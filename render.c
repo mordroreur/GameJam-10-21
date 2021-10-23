@@ -1,5 +1,6 @@
 #include "render.h"
 #include "Terrain.h"
+#include <SDL2/SDL_render.h>
 #define TAILLE_X 21
 #define TAILLE_Y 18
 
@@ -64,7 +65,8 @@ int BouclePrincipaleDuJeu(){
   if(!image) {
     printf("IMG_Load: %s\n", IMG_GetError());
   }
-
+  background_image = IMG_Load("Res/background/sky.png");
+  
   sprite_image_orange[0] = IMG_Load("Res/player/orange/player_walk0.png");
   sprite_image_orange[1] = IMG_Load("Res/player/orange/player_walk1.png");
   sprite_image_orange[2] = IMG_Load("Res/player/orange/player_walk2.png");
@@ -98,9 +100,10 @@ int BouclePrincipaleDuJeu(){
   while (EtapeActuelleDuJeu) {
     NowTime = getTime();
 
+    
     /* Gestion de l'affichage écran */
     if (NowTime - LastFrame > timeForNewFrame) {
-
+      
       SDL_Rect Joueur;
 
       SDL_Rect Fond;
@@ -110,27 +113,29 @@ int BouclePrincipaleDuJeu(){
       Fond.w = TailleEcranLong;
       SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
       SDL_RenderFillRect(renderer, &Fond);
-
+      
       SDL_Rect Player1_Screen;
       Player1_Screen.x = 0;
       Player1_Screen.y = 0;
       Player1_Screen.h = TailleEcranHaut;
       Player1_Screen.w = TailleEcranLong/2;
-      background_image = IMG_Load("Res/background/sky.png");
       background_avatar = SDL_CreateTextureFromSurface(renderer, background_image);
       SDL_RenderCopy(renderer, background_avatar, NULL, &Player1_Screen);
-
       SDL_Rect Player2_Screen;
       Player2_Screen.x = TailleEcranLong/2;
       Player2_Screen.y = 0;
       Player2_Screen.h = TailleEcranHaut;
       Player2_Screen.w = TailleEcranLong/2;
       SDL_RenderCopy(renderer, background_avatar, NULL, &Player2_Screen);
+
+      SDL_DestroyTexture(background_avatar);
+      
       SDL_Rect case_screen;
       case_screen.x = - TailleEcranLong/(2*TAILLE_X);
       case_screen.y = - TailleEcranHaut/TAILLE_Y;
       case_screen.w = TailleEcranLong/(2*TAILLE_X);
       case_screen.h = TailleEcranHaut/TAILLE_Y;
+      
       for(i=0; i<TAILLE_X +1; i++){
 
         case_screen.x = case_screen.x + case_screen.w;
@@ -144,10 +149,11 @@ int BouclePrincipaleDuJeu(){
           if (NiveauActuelle.salle[0].terrain[i][j]){
             avatar = SDL_CreateTextureFromSurface(renderer, image);
             SDL_RenderCopy(renderer, avatar, NULL, &case_screen);
+	    SDL_DestroyTexture(avatar);
           }
         }
       }
-
+       
       int angle = 0;
       SDL_RendererFlip flip;
 
@@ -202,8 +208,9 @@ int BouclePrincipaleDuJeu(){
       sprite_avatar = SDL_CreateTextureFromSurface(renderer, sprite_image);
       //SDL_RenderCopy(renderer, sprite_avatar, NULL, &Joueur);
       SDL_RenderCopyEx(renderer, sprite_avatar, NULL, &Joueur, angle, NULL, flip);
+      SDL_DestroyTexture(sprite_avatar);
       }
-
+      
 
       if(DEBUG){
         char affichageFrameDebug[5];
@@ -215,18 +222,18 @@ int BouclePrincipaleDuJeu(){
       
       SDL_RenderPresent(renderer);
       SDL_RenderClear(renderer);
-
+				      
       LastFrame += timeForNewFrame;
       fpsCount++;
-    }else{
-
-      /* Endors le cpu pour garder de la ressource */
+      }else{
+				      
+      // Endors le cpu pour garder de la ressource 
       NowTime = getTime();
       
       long SleepForCPU = 0;
       SleepForCPU = (long)(timeForNewFrame - (NowTime - LastFrame)) / 300;
       SDL_Delay(SleepForCPU);
-    }
+      }
     
 
     /* Gestion du debugage */
