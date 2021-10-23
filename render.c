@@ -128,8 +128,8 @@ int BouclePrincipaleDuJeu(){
       }
       Joueur.h = NiveauActuelle.player[0].sizeY *  TailleEcranHaut/TAILLE_Y;
       Joueur.w = NiveauActuelle.player[0].sizeX * TailleEcranLong/(2*TAILLE_X);
-      Joueur.x = NiveauActuelle.player[0].x;
-      Joueur.y = NiveauActuelle.player[0].y;
+      Joueur.x = NiveauActuelle.player[0].x * TailleEcranLong/(2*TAILLE_X);
+      Joueur.y = NiveauActuelle.player[0].y *  TailleEcranHaut/TAILLE_Y;
       SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
       SDL_RenderFillRect(renderer, &Joueur);
 
