@@ -163,6 +163,9 @@ int BouclePrincipaleDuJeu(){
 
         if (NiveauActuelle.player[0].xSpeed == 0){
           sprite_image = sprite_image_orange[4 + (SDL_GetTicks()/500)%2];
+          if (NiveauActuelle.player[0].direction == 0){
+            flip = SDL_FLIP_HORIZONTAL;
+          }
         }
         
         if (NiveauActuelle.player[0].xSpeed > 0){
