@@ -86,6 +86,12 @@ salle getFirstSalle(int n){
   s.terrain[9][16] = 0;
   s.terrain[8][17] = 0;
   s.terrain[9][17] = 0;
+
+  s.terrain[1][5] = 1;
+  s.terrain[2][6] = 1;
+
+  s.terrain[2][10] = 1;
+  s.terrain[3][10] = 1;
   return s;
 }
 
