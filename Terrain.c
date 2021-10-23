@@ -12,7 +12,7 @@ niveau AleaCreaTion(int seed, int playerNb){
   res.player = (entite *)malloc(sizeof(entite)*playerNb);
   
   for(int i = 0; i < playerNb; i++){
-    res.player[i].sizeX = 1;
+    res.player[i].sizeX = 2;
     res.player[i].sizeY = 2;
     res.player[i].xSpeed = 0;
     res.player[i].ySpeed = 0;
