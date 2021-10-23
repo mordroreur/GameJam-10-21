@@ -17,6 +17,9 @@ TTF_Font *RobotoFont;
 SDL_Surface *image = NULL;
 SDL_Texture  *avatar;
 
+SDL_Surface *background_image = NULL;
+SDL_Texture *background_avatar;
+
 SDL_Surface *sprite_image = NULL;
 
 SDL_Surface * sprite_image_orange[9];
@@ -112,8 +115,9 @@ int BouclePrincipaleDuJeu(){
       Player1_Screen.y = 0;
       Player1_Screen.h = TailleEcranHaut;
       Player1_Screen.w = TailleEcranLong/2;
-      SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-      SDL_RenderFillRect(renderer, &Player1_Screen);
+      background_image = IMG_Load("Res/background/sky.png");
+      background_avatar = SDL_CreateTextureFromSurface(renderer, background_image);
+      SDL_RenderCopy(renderer, background_avatar, NULL, &Player1_Screen);
 
       SDL_Rect Player2_Screen;
       Player2_Screen.x = TailleEcranLong/2;
@@ -141,10 +145,14 @@ int BouclePrincipaleDuJeu(){
           if (NiveauActuelle.salle[0].terrain[i][j]){
             avatar = SDL_CreateTextureFromSurface(renderer, image);
             SDL_RenderCopy(renderer, avatar, NULL, &case_screen);
-
           }
         }
       }
+
+      int angle = 0;
+      SDL_RendererFlip flip;
+
+      flip = SDL_FLIP_NONE;
 
       Joueur.h = NiveauActuelle.player[0].sizeY *  TailleEcranHaut/TAILLE_Y;
       Joueur.w = NiveauActuelle.player[0].sizeX * TailleEcranLong/(2*TAILLE_X);
@@ -158,7 +166,12 @@ int BouclePrincipaleDuJeu(){
         }
         
         if (NiveauActuelle.player[0].xSpeed > 0){
-         sprite_image = sprite_image_orange[(SDL_GetTicks()/200)%4];
+         sprite_image = sprite_image_orange[(SDL_GetTicks()/110)%4];
+        }
+        
+        if (NiveauActuelle.player[0].xSpeed < 0){
+         sprite_image = sprite_image_orange[(SDL_GetTicks()/110)%4];
+         flip = SDL_FLIP_HORIZONTAL;
         }
 
       }
@@ -173,14 +186,15 @@ int BouclePrincipaleDuJeu(){
     
 
       sprite_avatar = SDL_CreateTextureFromSurface(renderer, sprite_image);
-      SDL_RenderCopy(renderer, sprite_avatar, NULL, &Joueur);
+      //SDL_RenderCopy(renderer, sprite_avatar, NULL, &Joueur);
+      SDL_RenderCopyEx(renderer, sprite_avatar, NULL, &Joueur, angle, NULL, flip);
 
       if(DEBUG){
-      char affichageFrameDebug[5];
-      sprintf(affichageFrameDebug, "%d", LastFpsCount);
-      DrawString(affichageFrameDebug, 0, 0, 6, 'n', 0, 0, 0);
-      sprintf(affichageFrameDebug, "%d", LastTickCount);
-      DrawString(affichageFrameDebug, 100, 0, 6, 'e', 0, 0, 0);
+        char affichageFrameDebug[5];
+        sprintf(affichageFrameDebug, "%d", LastFpsCount);
+        DrawString(affichageFrameDebug, 0, 0, 6, 'n', 0, 0, 0);
+        sprintf(affichageFrameDebug, "%d", LastTickCount);
+        DrawString(affichageFrameDebug, 100, 0, 6, 'e', 0, 0, 0);
       }
       
       SDL_RenderPresent(renderer);
