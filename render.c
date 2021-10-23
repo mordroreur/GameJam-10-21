@@ -51,11 +51,6 @@ int BouclePrincipaleDuJeu(){
   int fpsCount = 0;
   int LastFpsCount = 0;
   int LastTickCount = 0;
-  
-
-  int i;
-  int j;
-  int joueur_id;
 
 
 
@@ -103,113 +98,13 @@ int BouclePrincipaleDuJeu(){
     
     /* Gestion de l'affichage écran */
     if (NowTime - LastFrame > timeForNewFrame) {
-      
-      SDL_Rect Joueur;
 
-      SDL_Rect Fond;
-      Fond.x = 0;
-      Fond.y = 0;
-      Fond.h = TailleEcranHaut;
-      Fond.w = TailleEcranLong;
-      SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-      SDL_RenderFillRect(renderer, &Fond);
-      
-      SDL_Rect Player1_Screen;
-      Player1_Screen.x = 0;
-      Player1_Screen.y = 0;
-      Player1_Screen.h = TailleEcranHaut;
-      Player1_Screen.w = TailleEcranLong/2;
-      background_avatar = SDL_CreateTextureFromSurface(renderer, background_image);
-      SDL_RenderCopy(renderer, background_avatar, NULL, &Player1_Screen);
-      SDL_Rect Player2_Screen;
-      Player2_Screen.x = TailleEcranLong/2;
-      Player2_Screen.y = 0;
-      Player2_Screen.h = TailleEcranHaut;
-      Player2_Screen.w = TailleEcranLong/2;
-      SDL_RenderCopy(renderer, background_avatar, NULL, &Player2_Screen);
-
-      SDL_DestroyTexture(background_avatar);
-      
-      SDL_Rect case_screen;
-      case_screen.x = - TailleEcranLong/(2*TAILLE_X);
-      case_screen.y = - TailleEcranHaut/TAILLE_Y;
-      case_screen.w = TailleEcranLong/(2*TAILLE_X);
-      case_screen.h = TailleEcranHaut/TAILLE_Y;
-      
-      for(i=0; i<TAILLE_X +1; i++){
-
-        case_screen.x = case_screen.x + case_screen.w;
-        case_screen.y = - TailleEcranHaut/TAILLE_Y;
-        for(j=0; j<TAILLE_Y +1 ; j++){
-
-          case_screen.y = case_screen.y + case_screen.h;
-
-
-
-          if (NiveauActuelle.salle[0].terrain[i][j]){
-            avatar = SDL_CreateTextureFromSurface(renderer, image);
-            SDL_RenderCopy(renderer, avatar, NULL, &case_screen);
-	    SDL_DestroyTexture(avatar);
-          }
-        }
-      }
-       
-      int angle = 0;
-      SDL_RendererFlip flip;
-
-
-
-      
-
-      for (joueur_id = 0; joueur_id <2; joueur_id++){
-        flip = SDL_FLIP_NONE;
-
-        if(joueur_id == 0){
-          Joueur.h = NiveauActuelle.player[joueur_id].sizeY *  TailleEcranHaut/TAILLE_Y;
-          Joueur.w = NiveauActuelle.player[joueur_id].sizeX * TailleEcranLong/(2*TAILLE_X);
-          Joueur.x = NiveauActuelle.player[joueur_id].x * TailleEcranLong/(2*TAILLE_X);
-          Joueur.y = NiveauActuelle.player[joueur_id].y *  TailleEcranHaut/TAILLE_Y;
-        }
-        else {
-          Joueur.h = NiveauActuelle.player[joueur_id].sizeY *  TailleEcranHaut/TAILLE_Y;
-          Joueur.w = NiveauActuelle.player[joueur_id].sizeX * TailleEcranLong/(2*TAILLE_X);
-          Joueur.x = TailleEcranLong/(2) +NiveauActuelle.player[joueur_id].x * TailleEcranLong/(2*TAILLE_X);
-          Joueur.y = NiveauActuelle.player[joueur_id].y *  TailleEcranHaut/TAILLE_Y;
-        }
-
-        if (NiveauActuelle.player[joueur_id].ySpeed == 0){
-
-          if (NiveauActuelle.player[joueur_id].xSpeed == 0){
-            sprite_image = sprite_image_orange[4 + (SDL_GetTicks()/500)%2];
-            if (NiveauActuelle.player[joueur_id].direction == 0){
-              flip = SDL_FLIP_HORIZONTAL;
-            }
-          }
-          
-          if (NiveauActuelle.player[joueur_id].xSpeed > 0){
-          sprite_image = sprite_image_orange[(SDL_GetTicks()/110)%4];
-          }
-          
-          if (NiveauActuelle.player[joueur_id].xSpeed < 0){
-          sprite_image = sprite_image_orange[(SDL_GetTicks()/110)%4];
-          flip = SDL_FLIP_HORIZONTAL;
-          }
-      }
-
-      else if(NiveauActuelle.player[joueur_id].ySpeed > 0){
-        sprite_image = sprite_image_orange[7];
+      switch(EtapeActuelleDuJeu){
+      case 42:DessinPrincipale();break;
+      default:return 0;break;
       }
       
-      else if (NiveauActuelle.player[joueur_id].ySpeed < 0) {
-        sprite_image = sprite_image_orange[8];
-      }
-    
-
-      sprite_avatar = SDL_CreateTextureFromSurface(renderer, sprite_image);
-      //SDL_RenderCopy(renderer, sprite_avatar, NULL, &Joueur);
-      SDL_RenderCopyEx(renderer, sprite_avatar, NULL, &Joueur, angle, NULL, flip);
-      SDL_DestroyTexture(sprite_avatar);
-      }
+      
       
 
       if(DEBUG){
@@ -399,5 +294,122 @@ void *BouclePrincipaleDesTicks(void *CeciEstUneVaribleNull){
   }
   return NULL;
 }
+
+void DessinPrincipale(){
+
+  int i;
+  int j;
+  int joueur_id;
+
+  SDL_Rect Joueur;
+
+      SDL_Rect Fond;
+      Fond.x = 0;
+      Fond.y = 0;
+      Fond.h = TailleEcranHaut;
+      Fond.w = TailleEcranLong;
+      SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+      SDL_RenderFillRect(renderer, &Fond);
+      
+      SDL_Rect Player1_Screen;
+      Player1_Screen.x = 0;
+      Player1_Screen.y = 0;
+      Player1_Screen.h = TailleEcranHaut;
+      Player1_Screen.w = TailleEcranLong/2;
+      background_avatar = SDL_CreateTextureFromSurface(renderer, background_image);
+      SDL_RenderCopy(renderer, background_avatar, NULL, &Player1_Screen);
+      SDL_Rect Player2_Screen;
+      Player2_Screen.x = TailleEcranLong/2;
+      Player2_Screen.y = 0;
+      Player2_Screen.h = TailleEcranHaut;
+      Player2_Screen.w = TailleEcranLong/2;
+      SDL_RenderCopy(renderer, background_avatar, NULL, &Player2_Screen);
+
+      SDL_DestroyTexture(background_avatar);
+      
+      SDL_Rect case_screen;
+      case_screen.x = - TailleEcranLong/(2*TAILLE_X);
+      case_screen.y = - TailleEcranHaut/TAILLE_Y;
+      case_screen.w = TailleEcranLong/(2*TAILLE_X);
+      case_screen.h = TailleEcranHaut/TAILLE_Y;
+      
+      for(i=0; i<TAILLE_X +1; i++){
+
+        case_screen.x = case_screen.x + case_screen.w;
+        case_screen.y = - TailleEcranHaut/TAILLE_Y;
+        for(j=0; j<TAILLE_Y +1 ; j++){
+
+          case_screen.y = case_screen.y + case_screen.h;
+
+
+
+          if (NiveauActuelle.salle[0].terrain[i][j]){
+            avatar = SDL_CreateTextureFromSurface(renderer, image);
+            SDL_RenderCopy(renderer, avatar, NULL, &case_screen);
+	    SDL_DestroyTexture(avatar);
+          }
+        }
+      }
+       
+      int angle = 0;
+      SDL_RendererFlip flip;
+
+
+
+      
+
+      for (joueur_id = 0; joueur_id <2; joueur_id++){
+        flip = SDL_FLIP_NONE;
+
+        if(joueur_id == 0){
+          Joueur.h = NiveauActuelle.player[joueur_id].sizeY *  TailleEcranHaut/TAILLE_Y;
+          Joueur.w = NiveauActuelle.player[joueur_id].sizeX * TailleEcranLong/(2*TAILLE_X);
+          Joueur.x = NiveauActuelle.player[joueur_id].x * TailleEcranLong/(2*TAILLE_X);
+          Joueur.y = NiveauActuelle.player[joueur_id].y *  TailleEcranHaut/TAILLE_Y;
+        }
+        else {
+          Joueur.h = NiveauActuelle.player[joueur_id].sizeY *  TailleEcranHaut/TAILLE_Y;
+          Joueur.w = NiveauActuelle.player[joueur_id].sizeX * TailleEcranLong/(2*TAILLE_X);
+          Joueur.x = TailleEcranLong/(2) +NiveauActuelle.player[joueur_id].x * TailleEcranLong/(2*TAILLE_X);
+          Joueur.y = NiveauActuelle.player[joueur_id].y *  TailleEcranHaut/TAILLE_Y;
+        }
+
+        if (NiveauActuelle.player[joueur_id].ySpeed == 0){
+
+          if (NiveauActuelle.player[joueur_id].xSpeed == 0){
+            sprite_image = sprite_image_orange[4 + (SDL_GetTicks()/500)%2];
+            if (NiveauActuelle.player[joueur_id].direction == 0){
+              flip = SDL_FLIP_HORIZONTAL;
+            }
+          }
+          
+          if (NiveauActuelle.player[joueur_id].xSpeed > 0){
+          sprite_image = sprite_image_orange[(SDL_GetTicks()/110)%4];
+          }
+          
+          if (NiveauActuelle.player[joueur_id].xSpeed < 0){
+          sprite_image = sprite_image_orange[(SDL_GetTicks()/110)%4];
+          flip = SDL_FLIP_HORIZONTAL;
+          }
+      }
+
+      else if(NiveauActuelle.player[joueur_id].ySpeed > 0){
+        sprite_image = sprite_image_orange[7];
+      }
+      
+      else if (NiveauActuelle.player[joueur_id].ySpeed < 0) {
+        sprite_image = sprite_image_orange[8];
+      }
+    
+
+      sprite_avatar = SDL_CreateTextureFromSurface(renderer, sprite_image);
+      //SDL_RenderCopy(renderer, sprite_avatar, NULL, &Joueur);
+      SDL_RenderCopyEx(renderer, sprite_avatar, NULL, &Joueur, angle, NULL, flip);
+      SDL_DestroyTexture(sprite_avatar);
+      }
+
+  
+}
+
 
 

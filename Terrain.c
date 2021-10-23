@@ -60,6 +60,9 @@ salle getFirstSalle(int n){
 	}
       }
   }
+
+  s.terrain[8][15] = 0;
+  s.terrain[9][15] = 0;
   return s;
 }
 
