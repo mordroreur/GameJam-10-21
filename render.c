@@ -1,7 +1,7 @@
 #include "render.h"
 #include "Terrain.h"
-#define TAILLE_X 100
-#define TAILLE_Y 50
+#define TAILLE_X 21
+#define TAILLE_Y 18
 
 extern int EtapeActuelleDuJeu; /* 0 = fin; 1 = Loading Screen... */
 extern int TailleEcranLong; /* Taille de l'ecran en nombre de pixel de gauche a droite */
@@ -39,6 +39,7 @@ int BouclePrincipaleDuJeu(){
   int fpsCount = 0;
   int LastFpsCount = 0;
   int LastTickCount = 0;
+  
 
   int i;
   int j;
@@ -46,6 +47,11 @@ int BouclePrincipaleDuJeu(){
 
 
   create_Win();
+
+  image=IMG_Load("roche.png");
+  if(!image) {
+    printf("IMG_Load: %s\n", IMG_GetError());
+  }
 
 
 
@@ -97,20 +103,24 @@ int BouclePrincipaleDuJeu(){
       SDL_RenderFillRect(renderer, &Player2_Screen);
 
       SDL_Rect case_screen;
+      case_screen.x = - TailleEcranLong/(2*TAILLE_X);
+      case_screen.y = - TailleEcranHaut/TAILLE_Y;
+      case_screen.w = TailleEcranLong/(2*TAILLE_X);
+      case_screen.h = TailleEcranHaut/TAILLE_Y;
+      for(i=0; i<TAILLE_X +1; i++){
 
-      for(i=0; i<TAILLE_X_SALLE; i++){
-        for(j=0; j<TAILLE_Y_SALLE; j++){
-          case_screen.x = i * TailleEcranLong/(2*TAILLE_X_SALLE);
-          case_screen.y = j * TailleEcranHaut/TAILLE_Y_SALLE;
-          case_screen.h = TailleEcranHaut/TAILLE_Y_SALLE;
-          case_screen.w = TailleEcranLong/(2*TAILLE_X_SALLE);
+        case_screen.x = case_screen.x + case_screen.w;
+        case_screen.y = - TailleEcranHaut/TAILLE_Y;
+        for(j=0; j<TAILLE_Y +1 ; j++){
 
-          SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+          case_screen.y = case_screen.y + case_screen.h;
+
+
           if (NiveauActuelle.salle[0].terrain[i][j]){
-            SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-          }
+            avatar = SDL_CreateTextureFromSurface(renderer, image);
+            SDL_RenderCopy(renderer, avatar, NULL, &case_screen);
 
-          SDL_RenderFillRect(renderer, &case_screen);
+          }
         }
       }
 
