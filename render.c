@@ -78,6 +78,8 @@ int BouclePrincipaleDuJeu(){
     /* Gestion de l'affichage écran */
     if (NowTime - LastFrame > timeForNewFrame) {
 
+      SDL_Rect Joueur;
+
       SDL_Rect Fond;
       Fond.x = 0;
       Fond.y = 0;
@@ -116,6 +118,7 @@ int BouclePrincipaleDuJeu(){
           case_screen.y = case_screen.y + case_screen.h;
 
 
+
           if (NiveauActuelle.salle[0].terrain[i][j]){
             avatar = SDL_CreateTextureFromSurface(renderer, image);
             SDL_RenderCopy(renderer, avatar, NULL, &case_screen);
@@ -123,6 +126,13 @@ int BouclePrincipaleDuJeu(){
           }
         }
       }
+      Joueur.h = NiveauActuelle.player[0].sizeY *  TailleEcranHaut/TAILLE_Y;
+      Joueur.w = NiveauActuelle.player[0].sizeX * TailleEcranLong/(2*TAILLE_X);
+      Joueur.x = NiveauActuelle.player[0].x;
+      Joueur.y = NiveauActuelle.player[0].y;
+      SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+      SDL_RenderFillRect(renderer, &Joueur);
+
 
       if(DEBUG){
       char affichageFrameDebug[5];
