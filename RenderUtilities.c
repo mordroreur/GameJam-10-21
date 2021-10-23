@@ -49,6 +49,12 @@ void DrawString(char *s, int x, int y, int size, char center, int R, int G, int 
     Message_rect.w = (int)((float)(TailleEcranLong)/400 * size * n);
     Message_rect.h = (int)((float)(TailleEcranHaut)/100 * size);
     break;
+    case 'c':
+      Message_rect.x = (int)((float)(TailleEcranLong)/100 * x - ((float)(TailleEcranLong)/400 * size * n)/2); 
+    Message_rect.y = (int)((float)(TailleEcranHaut)/100 * y - ((float)(TailleEcranHaut)/100 * size)/2);
+    Message_rect.w = (int)((float)(TailleEcranLong)/400 * size * n);
+    Message_rect.h = (int)((float)(TailleEcranHaut)/100 * size);
+    break;
   default:
     Message_rect.x = (int)((float)(TailleEcranLong)/100 * x); 
     Message_rect.y = (int)((float)(TailleEcranHaut)/100 * y);
@@ -64,7 +70,8 @@ void DrawString(char *s, int x, int y, int size, char center, int R, int G, int 
 
   
 }
-
+int nombreOpen = 0;
+int LastOpen = 0;
 
 void DrawMenu(){
 
@@ -89,11 +96,22 @@ void DrawMenu(){
   Rect.h = TailleEcranHaut/2;
   Rect.w = TailleEcranLong/4;
   int isSouris = (posMX > TailleEcranLong/8 && posMX < TailleEcranLong/8 + TailleEcranLong/6 && posMY > TailleEcranHaut/6 && posMY < TailleEcranHaut/6 + TailleEcranHaut/2)?1:0;
+
+  if(LastOpen != isSouris){
+    LastOpen = isSouris;
+    nombreOpen++;
+  }
+  
   Text = SDL_CreateTextureFromSurface(renderer, sprite_image_Fusee[isSouris]);
   SDL_RenderCopy(renderer, Text, NULL, &Rect);
   SDL_DestroyTexture(Text);
 
-  DrawString("Play", 25, 75, 8, 'c', 255*isSouris, 255*isSouris, 255*isSouris);
+  DrawString("Play", 22, 68, 8, 'c', 255*isSouris, 255*isSouris, 255*isSouris);
+
+  if(nombreOpen > 100){
+    DrawString("EASTER EGG", 22, 50, 8, 'c', 255, 0, 255);
+  }
+
   
 
   
