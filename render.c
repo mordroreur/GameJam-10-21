@@ -333,7 +333,7 @@ void DessinPrincipale(){
       case_screen.w = TailleEcranLong/(2*TAILLE_X);
       case_screen.h = TailleEcranHaut/TAILLE_Y;
       
-      for(i=0; i<TAILLE_X +1; i++){
+      for(i=(int)(NiveauActuelle.player[0].x) -11; i< (int)NiveauActuelle.player[0].x + TAILLE_X - 11; i++){
 
         case_screen.x = case_screen.x + case_screen.w;
         case_screen.y = - TailleEcranHaut/TAILLE_Y;
@@ -342,11 +342,10 @@ void DessinPrincipale(){
           case_screen.y = case_screen.y + case_screen.h;
 
 
-
-          if (NiveauActuelle.salle[0].terrain[i][j]){
+          if (i > 0 && NiveauActuelle.salle[0].terrain[i][j]){
             avatar = SDL_CreateTextureFromSurface(renderer, image);
             SDL_RenderCopy(renderer, avatar, NULL, &case_screen);
-	    SDL_DestroyTexture(avatar);
+	          SDL_DestroyTexture(avatar);
           }
         }
       }
@@ -364,7 +363,7 @@ void DessinPrincipale(){
         if(joueur_id == 0){
           Joueur.h = NiveauActuelle.player[joueur_id].sizeY *  TailleEcranHaut/TAILLE_Y;
           Joueur.w = NiveauActuelle.player[joueur_id].sizeX * TailleEcranLong/(2*TAILLE_X);
-          Joueur.x = NiveauActuelle.player[joueur_id].x * TailleEcranLong/(2*TAILLE_X);
+          Joueur.x = (float)TailleEcranLong/4;
           Joueur.y = NiveauActuelle.player[joueur_id].y *  TailleEcranHaut/TAILLE_Y;
         }
         else {
