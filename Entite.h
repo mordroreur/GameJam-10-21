@@ -10,7 +10,8 @@ typedef struct Entite{
   float sizeX;
   float sizeY;
   int type;
-  int equipe;  
+  int equipe; 
+  int direction; 
 }entite;
 
 

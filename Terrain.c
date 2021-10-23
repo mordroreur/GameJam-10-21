@@ -18,6 +18,7 @@ niveau AleaCreaTion(int seed, int playerNb){
     res.player[i].ySpeed = 0;
     res.player[i].x = 0;
     res.player[i].y = 0;
+    res.player[i].direction = 1;
   }
 
 

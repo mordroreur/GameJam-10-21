@@ -4,8 +4,11 @@
 #include "Entite.h"
 #include "Terrain.h"
 
-#define GRAVITY_MULTIPLIER 1.03
+#define GRAVITY_MULTIPLIER 1.1
 #define AIR_FRICTION 0.8
+
+#define X_ACCEL 0.01
+#define X_TERM_VELOCITY 0.2
 
 #define NB_INPUTS 4
 #define INPUT_JUMP 0

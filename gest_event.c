@@ -15,8 +15,8 @@ void keyUp(SDL_KeyboardEvent *key){
   switch(key->keysym.sym){
   case SDLK_ESCAPE:EtapeActuelleDuJeu = 0;break;
   case SDLK_UP:inputsJoueurs[0][INPUT_JUMP] = 0;break;
-  case SDLK_RIGHT:inputsJoueurs[0][INPUT_RIGHT] = 0;break;
-  case SDLK_LEFT:inputsJoueurs[0][INPUT_LEFT] = 0;break;
+  case SDLK_RIGHT:inputsJoueurs[0][INPUT_RIGHT] = 0; NiveauActuelle.player[0].direction = 1; break;
+  case SDLK_LEFT:inputsJoueurs[0][INPUT_LEFT] = 0; NiveauActuelle.player[0].direction = 0; break;
   case SDLK_DOWN:inputsJoueurs[0][INPUT_ITEM] = 0;break;
   default:break;
   }
@@ -26,7 +26,7 @@ void keyDown(SDL_KeyboardEvent *key){
   // printf("%d\n", key->keysym.sym);
   switch(key->keysym.sym){
   case SDLK_UP:inputsJoueurs[0][INPUT_JUMP] = 1;break;
-  case SDLK_RIGHT:inputsJoueurs[0][INPUT_RIGHT] = 1;break;
+  case SDLK_RIGHT:inputsJoueurs[0][INPUT_RIGHT] = 1; break;
   case SDLK_LEFT:inputsJoueurs[0][INPUT_LEFT] = 1;break;
   case SDLK_DOWN:inputsJoueurs[0][INPUT_ITEM] = 1;break;
   default:break;
@@ -38,7 +38,6 @@ void initGestion() {
   for(int i = 0; i < NiveauActuelle.nbPlayer; i++){ 
     inputsJoueurs[i] = (int*) calloc(NB_INPUTS, sizeof(int));
   }
-  printf("%d\n", inputsJoueurs[0][INPUT_RIGHT]);
 }
 
 void gestionInputs() {
