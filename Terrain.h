@@ -25,6 +25,6 @@ typedef struct Niveau{
   
 }niveau;
 
-
+niveau AleaCreaTion(int seed, int playerNb);
 
 #endif /* TERRAIN_HEADER_ */

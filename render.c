@@ -1,4 +1,5 @@
 #include "render.h"
+#include "Terrain.h"
 #define TAILLE_X 100
 #define TAILLE_Y 50
 
@@ -22,7 +23,7 @@ SDL_Event event;
 
 int tickCount = 0;
 
-
+niveau NiveauActuelle;
 
 
 
@@ -60,6 +61,8 @@ int BouclePrincipaleDuJeu(){
     if(RetourDuThreadDesTicks){
       return 1;
     }
+
+    NiveauActuelle = AleaCreaTion(42, 2);
     
   
   /************Début de la boucle frames**************************/
@@ -98,12 +101,12 @@ int BouclePrincipaleDuJeu(){
       for(i=0; i<TAILLE_X_SALLE; i++){
         for(j=0; j<TAILLE_Y_SALLE; j++){
           case_screen.x = i * TailleEcranLong/(2*TAILLE_X_SALLE);
-          case_screen.y = j * TailleEcranHaut*TAILLE_Y_SALLE;
+          case_screen.y = j * TailleEcranHaut/TAILLE_Y_SALLE;
           case_screen.h = TailleEcranHaut/TAILLE_Y_SALLE;
           case_screen.w = TailleEcranLong/(2*TAILLE_X_SALLE);
 
           SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
-          if (i + j % 2){
+          if (NiveauActuelle.salle[0].terrain[i][j]){
             SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
           }
 
