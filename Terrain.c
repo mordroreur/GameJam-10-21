@@ -16,14 +16,18 @@ niveau AleaCreaTion(int seed, int playerNb){
     res.player[i].sizeY = 2;
     res.player[i].xSpeed = 0;
     res.player[i].ySpeed = 0;
-    res.player[i].x = 0;
-    res.player[i].y = 0;
+    res.player[i].x = 5;
+    res.player[i].y = 5;
     res.player[i].direction = 1;
+
   }
 
 
   res.salle = (salle *)malloc(sizeof(salle)*res.nbSalle);
-  for(int i = 0; i < res.nbSalle; i++){
+
+  res.salle[0] = getFirstSalle(rand());
+  
+  for(int i = 1; i < res.nbSalle; i++){
     res.salle[i].lE = creerListe();
 
     if(rand()%3 < 3){
@@ -43,6 +47,20 @@ niveau AleaCreaTion(int seed, int playerNb){
  
   
   return res;
+}
+
+salle getFirstSalle(int n){
+  salle s;
+  for(int i = 0; i < TAILLE_X_SALLE; i++){
+      for(int j = 0; j < TAILLE_Y_SALLE; j++){
+	if(j != 15 && i != 0){
+	  s.terrain[i][j] = 0;
+	}else {
+	  s.terrain[i][j] = 1;
+	}
+      }
+  }
+  return s;
 }
 
 

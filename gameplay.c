@@ -26,7 +26,7 @@ void gestionPhysiquesJoueur(int idJoueur) {
     }
 
     if(inputsJoueurs[idJoueur][INPUT_RIGHT]) {
-      joueur->xSpeed = ((joueur->xSpeed + X_ACCEL < X_TERM_VELOCITY) ? joueur->xSpeed + X_ACCEL : X_TERM_VELOCITY);
+            joueur->xSpeed = ((joueur->xSpeed + X_ACCEL < X_TERM_VELOCITY) ? joueur->xSpeed + X_ACCEL : X_TERM_VELOCITY);
     } else if(inputsJoueurs[idJoueur][INPUT_LEFT]) {
       joueur->xSpeed = ((joueur->xSpeed - X_ACCEL > -X_TERM_VELOCITY) ? joueur->xSpeed - X_ACCEL : -X_TERM_VELOCITY);
     } else {
