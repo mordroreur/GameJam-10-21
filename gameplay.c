@@ -33,13 +33,11 @@ int moveEntityY(entite* e, float y)
     
     if(yOldTile != yNewTile && (yNewTile < TAILLE_Y_SALLE && yNewTile >= 0))
     {
-      yNewTile = floorf(yNew);
-
       for(int i = xMinTile; i<= xMaxTile;i++)
       {
-        if(NiveauActuelle.salle[numSalle].terrain[i][yNewTile] == 1)
+        if(NiveauActuelle.salle[numSalle].terrain[i][yOldTile] == 1)
         {
-          e->y = (yNewTile-e->sizeY);
+          e->y = (yOldTile-e->sizeY);
           return 0;
         }
       } 
@@ -48,20 +46,18 @@ int moveEntityY(entite* e, float y)
     return 1;
   }
     yOld = e->y;
-    yNew = yOld-y;
+    yNew = yOld+y;
 
     yOldTile = floorf(yOld);
     yNewTile = floorf(yNew);
     
     if(yOldTile != yNewTile && (yNewTile < TAILLE_Y_SALLE && yNewTile >= 0))
     {
-      yNewTile = ceilf(yNew);
-
       for(int i = xMinTile; i<= xMaxTile;i++)
       {
-        if(NiveauActuelle.salle[numSalle].terrain[i][yNewTile] == 1)
+        if(NiveauActuelle.salle[numSalle].terrain[i][yOldTile] == 1)
         {
-          e->y = yNewTile;
+          e->y = yOldTile+1;
           return 0;
         }
       } 
@@ -83,6 +79,7 @@ int moveEntityX(entite* e, float x)
 
   if(x > 0)
   {
+    /*
     xOld = e->x+e->sizeX;
     xNew = xOld+x;
 
@@ -102,24 +99,22 @@ int moveEntityX(entite* e, float x)
         }
       } 
     } 
-    e->x += x;
+    e->x += x;*/
     return 1;
   }
     xOld = e->x;
-    xNew = xOld-x;
+    xNew = xOld+x;
 
-    xOldTile = floorf(xOld);
-    xNewTile = floorf(xNew);
+    xOldTile = floorf(xOld)-1;
+    xNewTile = floorf(xNew)-1;
     
     if(xOldTile != xNewTile && (xNewTile < TAILLE_X_SALLE && xNewTile >= 0))
     {
-      xNewTile = ceilf(xNew);
-
       for(int i = yMinTile; i<= yMaxTile;i++)
       {
-        if(NiveauActuelle.salle[numSalle].terrain[xNewTile][i] == 1)
+        if(NiveauActuelle.salle[numSalle].terrain[xOldTile][i] == 1)
         {
-          e->x = (xNewTile);
+          e->x = xOldTile+1;
           return 0;
         }
       } 
@@ -157,6 +152,7 @@ void gestionPhysiquesJoueur(int idJoueur) {
       printf("A1\n");
     }else
     {
+      
       printf("A0\n");
 
     }
