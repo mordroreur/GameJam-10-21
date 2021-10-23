@@ -38,7 +38,6 @@ void initGestion() {
   for(int i = 0; i < NiveauActuelle.nbPlayer; i++){ 
     inputsJoueurs[i] = (int*) calloc(NB_INPUTS, sizeof(int));
   }
-  printf("%d\n", inputsJoueurs[0][INPUT_RIGHT]);
 }
 
 void gestionInputs() {
