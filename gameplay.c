@@ -11,7 +11,7 @@ void gestionPhysiquesJoueur(int idJoueur) {
     float x = joueur->x, y = joueur->y;
     printf("%f %f\n", x, y);
     int salleJoueur = getSalleEntite(*joueur);
-    if(NiveauActuelle.salle[salleJoueur].terrain[(int)x][(int)y] != 1) {
-        joueur->y += 0.1;
+    if(NiveauActuelle.salle[salleJoueur].terrain[(int)x][(int)(y+joueur->sizeY)] != 1) {
+        joueur->y += 0.2;
     }
 }
