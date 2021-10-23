@@ -338,21 +338,20 @@ void DessinPrincipale(){
       SDL_DestroyTexture(background_avatar);
       
       SDL_Rect case_screen;
-      case_screen.x = - TailleEcranLong/(2*TAILLE_X);
-      case_screen.y = - TailleEcranHaut/TAILLE_Y;
+      case_screen.x = - (int)((TailleEcranLong/(2*TAILLE_X)+((float)NiveauActuelle.player[0].x - (int)NiveauActuelle.player[0].x )*TailleEcranLong/(2*TAILLE_X)));
+      case_screen.y = - TailleEcranHaut/TAILLE_Y + ((float)NiveauActuelle.player[0].y - (int)NiveauActuelle.player[0].y )*TailleEcranHaut/(TAILLE_Y);
       case_screen.w = TailleEcranLong/(2*TAILLE_X);
       case_screen.h = TailleEcranHaut/TAILLE_Y;
       
-      for(i=(int)(NiveauActuelle.player[0].x) -11; i< (int)NiveauActuelle.player[0].x + TAILLE_X - 11; i++){
+      for(i=(int)(NiveauActuelle.player[0].x) -11; i< (int)NiveauActuelle.player[0].x + TAILLE_X - 10; i++){
 
         case_screen.x = case_screen.x + case_screen.w;
         case_screen.y = - TailleEcranHaut/TAILLE_Y;
-        for(j=0; j<TAILLE_Y +1 ; j++){
+        for(j=(int)NiveauActuelle.player[0].y - 4; j<TAILLE_Y +1 + (int)NiveauActuelle.player[0].y - 4; j++){
 
           case_screen.y = case_screen.y + case_screen.h;
 
-
-          if (i > 0 && NiveauActuelle.salle[0].terrain[i][j]){
+          if (j >= 0 && i >= 0 && NiveauActuelle.salle[0].terrain[i][j]){
             avatar = SDL_CreateTextureFromSurface(renderer, image);
             SDL_RenderCopy(renderer, avatar, NULL, &case_screen);
 	          SDL_DestroyTexture(avatar);
@@ -374,7 +373,7 @@ void DessinPrincipale(){
           Joueur.h = NiveauActuelle.player[joueur_id].sizeY *  TailleEcranHaut/TAILLE_Y;
           Joueur.w = NiveauActuelle.player[joueur_id].sizeX * TailleEcranLong/(2*TAILLE_X);
           Joueur.x = (float)TailleEcranLong/4;
-          Joueur.y = NiveauActuelle.player[joueur_id].y *  TailleEcranHaut/TAILLE_Y;
+          Joueur.y = (float)TailleEcranHaut/4;
         }
         else {
           Joueur.h = NiveauActuelle.player[joueur_id].sizeY *  TailleEcranHaut/TAILLE_Y;
