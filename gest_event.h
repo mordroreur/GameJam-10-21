@@ -4,4 +4,5 @@
 
 void keyUp(SDL_KeyboardEvent *key);
 void keyDown(SDL_KeyboardEvent *key);
+void initGestion();
 void gestionInputs();

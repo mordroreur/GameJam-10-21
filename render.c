@@ -60,6 +60,7 @@ int BouclePrincipaleDuJeu(){
   TimeCount = getTime();
   NowTime = getTime();
 
+  NiveauActuelle = AleaCreaTion(42, 2);
 
   /************Début de la boucle des ticks***********************/
     pthread_t threadBoucleDesTicks;
@@ -67,8 +68,6 @@ int BouclePrincipaleDuJeu(){
     if(RetourDuThreadDesTicks){
       return 1;
     }
-
-    NiveauActuelle = AleaCreaTion(42, 2);
     
   
   /************Début de la boucle frames**************************/
@@ -294,6 +293,7 @@ void *BouclePrincipaleDesTicks(void *CeciEstUneVaribleNull){
   long int NowTime;
   NowTime = getTime();
   LastTick = getTime();
+  initGestion();
 
   
   while(EtapeActuelleDuJeu){
