@@ -26,9 +26,9 @@ void gestionPhysiquesJoueur(int idJoueur) {
     }
 
     if(inputsJoueurs[idJoueur][INPUT_RIGHT]) {
-      joueur->xSpeed = 0.1;
+      joueur->xSpeed = ((joueur->xSpeed + X_ACCEL < X_TERM_VELOCITY) ? joueur->xSpeed + X_ACCEL : X_TERM_VELOCITY);
     } else if(inputsJoueurs[idJoueur][INPUT_LEFT]) {
-      joueur->xSpeed = -0.1;
+      joueur->xSpeed = ((joueur->xSpeed - X_ACCEL > -X_TERM_VELOCITY) ? joueur->xSpeed - X_ACCEL : -X_TERM_VELOCITY);
     } else {
       joueur->xSpeed = 0;
     }
@@ -44,6 +44,8 @@ void gestionPhysiquesJoueur(int idJoueur) {
       inputsJoueurs[idJoueur][INPUT_JUMP] = 0;
     }
 
+    // if(NiveauActuelle.salle[salleJoueur].terrain[(int)x][(int)(y+joueur->sizeY+joueur->ySpeed)] != 1) {
     joueur->y += joueur->ySpeed;
+    // } 
     joueur->x += joueur->xSpeed;
 }
