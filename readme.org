@@ -1,0 +1,12 @@
+* Readme
+** Librairy nécessaire à la compilation :
+
+SDL2 :
+
+https://wiki.libsdl.org/Installation
+
+apt install libsdl2-image-dev
+
+sudo apt install libsdl2-ttf-2.0-0
+
+
