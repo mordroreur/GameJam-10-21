@@ -1,5 +1,6 @@
 #include "Terrain.h"
 
+#define NombreDeSalleConnu 1
 
 
 niveau AleaCreaTion(int seed, int playerNb){
@@ -22,9 +23,13 @@ niveau AleaCreaTion(int seed, int playerNb){
   for(int i = 0; i < res.nbSalle; i++){
     res.salle[i].lE = creerListe();
 
-    for(int j = 0; j < TAILLE_X_SALLE; j++){
-      for(int k = 0; k < TAILLE_Y_SALLE; k++){
-	res.salle[i].terrain[j][k] = (rand()%2 == 1)?0:1;
+    if(rand()%3 < 3){
+      res.salle[i] = getKnownSalle(rand());
+    }else {
+      for(int j = 0; j < TAILLE_X_SALLE; j++){
+	for(int k = 0; k < TAILLE_Y_SALLE; k++){
+	  res.salle[i].terrain[j][k] = (rand()%2 == 1)?0:1;
+	}
       }
     }
     
@@ -35,4 +40,29 @@ niveau AleaCreaTion(int seed, int playerNb){
  
   
   return res;
+}
+
+
+salle getKnownSalle(int n){
+  salle s;
+  switch (n % NombreDeSalleConnu) {
+  case 0 :
+    for(int i = 0; i < TAILLE_X_SALLE; i++){
+      for(int j = 0; j < TAILLE_Y_SALLE; j++){
+	if(j != 20){
+	  s.terrain[i][j] = 0;
+	}else {
+	  s.terrain[i][j] = 1;
+	}
+      }
+    }break;
+  default:
+    for(int i = 0; i < TAILLE_X_SALLE; i++){
+      for(int j = 0; j < TAILLE_Y_SALLE; j++){
+	s.terrain[i][j] = 0;
+      }
+    }
+  }
+
+  return s;
 }
