@@ -8,7 +8,7 @@ typedef struct Entite{
   float sizeX;
   float sizeY;
   int type;
-  
+  int equipe;  
 }entite;
 
 

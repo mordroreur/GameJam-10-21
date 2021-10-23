@@ -11,6 +11,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <pthread.h>
+#include "Terrain.h"
 
 
 #define FPS_TO_GET 60  /*!< Frames render per second*/

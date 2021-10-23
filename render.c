@@ -1,7 +1,8 @@
 #include "render.h"
+#define TAILLE_X 100
+#define TAILLE_Y 50
 
 extern int EtapeActuelleDuJeu; /* 0 = fin; 1 = Loading Screen... */
-
 extern int TailleEcranLong; /* Taille de l'ecran en nombre de pixel de gauche a droite */
 extern int TailleEcranHaut; /* Taille de l'ecran en nombre de pixel de haut en bas */
 
@@ -12,7 +13,10 @@ extern int DEBUG; /* 1 : affiche le debug */
 
 TTF_Font *RobotoFont;
 
+SDL_Surface *image = NULL;
+SDL_Texture  *avatar;
 
+SDL_Event event;
 
 
 
@@ -35,12 +39,14 @@ int BouclePrincipaleDuJeu(){
   int LastFpsCount = 0;
   int LastTickCount = 0;
 
-  
-  
-  SDL_Event event;
+  int i;
+  int j;
+
 
 
   create_Win();
+
+
 
   /************Initialisation des variables de temps**************/
   LastFrame = getTime();
@@ -87,7 +93,23 @@ int BouclePrincipaleDuJeu(){
       SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255);
       SDL_RenderFillRect(renderer, &Player2_Screen);
 
+      SDL_Rect case_screen;
 
+      for(i=0; i<TAILLE_X_SALLE; i++){
+        for(j=0; j<TAILLE_Y_SALLE; j++){
+          case_screen.x = i * TailleEcranLong/(2*TAILLE_X_SALLE);
+          case_screen.y = j * TailleEcranHaut*TAILLE_Y_SALLE;
+          case_screen.h = TailleEcranHaut/TAILLE_Y_SALLE;
+          case_screen.w = TailleEcranLong/(2*TAILLE_X_SALLE);
+
+          SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+          if (i + j % 2){
+            SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+          }
+
+          SDL_RenderFillRect(renderer, &case_screen);
+        }
+      }
 
       if(DEBUG){
       char affichageFrameDebug[5];
@@ -112,41 +134,6 @@ int BouclePrincipaleDuJeu(){
       SDL_Delay(SleepForCPU);
     }
     
-
-    /* Gestion des imputs clavier */
-    while (SDL_PollEvent(&event))
-    {
-      switch (event.type)
-      {
-      case SDL_KEYDOWN:
-        break; // KeyDown(&event.key);break;
-      case SDL_KEYUP:
-        keyUp(&event.key);
-        break;
-      case SDL_MOUSEWHEEL:
-        // if (event.wheel.y > 0) {
-	// } else if (event.wheel.y < 0) {
-	// }
-        break;
-      case SDL_MOUSEBUTTONDOWN:
-        // if (event.button.button == SDL_BUTTON_LEFT) {
-        // } else if (event.button.button == SDL_BUTTON_RIGHT) {
-	// }
-        break;
-      case SDL_QUIT:
-        EtapeActuelleDuJeu = 0;
-        break;
-      case SDL_WINDOWEVENT:
-	if(event.window.event == SDL_WINDOWEVENT_SIZE_CHANGED){
-	  TailleEcranHaut = event.window.data2;
-	  TailleEcranLong = event.window.data1;
-	}
-	break;
-      default:
-        break;
-      }
-    }
-
 
     /* Gestion du debugage */
     if (NowTime > TimeCount)
