@@ -1,6 +1,7 @@
 #pragma once
 #include <stdlib.h>
 #include <stdio.h>
+#include <math.h>
 #include "Entite.h"
 #include "Terrain.h"
 
@@ -18,3 +19,8 @@
 
 int getSalleEntite(entite ent);
 void gestionPhysiquesJoueur(int idJoueur);
+
+// 0 = pas reussi
+// 1 = reuss à te déplacer
+int moveEntityX(entite* e, float x);
+int moveEntityY(entite* e, float y);
