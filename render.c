@@ -135,7 +135,9 @@ int BouclePrincipaleDuJeu(){
       Joueur.y = NiveauActuelle.player[0].y *  TailleEcranHaut/TAILLE_Y;
 
       
+
       if (NiveauActuelle.player[0].ySpeed == 0){
+
         if (NiveauActuelle.player[0].xSpeed == 0){
           sprite_image=IMG_Load("Res/player/orange/player_orange_face.png");
           if(!sprite_image) {
@@ -144,12 +146,33 @@ int BouclePrincipaleDuJeu(){
         }
         
         if (NiveauActuelle.player[0].xSpeed > 0){
-          sprite_image=IMG_Load("Res/player/orange/player_orange_face.png");
+          switch (cycle_animation)
+          {
+          case 0:
+            sprite_image=IMG_Load("Res/player/orange/player_walk0.png");
+            break;
+          
+          case 1:
+            sprite_image=IMG_Load("Res/player/orange/player_walk1.png");
+            break;
+          
+          case 2:
+            sprite_image=IMG_Load("Res/player/orange/player_walk2.png");
+            break;
+
+          case 3:
+            sprite_image=IMG_Load("Res/player/orange/player_walk3.png");
+            break;
+          
+          default:
+            break;
+          }
+          sprite_image=IMG_Load("Res/player/orange/player_walk.png");
           if(!sprite_image) {
             printf("IMG_Load: %s\n", IMG_GetError());
           }
         }
-    
+
       }
 
       else if(NiveauActuelle.player[0].ySpeed > 0){
