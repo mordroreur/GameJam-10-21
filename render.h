@@ -12,7 +12,7 @@
 #include <stdlib.h>
 #include <pthread.h>
 #include "Terrain.h"
-
+#include "gest_event.h"
 
 #define FPS_TO_GET 60  /*!< Frames render per second*/
 #define TICK_TO_GET 60 /*!< Verification done per second*/
@@ -25,9 +25,6 @@ void create_Win();
 
 
 void end_sdl(char ok, char const *msg);
-
-
-void keyUp(SDL_KeyboardEvent *key);
 
 
 void *BouclePrincipaleDesTicks(void *CeciEstUneVaribleNull);

@@ -223,17 +223,11 @@ void create_Win() {
   
 }
 
-void keyUp(SDL_KeyboardEvent *key){
-  //printf("%c\n", key->keysym.sym);
-  switch(key->keysym.sym){
-  case SDLK_ESCAPE:EtapeActuelleDuJeu = 0;break;
-  default:break;
-  }
-}
 
 
 
-/*Peu etre utile :
+
+/*Peut etre utile :
 
 
 
@@ -287,7 +281,7 @@ void *BouclePrincipaleDesTicks(void *CeciEstUneVaribleNull){
     if (NowTime - LastTick > timeForNewTick) {
       
 
-
+      gestionInputs();
       
       LastTick += timeForNewTick;
       tickCount++;

@@ -1,4 +1,22 @@
-/* Gestion des imputs clavier 
+#include "gest_event.h"
+
+extern int EtapeActuelleDuJeu; /* 0 = fin; 1 = Loading Screen... */
+extern int TailleEcranLong; /* Taille de l'ecran en nombre de pixel de gauche a droite */
+extern int TailleEcranHaut; /* Taille de l'ecran en nombre de pixel de haut en bas */
+
+extern SDL_Event event;
+
+void keyUp(SDL_KeyboardEvent *key){
+  //printf("%c\n", key->keysym.sym);
+  switch(key->keysym.sym){
+  case SDLK_ESCAPE:EtapeActuelleDuJeu = 0;break;
+  default:break;
+  }
+}
+
+void gestionInputs() {
+/* Gestion des imputs clavier */
+    
     while (SDL_PollEvent(&event))
     {
       switch (event.type)
@@ -31,4 +49,4 @@
         break;
       }
     }
-*/
+}
