@@ -14,6 +14,8 @@ void DrawString(char *s, int x, int y, int size, char center, int R, int G, int 
 long int getTime();
 
 
-void DrawImage(int imagenb, int x, int y, int size, char center);
+void DrawMenu();
+
+
 
 #endif /* RENDERUTILLITIES_HEADER_ */

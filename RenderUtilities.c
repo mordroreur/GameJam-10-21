@@ -12,6 +12,10 @@ extern int DEBUG; /* 1 : affiche le debug */
 
 extern TTF_Font *RobotoFont;
 
+extern SDL_Surface *background_image;
+
+extern SDL_Surface *sprite_image_Star[3];
+extern SDL_Surface *sprite_image_Fusee[2];
 
 long int getTime(){
   struct timespec tms;
@@ -62,10 +66,35 @@ void DrawString(char *s, int x, int y, int size, char center, int R, int G, int 
 }
 
 
-void DrawImage(int imagenb, int x, int y, int size, char center){
+void DrawMenu(){
+
+  SDL_Texture *Text;
+  int posMX;
+  int posMY;
+  SDL_GetMouseState(&posMX, &posMY);
+
+  SDL_Rect Rect;
+  Rect.x = 0;
+  Rect.y = 0;
+  Rect.h = TailleEcranHaut;
+  Rect.w = TailleEcranLong;
+  
+  Text = SDL_CreateTextureFromSurface(renderer, background_image);
+  SDL_RenderCopy(renderer, Text, NULL, &Rect);
+  SDL_DestroyTexture(Text);
 
 
+  Rect.x = TailleEcranHaut/6;
+  Rect.y = TailleEcranLong/13;
+  Rect.h = TailleEcranHaut/2;
+  Rect.w = TailleEcranLong/4;
+  int isSouris = (posMX > TailleEcranLong/8 && posMX < TailleEcranLong/8 + TailleEcranLong/6 && posMY > TailleEcranHaut/6 && posMY < TailleEcranHaut/6 + TailleEcranHaut/2)?1:0;
+  Text = SDL_CreateTextureFromSurface(renderer, sprite_image_Fusee[isSouris]);
+  SDL_RenderCopy(renderer, Text, NULL, &Rect);
+  SDL_DestroyTexture(Text);
 
+  DrawString("Play", 25, 75, 8, 'c', 255*isSouris, 255*isSouris, 255*isSouris);
+  
 
   
 }

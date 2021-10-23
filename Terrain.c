@@ -53,7 +53,7 @@ salle getFirstSalle(int n){
   salle s;
   for(int i = 0; i < TAILLE_X_SALLE/5; i++){
     for(int j = 0; j < TAILLE_Y_SALLE; j++){
-      if(j < 15 && i != 0 && i != 12 && i != 13){
+      if(j < 15 && i != 0 ){
 	s.terrain[i][j] = 0;
       }else {
 	s.terrain[i][j] = 1;
@@ -73,9 +73,12 @@ salle getFirstSalle(int n){
       
       if(x == 3){
 	s.terrain[i][j] = 1;
-      }
-      if(x == 2){
-	s.terrain[i][j] = rand()%2;
+      }else if(x == 0){
+	s.terrain[i][j] = 0;
+      }else if((x == 2 && rand()%100 < 75) || (x == 1 && rand()%100 < 25)){
+	s.terrain[i][j] = 1;
+      }else {
+	s.terrain[i][j] = 0;
       }
     }
   }

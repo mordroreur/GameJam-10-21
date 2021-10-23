@@ -23,9 +23,10 @@ SDL_Texture *background_avatar;
 
 SDL_Surface *sprite_image = NULL;
 
-SDL_Surface * sprite_image_orange[9];
+SDL_Surface *sprite_image_orange[9];
 
-
+SDL_Surface *sprite_image_Star[3];
+SDL_Surface *sprite_image_Fusee[2];
 
 
 SDL_Texture *sprite_avatar;
@@ -76,6 +77,14 @@ int BouclePrincipaleDuJeu(){
   sprite_image_orange[8] = IMG_Load("Res/player/orange/player_jump.png");
 
 
+
+  sprite_image_Star[0] = IMG_Load("Res/background/star/star0.png");
+  sprite_image_Star[1] = IMG_Load("Res/background/star/star1.png");
+  sprite_image_Star[2] = IMG_Load("Res/background/star/star2.png");
+
+  sprite_image_Fusee[0] = IMG_Load("Res/background/rocket/open.png");
+  sprite_image_Fusee[1] = IMG_Load("Res/background/rocket/close.png");
+  
   /************Initialisation des variables de temps**************/
   LastFrame = getTime();
   TimeCount = getTime();
@@ -100,6 +109,7 @@ int BouclePrincipaleDuJeu(){
     if (NowTime - LastFrame > timeForNewFrame) {
 
       switch(EtapeActuelleDuJeu){
+      case 2:DrawMenu();break;
       case 42:DessinPrincipale();break;
       default:return 0;break;
       }
