@@ -3,9 +3,13 @@
 
 #include "listeEntite.h"
 
+
+#define TAILLE_X_SALLE 100
+#define TAILLE_Y_SALLE 50
+
 typedef struct Salle{
 
-  int terrain[100][50];
+  int terrain[TAILLE_X_SALLE][TAILLE_Y_SALLE];
   ListeEntite lE;
   
 }salle;
@@ -13,8 +17,8 @@ typedef struct Salle{
 
 typedef struct Niveau{
 
-  int *player;
-  int *salle;
+  entite *player;
+  salle *salle;
   int nbPlayer;
   int nbSalle;
   

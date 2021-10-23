@@ -3,9 +3,14 @@
 
 typedef struct Entite{
 
+  float x;
+  float y;
+  float sizeX;
+  float sizeY;
   int type;
   
 }entite;
+
 
 
 
