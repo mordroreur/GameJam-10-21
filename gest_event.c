@@ -77,7 +77,8 @@ void gestionInputs() {
       }
     }
 
-    for(int i = 0; i < NiveauActuelle.nbPlayer; i++) {
-      gestionPhysiquesJoueur(i);
-    }
+    // for(int i = 0; i < NiveauActuelle.nbPlayer; i++) {
+    //   gestionPhysiquesJoueur(i);
+    // }
+    gestionPhysiquesJoueur(0);
 }

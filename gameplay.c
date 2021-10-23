@@ -28,16 +28,18 @@ int moveEntityY(entite* e, float y)
     yOld = e->y+e->sizeY;
     yNew = yOld+y;
 
-    yOldTile = floorf(yOld);
-    yNewTile = floorf(yNew);
+    yOldTile = ceilf(yOld);
+    yNewTile = ceilf(yNew);
     
     if(yOldTile != yNewTile && (yNewTile < TAILLE_Y_SALLE && yNewTile >= 0))
     {
+      yNewTile = floorf(yNew);
+
       for(int i = xMinTile; i<= xMaxTile;i++)
       {
         if(NiveauActuelle.salle[numSalle].terrain[i][yNewTile] == 1)
         {
-          e->y = yNewTile-e->sizeY-0.00001;
+          e->y = (yNewTile-e->sizeY);
           return 0;
         }
       } 
@@ -45,20 +47,21 @@ int moveEntityY(entite* e, float y)
     e->y += y;
     return 1;
   }
-  return 1;
-    yOld = e->y+e->sizeY;
-    yNew = yOld+y;
+    yOld = e->y;
+    yNew = yOld-y;
 
     yOldTile = floorf(yOld);
     yNewTile = floorf(yNew);
     
     if(yOldTile != yNewTile && (yNewTile < TAILLE_Y_SALLE && yNewTile >= 0))
     {
+      yNewTile = ceilf(yNew);
+
       for(int i = xMinTile; i<= xMaxTile;i++)
       {
         if(NiveauActuelle.salle[numSalle].terrain[i][yNewTile] == 1)
         {
-          e->y = yNewTile-e->sizeY-0.00001;
+          e->y = yNewTile;
           return 0;
         }
       } 
@@ -66,6 +69,65 @@ int moveEntityY(entite* e, float y)
     e->y += y;
     return 1;
 }
+
+int moveEntityX(entite* e, float x)
+{
+  if(x == 0){return 1;}
+
+  int yMinTile = MAX(0,floorf(e->y));
+  int yMaxTile = MIN(TAILLE_Y_SALLE-1, floorf(e->y+e->sizeY));
+  int numSalle = getSalleEntite(*e);
+
+  float xOld, xNew;
+  int xOldTile, xNewTile;
+
+  if(x > 0)
+  {
+    xOld = e->x+e->sizeX;
+    xNew = xOld+x;
+
+    xOldTile = ceilf(xOld);
+    xNewTile = ceilf(xNew);
+    
+    if(xOldTile != xNewTile && (xNewTile < TAILLE_X_SALLE && xNewTile >= 0))
+    {
+      xNewTile = floorf(xNew);
+
+      for(int i = yMinTile; i<= yMaxTile;i++)
+      {
+        if(NiveauActuelle.salle[numSalle].terrain[xNewTile][i] == 1)
+        {
+          e->x = (xNewTile-e->sizeX);
+          return 0;
+        }
+      } 
+    } 
+    e->x += x;
+    return 1;
+  }
+    xOld = e->x;
+    xNew = xOld-x;
+
+    xOldTile = floorf(xOld);
+    xNewTile = floorf(xNew);
+    
+    if(xOldTile != xNewTile && (xNewTile < TAILLE_X_SALLE && xNewTile >= 0))
+    {
+      xNewTile = ceilf(xNew);
+
+      for(int i = yMinTile; i<= yMaxTile;i++)
+      {
+        if(NiveauActuelle.salle[numSalle].terrain[xNewTile][i] == 1)
+        {
+          e->x = (xNewTile);
+          return 0;
+        }
+      } 
+    } 
+    e->x += x;
+    return 1;
+}
+
 
 
 void gestionPhysiquesJoueur(int idJoueur) {
@@ -92,10 +154,10 @@ void gestionPhysiquesJoueur(int idJoueur) {
     {
       joueur->ySpeed = 0;
       grounded = 1;
-      printf("1\n");
+      printf("A1\n");
     }else
     {
-      printf("0\n");
+      printf("A0\n");
 
     }
       //joueur->ySpeed = 0;
@@ -111,13 +173,15 @@ void gestionPhysiquesJoueur(int idJoueur) {
       joueur->xSpeed = 0;
     }
 
+    
+
     // Jetpack
     // if(inputsJoueurs[idJoueur][INPUT_JUMP] && joueur->ySpeed < 2) {
     //   joueur->ySpeed -= 0.05;
     // }
 
     if(inputsJoueurs[idJoueur][INPUT_JUMP] && grounded) {
-      joueur->ySpeed -= 3;
+      joueur->ySpeed = -32/64.0;
       isJumping = 1;
       inputsJoueurs[idJoueur][INPUT_JUMP] = 0;
     }
@@ -127,5 +191,9 @@ void gestionPhysiquesJoueur(int idJoueur) {
       joueur->y += joueur->ySpeed;
     }
     */
-    joueur->x += joueur->xSpeed;
+
+    if(moveEntityX(joueur, joueur->xSpeed) == 0)
+    {
+      joueur->xSpeed = 0;
+    }
 }
