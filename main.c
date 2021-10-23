@@ -27,7 +27,7 @@ int main()
 {
   //  srand(time(NULL)); // in case we need random
 
-  EtapeActuelleDuJeu = 1;
+  EtapeActuelleDuJeu = 42;
 
   BouclePrincipaleDuJeu();
 

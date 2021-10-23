@@ -30,4 +30,7 @@ void end_sdl(char ok, char const *msg);
 
 void *BouclePrincipaleDesTicks(void *CeciEstUneVaribleNull);
 
+
+void DessinPrincipale();
+
 #endif /* RENDER_HEADER_ */
