@@ -5,6 +5,8 @@ typedef struct Entite{
 
   float x;
   float y;
+  float xSpeed;
+  float ySpeed;
   float sizeX;
   float sizeY;
   int type;

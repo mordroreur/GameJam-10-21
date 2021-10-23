@@ -6,23 +6,34 @@ extern int TailleEcranHaut; /* Taille de l'ecran en nombre de pixel de haut en b
 
 extern SDL_Event event;
 
+extern niveau NiveauActuelle;
+
 void keyUp(SDL_KeyboardEvent *key){
-  //printf("%c\n", key->keysym.sym);
+  // printf("%d\n", key->keysym.sym);
   switch(key->keysym.sym){
   case SDLK_ESCAPE:EtapeActuelleDuJeu = 0;break;
   default:break;
   }
 }
 
+void keyDown(SDL_KeyboardEvent *key){
+  // printf("%d\n", key->keysym.sym);
+  switch(key->keysym.sym){
+  case SDLK_q:EtapeActuelleDuJeu = 0;break;
+  default:break;
+  }
+}
+
 void gestionInputs() {
-/* Gestion des imputs clavier */
+/* Gestion des inputs clavier */
     
     while (SDL_PollEvent(&event))
     {
       switch (event.type)
       {
       case SDL_KEYDOWN:
-        break; // KeyDown(&event.key);break;
+        keyDown(&event.key);
+        break;
       case SDL_KEYUP:
         keyUp(&event.key);
         break;
@@ -48,5 +59,8 @@ void gestionInputs() {
       default:
         break;
       }
+    }
+    for(int i = 0; i < NiveauActuelle.nbPlayer; i++) {
+      gestionPhysiquesJoueur(i);
     }
 }
