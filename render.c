@@ -18,6 +18,12 @@ SDL_Surface *image = NULL;
 SDL_Texture  *avatar;
 
 SDL_Surface *sprite_image = NULL;
+
+SDL_Surface * sprite_image_orange[9];
+
+
+
+
 SDL_Texture *sprite_avatar;
 
 SDL_Event event;
@@ -55,6 +61,18 @@ int BouclePrincipaleDuJeu(){
     printf("IMG_Load: %s\n", IMG_GetError());
   }
 
+  sprite_image_orange[0] = IMG_Load("Res/player/orange/player_walk0.png");
+  sprite_image_orange[1] = IMG_Load("Res/player/orange/player_walk1.png");
+  sprite_image_orange[2] = IMG_Load("Res/player/orange/player_walk2.png");
+  sprite_image_orange[3] = IMG_Load("Res/player/orange/player_walk3.png");
+
+  sprite_image_orange[4] = IMG_Load("Res/player/orange/player_base0.png");
+  sprite_image_orange[5] = IMG_Load("Res/player/orange/player_base1.png");
+
+  sprite_image_orange[6] = IMG_Load("Res/player/orange/player_face.png");
+
+  sprite_image_orange[7] = IMG_Load("Res/player/orange/player_fall.png");
+  sprite_image_orange[8] = IMG_Load("Res/player/orange/player_jump.png");
 
 
   /************Initialisation des variables de temps**************/
@@ -133,66 +151,29 @@ int BouclePrincipaleDuJeu(){
       Joueur.x = NiveauActuelle.player[0].x * TailleEcranLong/(2*TAILLE_X);
       Joueur.y = NiveauActuelle.player[0].y *  TailleEcranHaut/TAILLE_Y;
 
-      
-
       if (NiveauActuelle.player[0].ySpeed == 0){
 
         if (NiveauActuelle.player[0].xSpeed == 0){
-          sprite_image=IMG_Load("Res/player/orange/player_orange_face.png");
-          if(!sprite_image) {
-            printf("IMG_Load: %s\n", IMG_GetError());
-          }
+          sprite_image = sprite_image_orange[4 + (SDL_GetTicks()/500)%2];
         }
         
         if (NiveauActuelle.player[0].xSpeed > 0){
-          switch (cycle_animation)
-          {
-          case 0:
-            sprite_image=IMG_Load("Res/player/orange/player_walk0.png");
-            break;
-          
-          case 1:
-            sprite_image=IMG_Load("Res/player/orange/player_walk1.png");
-            break;
-          
-          case 2:
-            sprite_image=IMG_Load("Res/player/orange/player_walk2.png");
-            break;
-
-          case 3:
-            sprite_image=IMG_Load("Res/player/orange/player_walk3.png");
-            break;
-          
-          default:
-            break;
-          }
-          sprite_image=IMG_Load("Res/player/orange/player_walk.png");
-          if(!sprite_image) {
-            printf("IMG_Load: %s\n", IMG_GetError());
-          }
+         sprite_image = sprite_image_orange[(SDL_GetTicks()/200)%4];
         }
 
       }
 
       else if(NiveauActuelle.player[0].ySpeed > 0){
-        sprite_image=IMG_Load("Res/player/orange/player_fall.png");
-        if(!sprite_image) {
-          printf("IMG_Load: %s\n", IMG_GetError());
-        }
+        sprite_image = sprite_image_orange[7];
       }
       
       else if (NiveauActuelle.player[0].ySpeed < 0) {
-        sprite_image=IMG_Load("Res/player/orange/player_jump.png");
-        if(!sprite_image) {
-          printf("IMG_Load: %s\n", IMG_GetError());
-        }
+        sprite_image = sprite_image_orange[8];
       }
     
 
       sprite_avatar = SDL_CreateTextureFromSurface(renderer, sprite_image);
       SDL_RenderCopy(renderer, sprite_avatar, NULL, &Joueur);
-
-      int cycle_animation = (cycle_animation + 1)%4;
 
       if(DEBUG){
       char affichageFrameDebug[5];
