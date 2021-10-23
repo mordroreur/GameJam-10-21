@@ -7,6 +7,17 @@ extern int ** inputsJoueurs;
 #define MIN(a,b) ((a) < (b) ? (a) : (b))
 #define MAX(a,b) ((a) > (b) ? (a) : (b))
 
+int blockIsSolid(int id)
+{
+  return id == 1;
+}
+
+
+int getBlockId(salle* s, int x, int y)
+{
+  return x >= 0 && x <TAILLE_X_SALLE && y >= 0 && y <TAILLE_Y_SALLE ?
+    s->terrain[x][y] : 0;
+}
 
 int getSalleEntite(entite ent) {
     return (ent.x / TAILLE_X_SALLE);
@@ -16,111 +27,77 @@ int moveEntityY(entite* e, float y)
 {
   if(y == 0){return 1;}
 
-  int xMinTile = MAX(0,floorf(e->x));
-  int xMaxTile = MIN(TAILLE_X_SALLE-1, floorf(e->x+e->sizeX));
-  int numSalle = getSalleEntite(*e);
+  int xMinTile = MAX(0,floorf(e->x+0.2));
+  int xMaxTile = MIN(TAILLE_X_SALLE-1, ceilf(e->x+e->sizeX - 0.2));
+  salle* s = &(NiveauActuelle.salle[getSalleEntite(*e)]);
 
-  float yOld, yNew;
-  int yOldTile, yNewTile;
+  int yNewTile;
+  e->y += y;
 
   if(y > 0)
   {
-    yOld = e->y+e->sizeY;
-    yNew = yOld+y;
-
-    yOldTile = ceilf(yOld);
-    yNewTile = ceilf(yNew);
+    yNewTile = floorf(e->y+e->sizeY);
     
-    if(yOldTile != yNewTile && (yNewTile < TAILLE_Y_SALLE && yNewTile >= 0))
+    for(int i = xMinTile; i < xMaxTile;i++)
     {
-      for(int i = xMinTile; i<= xMaxTile;i++)
+      if(blockIsSolid(getBlockId(s, i, yNewTile)))
       {
-        if(NiveauActuelle.salle[numSalle].terrain[i][yOldTile] == 1)
-        {
-          e->y = (yOldTile-e->sizeY);
-          return 0;
-        }
-      } 
-    } 
-    e->y += y;
+        e->y = (yNewTile-e->sizeY);
+        // printf("SNAP %f\n", e->y);
+        return 0;
+      }
+    }
     return 1;
   }
-    yOld = e->y;
-    yNew = yOld+y;
-
-    yOldTile = floorf(yOld);
-    yNewTile = floorf(yNew);
-    
-    if(yOldTile != yNewTile && (yNewTile < TAILLE_Y_SALLE && yNewTile >= 0))
+  
+  yNewTile = floorf(e->y);
+  for(int i = xMinTile; i < xMaxTile;i++)
+  {
+    if(blockIsSolid(getBlockId(s, i, yNewTile)))
     {
-      for(int i = xMinTile; i<= xMaxTile;i++)
-      {
-        if(NiveauActuelle.salle[numSalle].terrain[i][yOldTile] == 1)
-        {
-          e->y = yOldTile+1;
-          return 0;
-        }
-      } 
-    } 
-    e->y += y;
-    return 1;
+      e->y = (yNewTile+1);
+      return 0;
+    }
+  }
+  return 1;
 }
 
 int moveEntityX(entite* e, float x)
 {
   if(x == 0){return 1;}
 
-  int yMinTile = MAX(0,floorf(e->y));
+  int yMinTile = MAX(0,floorf(e->y)+1);
   int yMaxTile = MIN(TAILLE_Y_SALLE-1, floorf(e->y+e->sizeY));
-  int numSalle = getSalleEntite(*e);
+  salle* s = &(NiveauActuelle.salle[getSalleEntite(*e)]);
 
-  float xOld, xNew;
-  int xOldTile, xNewTile;
+  int xNewTile;
+  e->x += x;
 
   if(x > 0)
   {
-    /*
-    xOld = e->x+e->sizeX;
-    xNew = xOld+x;
-
-    xOldTile = ceilf(xOld);
-    xNewTile = ceilf(xNew);
+    xNewTile = floorf(e->x+e->sizeX);
     
-    if(xOldTile != xNewTile && (xNewTile < TAILLE_X_SALLE && xNewTile >= 0))
+    for(int i = yMinTile; i < yMaxTile;i++)
     {
-      xNewTile = floorf(xNew);
-
-      for(int i = yMinTile; i<= yMaxTile;i++)
+      if(blockIsSolid(getBlockId(s, xNewTile, i)))
       {
-        if(NiveauActuelle.salle[numSalle].terrain[xNewTile][i] == 1)
-        {
-          e->x = (xNewTile-e->sizeX);
-          return 0;
-        }
-      } 
-    } 
-    e->x += x;*/
+        e->x = (xNewTile-e->sizeX);
+        return 0;
+      }
+    }
     return 1;
   }
-    xOld = e->x;
-    xNew = xOld+x;
-
-    xOldTile = floorf(xOld)-1;
-    xNewTile = floorf(xNew)-1;
-    
-    if(xOldTile != xNewTile && (xNewTile < TAILLE_X_SALLE && xNewTile >= 0))
+  
+  xNewTile = floorf(e->x);
+  for(int i = yMinTile; i < yMaxTile;i++)
+  {
+    if(blockIsSolid(getBlockId(s, xNewTile, i)))
     {
-      for(int i = yMinTile; i<= yMaxTile;i++)
-      {
-        if(NiveauActuelle.salle[numSalle].terrain[xOldTile][i] == 1)
-        {
-          e->x = xOldTile+1;
-          return 0;
-        }
-      } 
-    } 
-    e->x += x;
-    return 1;
+      e->x = (xNewTile+1);
+      return 0;
+    }
+  }
+  return 1;
 }
 
 
@@ -149,11 +126,11 @@ void gestionPhysiquesJoueur(int idJoueur) {
     {
       joueur->ySpeed = 0;
       grounded = 1;
-      printf("A1\n");
+      // printf("A1\n");
     }else
     {
-      
-      printf("A0\n");
+
+      // printf("A0\n");
 
     }
       //joueur->ySpeed = 0;

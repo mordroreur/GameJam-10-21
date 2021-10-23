@@ -17,8 +17,11 @@
 #define INPUT_RIGHT 2
 #define INPUT_ITEM 3
 
+int getBlockId(salle* s, int x, int y);
 int getSalleEntite(entite ent);
 void gestionPhysiquesJoueur(int idJoueur);
+
+int blockIsSolid(int id); 
 
 // 0 = pas reussi
 // 1 = reuss à te déplacer
