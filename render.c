@@ -339,14 +339,14 @@ void DessinPrincipale(){
       
       SDL_Rect case_screen;
       case_screen.x = - (int)((TailleEcranLong/(2*TAILLE_X)+((float)NiveauActuelle.player[0].x - (int)NiveauActuelle.player[0].x )*TailleEcranLong/(2*TAILLE_X)));
-      case_screen.y = - TailleEcranHaut/TAILLE_Y + ((float)NiveauActuelle.player[0].y - (int)NiveauActuelle.player[0].y )*TailleEcranHaut/(TAILLE_Y);
+      case_screen.y = - (int)(TailleEcranHaut/TAILLE_Y + ((float)NiveauActuelle.player[0].y - (int)NiveauActuelle.player[0].y - 0.5)*TailleEcranHaut/(TAILLE_Y));
       case_screen.w = TailleEcranLong/(2*TAILLE_X);
       case_screen.h = TailleEcranHaut/TAILLE_Y;
       
       for(i=(int)(NiveauActuelle.player[0].x) -11; i< (int)NiveauActuelle.player[0].x + TAILLE_X - 10; i++){
 
         case_screen.x = case_screen.x + case_screen.w;
-        case_screen.y = - TailleEcranHaut/TAILLE_Y;
+        case_screen.y = - (int)(TailleEcranHaut/TAILLE_Y + ((float)NiveauActuelle.player[0].y - (int)NiveauActuelle.player[0].y - 0.5)*TailleEcranHaut/(TAILLE_Y));
         for(j=(int)NiveauActuelle.player[0].y - 4; j<TAILLE_Y +1 + (int)NiveauActuelle.player[0].y - 4; j++){
 
           case_screen.y = case_screen.y + case_screen.h;
