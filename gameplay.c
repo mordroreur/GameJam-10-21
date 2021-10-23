@@ -120,7 +120,7 @@ void gestionPhysiquesJoueur(int idJoueur) {
         joueur->ySpeed = 0;
     }
     */
-    joueur->ySpeed = MIN(16.0/64, joueur->ySpeed+1/64.0);
+    joueur->ySpeed = MIN(16.0/64, joueur->ySpeed+1/128.0);
 
     if(moveEntityY(joueur, joueur->ySpeed) == 0)
     {
@@ -154,7 +154,7 @@ void gestionPhysiquesJoueur(int idJoueur) {
     // }
 
     if(inputsJoueurs[idJoueur][INPUT_JUMP] && grounded) {
-      joueur->ySpeed = -32/64.0;
+      joueur->ySpeed = -20/64.0;
       isJumping = 1;
       inputsJoueurs[idJoueur][INPUT_JUMP] = 0;
     }
