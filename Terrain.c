@@ -51,18 +51,47 @@ niveau AleaCreaTion(int seed, int playerNb){
 
 salle getFirstSalle(int n){
   salle s;
-  for(int i = 0; i < TAILLE_X_SALLE; i++){
-      for(int j = 0; j < TAILLE_Y_SALLE; j++){
-	if(j != 15 && i != 0){
-	  s.terrain[i][j] = 0;
-	}else {
-	  s.terrain[i][j] = 1;
-	}
+  for(int i = 0; i < TAILLE_X_SALLE/5; i++){
+    for(int j = 0; j < TAILLE_Y_SALLE; j++){
+      if(j < 15 && i != 0 && i != 12 && i != 13){
+	s.terrain[i][j] = 0;
+      }else {
+	s.terrain[i][j] = 1;
       }
+    }
+  }
+
+  for(int i = TAILLE_X_SALLE/5; i < TAILLE_X_SALLE; i++){
+    for(int j = 0; j < TAILLE_Y_SALLE; j++){
+      int x = s.terrain[i-1][j];
+      if(j < TAILLE_Y_SALLE-1){
+	x = s.terrain[i-1][j+1];
+      }
+      if(j > 0){
+	x = s.terrain[i-1][j-1];
+      }
+      
+      if(x == 3){
+	s.terrain[i][j] = 1;
+      }
+      if(x == 2){
+	s.terrain[i][j] = rand()%2;
+      }
+    }
   }
 
   s.terrain[8][15] = 0;
   s.terrain[9][15] = 0;
+  s.terrain[8][16] = 0;
+  s.terrain[9][16] = 0;
+  s.terrain[8][17] = 0;
+  s.terrain[9][17] = 0;
+
+  s.terrain[1][5] = 1;
+  s.terrain[2][6] = 1;
+
+  s.terrain[2][10] = 1;
+  s.terrain[3][10] = 1;
   return s;
 }
 
