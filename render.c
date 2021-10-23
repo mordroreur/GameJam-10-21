@@ -342,6 +342,7 @@ void DessinPrincipale(){
       case_screen.y = - (int)(TailleEcranHaut/TAILLE_Y + ((float)NiveauActuelle.player[0].y - (int)NiveauActuelle.player[0].y - 0.5)*TailleEcranHaut/(TAILLE_Y));
       case_screen.w = TailleEcranLong/(2*TAILLE_X);
       case_screen.h = TailleEcranHaut/TAILLE_Y;
+
       
       for(i=(int)(NiveauActuelle.player[0].x) -11; i< (int)NiveauActuelle.player[0].x + TAILLE_X - 10; i++){
 
@@ -354,6 +355,28 @@ void DessinPrincipale(){
           if (j >= 0 && i >= 0 && NiveauActuelle.salle[0].terrain[i][j]){
             avatar = SDL_CreateTextureFromSurface(renderer, image);
             SDL_RenderCopy(renderer, avatar, NULL, &case_screen);
+	          SDL_DestroyTexture(avatar);
+          }
+        }
+      }
+
+      SDL_Rect case_screen_2;
+      case_screen_2.x = TailleEcranLong/2 - (int)((TailleEcranLong/(2*TAILLE_X)+((float)NiveauActuelle.player[1].x - (int)NiveauActuelle.player[1].x )*TailleEcranLong/(2*TAILLE_X)));
+      case_screen_2.y = - (int)(TailleEcranHaut/TAILLE_Y + ((float)NiveauActuelle.player[1].y - (int)NiveauActuelle.player[1].y - 0.5)*TailleEcranHaut/(TAILLE_Y));
+      case_screen_2.w = TailleEcranLong/(2*TAILLE_X);
+      case_screen_2.h = TailleEcranHaut/TAILLE_Y;
+
+      for(i=(int)(NiveauActuelle.player[1].x) -11; i< (int)NiveauActuelle.player[1].x + TAILLE_X - 10; i++){
+
+        case_screen_2.x = case_screen_2.x + case_screen_2.w;
+        case_screen_2.y = - (int)(TailleEcranHaut/TAILLE_Y + ((float)NiveauActuelle.player[1].y - (int)NiveauActuelle.player[1].y - 0.5)*TailleEcranHaut/(TAILLE_Y));
+        for(j=(int)NiveauActuelle.player[1].y - 4; j<TAILLE_Y +1 + (int)NiveauActuelle.player[1].y - 4; j++){
+
+          case_screen_2.y = case_screen_2.y + case_screen_2.h;
+
+          if (j >= 0 && i >= 0 && NiveauActuelle.salle[0].terrain[i][j]){
+            avatar = SDL_CreateTextureFromSurface(renderer, image);
+            SDL_RenderCopy(renderer, avatar, NULL, &case_screen_2);
 	          SDL_DestroyTexture(avatar);
           }
         }
@@ -403,10 +426,16 @@ void DessinPrincipale(){
 
       else if(NiveauActuelle.player[joueur_id].ySpeed > 0){
         sprite_image = sprite_image_orange[7];
+        if (NiveauActuelle.player[joueur_id].direction == 0){
+          flip = SDL_FLIP_HORIZONTAL;
+        }
       }
       
       else if (NiveauActuelle.player[joueur_id].ySpeed < 0) {
         sprite_image = sprite_image_orange[8];
+        if (NiveauActuelle.player[joueur_id].direction == 0){
+          flip = SDL_FLIP_HORIZONTAL;
+        }
       }
     
 
