@@ -63,22 +63,39 @@ int BouclePrincipaleDuJeu(){
     /* Gestion de l'affichage écran */
     if (NowTime - LastFrame > timeForNewFrame) {
 
-      SDL_Rect Fond; Fond.x = 0; Fond.y = 0; Fond.h = TailleEcranHaut; Fond.w = TailleEcranLong;
+      SDL_Rect Fond;
+      Fond.x = 0;
+      Fond.y = 0;
+      Fond.h = TailleEcranHaut;
+      Fond.w = TailleEcranLong;
       SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
       SDL_RenderFillRect(renderer, &Fond);
 
+      SDL_Rect Player1_Screen;
+      Player1_Screen.x = 0;
+      Player1_Screen.y = 0;
+      Player1_Screen.h = TailleEcranHaut;
+      Player1_Screen.w = TailleEcranLong/2;
+      SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
+      SDL_RenderFillRect(renderer, &Player1_Screen);
 
-
-
+      SDL_Rect Player2_Screen;
+      Player2_Screen.x = TailleEcranLong/2;
+      Player2_Screen.y = 0;
+      Player2_Screen.h = TailleEcranHaut;
+      Player2_Screen.w = TailleEcranLong/2;
+      SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255);
+      SDL_RenderFillRect(renderer, &Player2_Screen);
 
 
 
       if(DEBUG){
-	char affichageFrameDebug[5];
-	sprintf(affichageFrameDebug, "%d", LastFpsCount);
-	DrawString(affichageFrameDebug, 0, 0, 6, 'n', 0, 0, 0);
-	sprintf(affichageFrameDebug, "%d", LastTickCount);
-	DrawString(affichageFrameDebug, 100, 0, 6, 'e', 0, 0, 0);}
+      char affichageFrameDebug[5];
+      sprintf(affichageFrameDebug, "%d", LastFpsCount);
+      DrawString(affichageFrameDebug, 0, 0, 6, 'n', 0, 0, 0);
+      sprintf(affichageFrameDebug, "%d", LastTickCount);
+      DrawString(affichageFrameDebug, 100, 0, 6, 'e', 0, 0, 0);
+      }
       
       SDL_RenderPresent(renderer);
       SDL_RenderClear(renderer);
