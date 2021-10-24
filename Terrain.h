@@ -26,8 +26,8 @@ typedef struct Niveau{
 }niveau;
 
 niveau AleaCreaTion(int seed, int playerNb);
-salle getKnownSalle(int n);
-salle getFirstSalle(int n);
+salle getKnownSalle(int n, int *Begin);
+salle getFirstSalle(int n, int *Begin);
 
 
 entite* entityNew();
