@@ -117,7 +117,7 @@ salle getFirstSalle(int n, int *Begin){
   s.terrain[2][10] = 1;
   s.terrain[3][10] = 1;
 
-  s.terrain[12][12] = 2;
+  // s.terrain[12][12] = 2;
 
   ListeEntite * l = malloc(sizeof(ListeEntite));
   l->first = NULL;
@@ -133,6 +133,18 @@ salle getFirstSalle(int n, int *Begin){
   powerup->equipe = -1;
   powerup->direction = -1;
   ajouteDebut(l, *powerup);
+
+  entite * coiny = entityNew(ENTITY_POWERUP_COINY);
+  entityInit(coiny, 
+    15, 12,
+    1, 1,
+    16/16.0, 16/16.0,
+    0.5, 0.5
+    );
+  // printf("%f %f\n", powerup->x, powerup->y);
+  coiny->equipe = -1;
+  coiny->direction = -1;
+  ajouteDebut(l, *coiny);
 
   s.lE = *l;
 
