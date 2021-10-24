@@ -88,9 +88,9 @@ void gestionInputs() {
 
     GetManetteInput();
 
-    // for(int i = 0; i < NiveauActuelle.nbPlayer; i++) {
-    //   gestionPhysiquesJoueur(i);
-    // }
-    gestionPhysiquesJoueur(0);
+     for(int i = 0; i < NiveauActuelle.nbPlayer; i++) {
+       gestionPhysiquesJoueur(i);
+     }
+    
 
 }
