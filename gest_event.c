@@ -117,7 +117,10 @@ void gestionInputs() {
 	  if(SDL_JoystickGetAxis(joystick[event.jaxis.which],0) < -25000){
 	    inputsJoueurs[event.jaxis.which][INPUT_LEFT] = 1;NiveauActuelle.player[event.jaxis.which].direction = 0;
 	  }else if(SDL_JoystickGetAxis(joystick[event.jaxis.which],0) > 25000){
-	    inputsJoueurs[event.jaxis.which][INPUT_LEFT] = 1;NiveauActuelle.player[event.jaxis.which].direction = 0;
+	    inputsJoueurs[event.jaxis.which][INPUT_RIGHT] = 1;NiveauActuelle.player[event.jaxis.which].direction = 1;
+	  }else{
+	    inputsJoueurs[event.jaxis.which][INPUT_LEFT] = 0;
+	    inputsJoueurs[event.jaxis.which][INPUT_RIGHT] = 0;
 	  }
 	}
 	
