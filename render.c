@@ -34,6 +34,7 @@ SDL_Texture *sprite_avatar;
 
 SDL_Event event;
 
+int ToucheAppuiPlayer[2][4];
 
 int tickCount = 0;
 
@@ -54,7 +55,15 @@ int BouclePrincipaleDuJeu(){
   int LastFpsCount = 0;
   int LastTickCount = 0;
 
+  ToucheAppuiPlayer[0][0] = SDLK_z;
+  ToucheAppuiPlayer[0][1] = SDLK_q;
+  ToucheAppuiPlayer[0][2] = SDLK_d;
+  ToucheAppuiPlayer[0][3] = SDLK_s;
 
+  ToucheAppuiPlayer[1][0] = SDLK_UP;
+  ToucheAppuiPlayer[1][1] = SDLK_LEFT;
+  ToucheAppuiPlayer[1][2] = SDLK_RIGHT;
+  ToucheAppuiPlayer[1][3] = SDLK_DOWN;
 
   create_Win();
 
