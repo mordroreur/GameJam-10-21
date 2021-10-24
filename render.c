@@ -2,6 +2,7 @@
 #include "RenderUtilities.h"
 #include "Terrain.h"
 #include <SDL2/SDL_render.h>
+#include <SDL2/SDL_timer.h>
 #define TAILLE_X 22
 #define TAILLE_Y 18
 
@@ -48,6 +49,10 @@ int tickCount = 0;
 niveau NiveauActuelle;
 
 int cycle_animation = 0;
+
+SDL_AudioSpec *wavSpec;
+Uint32 *wavLength;
+Uint8 **wavBuffer;
 
 
 int BouclePrincipaleDuJeu(){
@@ -127,6 +132,27 @@ int BouclePrincipaleDuJeu(){
 
   ManetteInit();
 
+  wavSpec = (SDL_AudioSpec*)malloc(sizeof(SDL_AudioSpec)*1);
+   wavLength = (Uint32 *)malloc(sizeof(Uint32)*1);
+   wavBuffer = (Uint8 **)malloc(sizeof(Uint8*)*1);
+
+ 
+  SDL_LoadWAV("Res/Sound/AMOGUS.wav", &wavSpec[0], &wavBuffer[0], &wavLength[0]);
+
+  SDL_AudioDeviceID deviceId = SDL_OpenAudioDevice(NULL, 0, &wavSpec[0], NULL, 0);
+  SDL_QueueAudio(deviceId, wavBuffer[0], wavLength[0]);
+  SDL_PauseAudioDevice(deviceId, 0);
+
+  SDL_Delay(500);
+
+  deviceId = SDL_OpenAudioDevice(NULL, 0, &wavSpec[0], NULL, 0);
+  SDL_QueueAudio(deviceId, wavBuffer[0], wavLength[0]);
+  SDL_PauseAudioDevice(deviceId, 0);
+ 
+  //SDL_CloseAudioDevice(deviceId);
+  //SDL_FreeWAV(wavBuffer);
+ 
+  
   /************Début de la boucle des ticks***********************/
     pthread_t threadBoucleDesTicks;
     int RetourDuThreadDesTicks = pthread_create(&threadBoucleDesTicks, NULL, BouclePrincipaleDesTicks,  NULL);

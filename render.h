@@ -36,4 +36,6 @@ SDL_Surface *sprite, SDL_RendererFlip *flip) ;
 
 void DessinPrincipale();
 
+
+
 #endif /* RENDER_HEADER_ */
