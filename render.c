@@ -19,6 +19,9 @@ TTF_Font *RobotoFont;
 SDL_Surface *image = NULL;
 SDL_Texture  *avatar;
 
+//SDL_Surface *separation_image = NULL;
+//SDL_Texture *separation_avatar;
+
 SDL_Surface *background_image = NULL;
 SDL_Texture *background_avatar;
 
@@ -72,6 +75,8 @@ int BouclePrincipaleDuJeu(){
     printf("IMG_Load: %s\n", IMG_GetError());
   }
   background_image = IMG_Load("Res/background/sky.png");
+
+  //separation_image = IMG_Load("Res/background/sky.png");
   
   sprite_image_orange[0] = IMG_Load("Res/player/orange/player_walk0.png");
   sprite_image_orange[1] = IMG_Load("Res/player/orange/player_walk1.png");
@@ -351,6 +356,12 @@ void DessinPrincipale(){
       SDL_RenderCopy(renderer, background_avatar, NULL, &Player2_Screen);
 
       SDL_DestroyTexture(background_avatar);
+
+      //SDL_Rect separation;
+      //separation.h= TailleEcranHaut;
+      //separation.w= TailleEcranLong/(2*TAILLE_X);
+      //separation.x= TailleEcranLong/2;
+      //separation.y = 0;
       
       SDL_Rect case_screen;
       case_screen.x = - (int)((TailleEcranLong/(2*TAILLE_X)+((float)NiveauActuelle.player[0].x - (int)NiveauActuelle.player[0].x )*TailleEcranLong/(2*TAILLE_X)));
