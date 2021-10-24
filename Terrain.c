@@ -105,7 +105,7 @@ salle getKnownSalle(int n){
   case 0 :
     for(int i = 0; i < TAILLE_X_SALLE; i++){
       for(int j = 0; j < TAILLE_Y_SALLE; j++){
-	if(j != 15){
+	if(j != 40){
 	  s.terrain[i][j] = 0;
 	}else {
 	  s.terrain[i][j] = 1;
