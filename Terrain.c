@@ -95,8 +95,12 @@ salle getFirstSalle(int n, int *Begin){
     }
   }
 
-  s.terrain[8][15] = 0;
-  s.terrain[9][15] = 0;
+  s.terrain[8][12] = 2;
+  s.terrain[9][12] = 2;
+
+  
+  s.terrain[8][15] = 2;
+  s.terrain[9][15] = 2;
   s.terrain[8][16] = 0;
   s.terrain[9][16] = 0;
   s.terrain[8][17] = 0;
