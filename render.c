@@ -38,7 +38,7 @@ SDL_Surface *sprite_image_Player[2][9];
 
 SDL_Surface *sprite_image_Star[3];
 SDL_Surface *sprite_image_Fusee[2];
-SDL_Surface *sprite_image_PowerUp[4];
+SDL_Surface *sprite_image_PowerUp[5];
 
 SDL_Surface *sprite_image_Starshit;
 
@@ -97,10 +97,10 @@ int BouclePrincipaleDuJeu(){
 
   sprite_image_Starshit = IMG_Load("Res/background/star/starsheet.png");
 
-  sprite_image_PowerUp[0] = IMG_Load("Res/powerup/jetpack.png");
+  sprite_image_PowerUp[3] = IMG_Load("Res/powerup/jetpack.png");
   sprite_image_PowerUp[1] = IMG_Load("Res/powerup/cristal_anti_gravite.png");
   sprite_image_PowerUp[2] = IMG_Load("Res/powerup/richesse.png");
-  sprite_image_PowerUp[3] = IMG_Load("Res/powerup/rock.png");
+  sprite_image_PowerUp[4] = IMG_Load("Res/powerup/rock.png");
   
   sprite_image_Player[0][0] = IMG_Load("Res/player/orange/player_walk0.png");
   sprite_image_Player[0][1] = IMG_Load("Res/player/orange/player_walk1.png");
@@ -144,7 +144,7 @@ int BouclePrincipaleDuJeu(){
 
 
   ManetteInit();
-
+  /*
   wavSpec = (SDL_AudioSpec*)malloc(sizeof(SDL_AudioSpec)*1);
    wavLength = (Uint32 *)malloc(sizeof(Uint32)*1);
    wavBuffer = (Uint8 **)malloc(sizeof(Uint8*)*1);
@@ -161,7 +161,9 @@ int BouclePrincipaleDuJeu(){
   deviceId = SDL_OpenAudioDevice(NULL, 0, &wavSpec[0], NULL, 0);
   SDL_QueueAudio(deviceId, wavBuffer[0], wavLength[0]);
   SDL_PauseAudioDevice(deviceId, 0);
- 
+
+  */
+  
   //SDL_CloseAudioDevice(deviceId);
   //SDL_FreeWAV(wavBuffer);
  
