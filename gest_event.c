@@ -42,7 +42,6 @@ void initGestion() {
 
 void gestionInputs() {
 /* Gestion des inputs clavier */
-    
     while (SDL_PollEvent(&event))
     {
       switch (event.type)
@@ -77,8 +76,11 @@ void gestionInputs() {
       }
     }
 
+    GetManetteInput();
+
     // for(int i = 0; i < NiveauActuelle.nbPlayer; i++) {
     //   gestionPhysiquesJoueur(i);
     // }
     gestionPhysiquesJoueur(0);
+
 }
