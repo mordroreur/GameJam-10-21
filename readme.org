@@ -12,6 +12,5 @@ sudo apt install libsdl2-ttf-2.0-0
 
 * TODO:
 ** Physique : hitbox plus petite que le sprite
-** Physique : Gestion des salles
 ** affichage : Saut regarde du mauvais coté
 ** affichage : gestion 2 eme personnage.

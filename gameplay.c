@@ -154,6 +154,9 @@ void gestionPhysiquesJoueur(int idJoueur) {
 
       //grounded=1;
     //printf("x:%f, y:%f\n", joueur->x, joueur->y);
+    // printf("size x%f\n", joueur->sizeX);
+    //printf("size x%f, size y%f\n", joueur->sizeX, joueur->sizeY);
+    //printf("x%f, y%f\n", joueur->x, joueur->y);
 
 
     if(inputsJoueurs[idJoueur][INPUT_RIGHT] && grounded) {

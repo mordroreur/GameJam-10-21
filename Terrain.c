@@ -12,13 +12,18 @@ niveau AleaCreaTion(int seed, int playerNb){
   res.player = (entite *)malloc(sizeof(entite)*playerNb);
   
   for(int i = 0; i < playerNb; i++){
-    res.player[i].sizeX = 2;
-    res.player[i].sizeY = 2;
-    res.player[i].xSpeed = 0;
-    res.player[i].ySpeed = 0;
-    res.player[i].x = 10;
-    res.player[i].y = 10;
-    res.player[i].direction = 1;
+
+    entite* p = &(res.player[i]);
+    p->direction = 1;
+    p->type = 0;
+    p->equipe = i;
+
+    entityInit(p, 
+    10, 10,
+    2,2,
+    16/16.0, 22/16.0,
+    0.5, 1
+    );
 
   }
 
@@ -34,9 +39,9 @@ niveau AleaCreaTion(int seed, int playerNb){
       res.salle[i] = getKnownSalle(rand());
     }else {
       for(int j = 0; j < TAILLE_X_SALLE; j++){
-	for(int k = 0; k < TAILLE_Y_SALLE; k++){
-	  res.salle[i].terrain[j][k] = (rand()%2 == 1)?0:1;
-	}
+        for(int k = 0; k < TAILLE_Y_SALLE; k++){
+          res.salle[i].terrain[j][k] = (rand()%2 == 1)?0:1;
+        }
       }
     }
     
@@ -122,3 +127,28 @@ salle getKnownSalle(int n){
 
   return s;
 }
+
+
+
+
+entite* entityNew(int type)
+{
+  entite * e = malloc(sizeof(entite));
+  e->type = 0;
+  return e;
+}
+
+void entityInit(entite* e, float x, float y, float sizeX, float sizeY, float xHitbox, float yHitbox, float xHitboxOffsetPourcentage, float yHitboxOffsetPourcentage) 
+{
+  e->x=x;
+  e->y=y;
+  e->xSpeed=0;
+  e->ySpeed=0;
+  e->sizeX=sizeX;
+  e->sizeY=sizeY;
+  e->xHitbox=xHitbox;
+  e->yHitbox=yHitbox;
+  e->xHitboxOffset= (sizeX-xHitbox)*xHitboxOffsetPourcentage;
+  e->yHitboxOffset= (sizeY-yHitbox)*yHitboxOffsetPourcentage;
+}
+

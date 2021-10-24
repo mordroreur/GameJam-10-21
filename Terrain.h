@@ -29,4 +29,8 @@ niveau AleaCreaTion(int seed, int playerNb);
 salle getKnownSalle(int n);
 salle getFirstSalle(int n);
 
+
+entite* entityNew();
+void entityInit(entite* e, float x, float y, float sizeX, float sizeY, float xHitbox, float yHitbox, float xHitboxOffsetPourcentage, float yHitboxOffsetPourcentage);
+
 #endif /* TERRAIN_HEADER_ */
