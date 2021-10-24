@@ -27,6 +27,8 @@ SDL_Texture *background_avatar;
 
 SDL_Surface *sprite_image = NULL;
 
+SDL_Surface *semisolid_image = NULL;
+
 SDL_Surface *sprite_image_orange[9];
 
 SDL_Surface *sprite_image_vert[9];
@@ -77,6 +79,8 @@ int BouclePrincipaleDuJeu(){
     printf("IMG_Load: %s\n", IMG_GetError());
   }
   background_image = IMG_Load("Res/background/sky.png");
+
+  semisolid_image = IMG_Load("Res/semisolid.png");
 
   separation_image = IMG_Load("Res/split.png");
   
@@ -420,8 +424,13 @@ void DessinPrincipale(){
 
             case_screen.y = case_screen.y + case_screen.h ;
 
-            if (j >= 0 && i >= 0 && NiveauActuelle.salle[i/100].terrain[i%100][j]){
-              avatar = SDL_CreateTextureFromSurface(renderer, image);
+            if (j >= 0 && i >= 0){
+              if (NiveauActuelle.salle[i/100].terrain[i%100][j] == 1){
+                avatar = SDL_CreateTextureFromSurface(renderer, image);
+              }
+              else if (NiveauActuelle.salle[i/100].terrain[i%100][j] == 2){
+                avatar = SDL_CreateTextureFromSurface(renderer, semisolid_image);
+              }
               SDL_RenderCopy(renderer, avatar, NULL, &case_screen);
               SDL_DestroyTexture(avatar);
             }
@@ -442,8 +451,13 @@ void DessinPrincipale(){
 
             case_screen_2.y = case_screen_2.y + case_screen_2.h;
 
-            if (j >= 0 && i >= 0 && NiveauActuelle.salle[i/100].terrain[i%100][j]){
-              avatar = SDL_CreateTextureFromSurface(renderer, image);
+            if (j >= 0 && i >= 0){
+              if (NiveauActuelle.salle[i/100].terrain[i%100][j] == 1){
+                avatar = SDL_CreateTextureFromSurface(renderer, image);
+              }
+              else if (NiveauActuelle.salle[i/100].terrain[i%100][j] == 2){
+                avatar = SDL_CreateTextureFromSurface(renderer, semisolid_image);
+              }
               SDL_RenderCopy(renderer, avatar, NULL, &case_screen_2);
               SDL_DestroyTexture(avatar);
             }
@@ -569,8 +583,13 @@ void DessinPrincipale(){
           
           
 
-          if (j >= 0 && i >= 0 && NiveauActuelle.salle[i/100].terrain[i%100][j]){
-            avatar = SDL_CreateTextureFromSurface(renderer, image);
+          if (j >= 0 && i >= 0){
+            if (NiveauActuelle.salle[i/100].terrain[i%100][j] == 1){
+              avatar = SDL_CreateTextureFromSurface(renderer, image);
+            }
+            else if (NiveauActuelle.salle[i/100].terrain[i%100][j] == 2){
+              avatar = SDL_CreateTextureFromSurface(renderer, semisolid_image);
+            }
             SDL_RenderCopy(renderer, avatar, NULL, &case_screen);
             SDL_DestroyTexture(avatar);
           }
