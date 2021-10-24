@@ -377,15 +377,15 @@ void DessinPrincipale(){
 
       SDL_Rect case_screen_2;
       case_screen_2.x = TailleEcranLong/2 - (int)((TailleEcranLong/(2*TAILLE_X)+((float)NiveauActuelle.player[1].x - (int)NiveauActuelle.player[1].x )*TailleEcranLong/(2*TAILLE_X)));
-      case_screen_2.y = - (int)(TailleEcranHaut/TAILLE_Y + ((float)NiveauActuelle.player[1].y - (int)NiveauActuelle.player[1].y - 0.5)*TailleEcranHaut/(TAILLE_Y));
+      case_screen_2.y = - (int)(TailleEcranHaut/TAILLE_Y + ((float)NiveauActuelle.player[1].y - (int)NiveauActuelle.player[1].y - 1)*TailleEcranHaut/(TAILLE_Y));
       case_screen_2.w = TailleEcranLong/(2*TAILLE_X);
       case_screen_2.h = TailleEcranHaut/TAILLE_Y;
 
       for(i=(int)(NiveauActuelle.player[1].x) -11; i< (int)NiveauActuelle.player[1].x + TAILLE_X - 10; i++){
 
         case_screen_2.x = case_screen_2.x + case_screen_2.w;
-        case_screen_2.y = - (int)(TailleEcranHaut/TAILLE_Y + ((float)NiveauActuelle.player[1].y - (int)NiveauActuelle.player[1].y - 0.5)*TailleEcranHaut/(TAILLE_Y));
-        for(j=(int)NiveauActuelle.player[1].y - 12; j<TAILLE_Y +1 + (int)NiveauActuelle.player[1].y - 12; j++){
+        case_screen_2.y = - (int)(TailleEcranHaut/TAILLE_Y + ((float)NiveauActuelle.player[1].y - (int)NiveauActuelle.player[1].y - 1)*TailleEcranHaut/(TAILLE_Y));
+        for(j=(int)NiveauActuelle.player[1].y - 8; j<TAILLE_Y +1 + (int)NiveauActuelle.player[1].y - 8; j++){
 
           case_screen_2.y = case_screen_2.y + case_screen_2.h;
 
@@ -417,7 +417,7 @@ void DessinPrincipale(){
           Joueur.h = NiveauActuelle.player[joueur_id].sizeY *  TailleEcranHaut/TAILLE_Y;
           Joueur.w = NiveauActuelle.player[joueur_id].sizeX * TailleEcranLong/(2*TAILLE_X);
           Joueur.x = (float)TailleEcranLong*3/4;
-          Joueur.y = NiveauActuelle.player[joueur_id].y *  TailleEcranHaut/TAILLE_Y;
+          Joueur.y = (float)TailleEcranHaut/2;
         }
 
         if (NiveauActuelle.player[joueur_id].ySpeed == 0){
