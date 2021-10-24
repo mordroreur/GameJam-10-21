@@ -280,7 +280,7 @@ void usePowerup(int idJoueur) {
                 NiveauActuelle.player[i].ySpeed = 0;
               }
             }
-      joueur->heldPowerup = 0;
+      joueur->heldPowerup = -1;
       break;
   }
 }
