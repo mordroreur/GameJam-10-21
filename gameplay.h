@@ -24,6 +24,7 @@
 
 #define Hitbox_Precision (2/16.0)
 
+#define Block_Semisolid 2
 #define Block_Solid 1
 #define Block_Air 0
 
@@ -33,6 +34,7 @@ int getSalleEntite(entite ent);
 void gestionPhysiquesJoueur(int idJoueur);
 
 int blockIsSolid(int id); 
+int blockIsSemiSolid(int id); 
 
 float xHitboxPos(entite* e);
 float yHitboxPos(entite* e);

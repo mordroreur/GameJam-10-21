@@ -20,7 +20,12 @@ float yHitboxPos(entite* e);
 
 int blockIsSolid(int id)
 {
-  return id == 1;
+  return id == Block_Solid;
+}
+
+int blockIsSemiSolid(int id)
+{
+  return id == Block_Semisolid;
 }
 
 
@@ -63,7 +68,8 @@ int moveEntityY(entite* e, float y)
     
     for(int i = xMinTile; i < xMaxTile;i++)
     {
-      if(blockIsSolid(getBlockId(i, yNewTile)))
+      int id = getBlockId(i, yNewTile);
+      if(blockIsSolid(id) || blockIsSemiSolid(id))
       {
         e->y = (yNewTile-e->yHitbox-e->yHitboxOffset);
         // printf("SNAP %f\n", e->y);
