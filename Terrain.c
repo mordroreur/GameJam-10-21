@@ -116,6 +116,27 @@ salle getFirstSalle(int n, int *Begin){
 
   s.terrain[2][10] = 1;
   s.terrain[3][10] = 1;
+
+  s.terrain[12][12] = 2;
+
+  ListeEntite * l = malloc(sizeof(ListeEntite));
+  l->first = NULL;
+
+  entite * powerup = entityNew(ENTITY_POWERUP_CRISTAL_RESET);
+  entityInit(powerup, 
+    12, 12,
+    1, 1,
+    16/16.0, 16/16.0,
+    0.5, 0.5
+    );
+  // printf("%f %f\n", powerup->x, powerup->y);
+  powerup->equipe = -1;
+  powerup->direction = -1;
+  ajouteDebut(l, *powerup);
+
+  s.lE = *l;
+
+  // printf("%f %f\n", l->first->val.x, l->first->val.y);
   return s;
 }
 

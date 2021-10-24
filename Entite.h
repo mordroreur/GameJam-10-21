@@ -21,12 +21,13 @@ typedef struct Entite{
   float xHitboxOffset; // offset entre x et le coin de la hitbox
   float yHitboxOffset;
 
+  int heldPowerup;
   int type;
   int equipe; 
   int direction;
 }entite;
 
-entite* entityNew();
+entite* entityNew(int type);
 void entityInit(entite* e, float x, float y, float sizeX, float sizeY, float xHitbox, float yHitbox, float xHitboxOffsetPourcentage, float yHitboxOffsetPourcentage);
 
 

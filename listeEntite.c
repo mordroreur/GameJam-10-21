@@ -22,7 +22,7 @@ void detruireListe(ListeEntite l){
 void ajouteDebut(ListeEntite *l, entite n){
   Maillon *M = (Maillon *)malloc(sizeof(Maillon));
   
-  M->val.type = n.type;
+  M->val = n;
 
   
   M->suiv = l->first;
@@ -33,7 +33,7 @@ void ajouteFin(ListeEntite *l, entite n){
   Maillon *M = (Maillon *)malloc(sizeof(Maillon));
   Maillon *new;
 
-  M->val.type = n.type;
+  M->val = n;
   
   M->suiv = NULL;
   if(l->first == NULL){

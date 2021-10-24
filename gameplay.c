@@ -218,4 +218,55 @@ void gestionPhysiquesJoueur(int idJoueur) {
     {
       joueur->xSpeed = 0;
     }
+
+    checkEntityCollisions(idJoueur);
+    // entite ent = (NiveauActuelle.salle[0].lE.first)->val;
+    // printf("%f %f\n", ent.x, ent.y);
+}
+
+void checkEntityCollisions(int idJoueur) {
+  entite * joueur = &NiveauActuelle.player[idJoueur];
+  Maillon * courant = NiveauActuelle.salle[getSalleEntite(*joueur)].lE.first;
+  while(courant != NULL) {
+    if(checkCollision(joueur, &((*courant).val))) {
+      processCollision(idJoueur, &((*courant).val));
+    }
+    courant = ((*courant).suiv);
+  }
+}
+
+int checkCollision(entite * joueur, entite * entity) {
+  float xMinJoueur = joueur->x+joueur->xHitboxOffset;
+  float xMaxJoueur = xMinJoueur+joueur->xHitbox;
+  float yMinJoueur = joueur->y+joueur->yHitboxOffset;
+  float yMaxJoueur = yMinJoueur+joueur->yHitbox;
+
+  float xMinEntity = entity->x+entity->xHitboxOffset;
+  float xMaxEntity = xMinEntity+entity->xHitbox;
+  float yMinEntity = entity->y+entity->yHitboxOffset;
+  float yMaxEntity = yMinEntity+entity->yHitbox;
+
+  int collisionX = (xMinJoueur > xMaxEntity) != (xMaxJoueur > xMinEntity);
+  int collisionY = (yMinJoueur > yMaxEntity) != (yMaxJoueur > yMinEntity);
+
+  // printf("xminent %f, xmaxent %f\n", entity->x, entity->y);
+  // printf("COLL X %d, COLL Y %d\n", collisionX, collisionY);
+
+  return (collisionX && collisionY);
+}
+
+void processCollision(int idJoueur, entite * entity) {
+  entite * joueur = &NiveauActuelle.player[idJoueur];
+  switch(entity->type) {
+    case ENTITY_POWERUP_CRISTAL_RESET:
+      for (int i = 0; i < NiveauActuelle.nbPlayer; i++) {
+        if (i != idJoueur) {
+          NiveauActuelle.player[i].xSpeed = 0;
+          NiveauActuelle.player[i].ySpeed = 0;
+        }
+      }
+      supprValeur(&(NiveauActuelle.salle[getSalleEntite(*joueur)].lE), *entity);
+      printf("POWERUP ACTIVE\n");
+      break;
+  }
 }

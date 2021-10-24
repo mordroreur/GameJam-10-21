@@ -4,6 +4,7 @@
 #include <math.h>
 #include "Entite.h"
 #include "Terrain.h"
+#include "listeEntite.h"
 
 #define GRAVITY 1/128.0
 #define JUMP_HEIGHT -15/64.0
@@ -38,6 +39,10 @@ int getBlockIdRelative(salle* s, int x, int y);
 int getBlockId(int x, int y);
 int getSalleEntite(entite ent);
 void gestionPhysiquesJoueur(int idJoueur);
+
+void checkEntityCollisions(int idJoueur);
+int checkCollision(entite * joueur, entite * entity);
+void processCollision(int idJoueur, entite * entity);
 
 int blockIsSolid(int id); 
 int blockIsSemiSolid(int id); 

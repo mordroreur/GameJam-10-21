@@ -3,7 +3,7 @@
 entite* entityNew(int type)
 {
   entite * e = malloc(sizeof(entite));
-  e->type = 0;
+  e->type = type;
   return e;
 }
 

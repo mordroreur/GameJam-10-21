@@ -2,7 +2,7 @@
 #define TERRAIN_HEADER_
 
 #include "listeEntite.h"
-
+#include "Entite.h"
 
 #include <stdlib.h>
 
