@@ -1,4 +1,5 @@
 #include "RenderUtilities.h"
+#include "gest_event.h"
 
 extern int EtapeActuelleDuJeu; /* 0 = fin; 1 = Loading Screen... */
 
@@ -16,6 +17,14 @@ extern SDL_Surface *background_image;
 
 extern SDL_Surface *sprite_image_Star[3];
 extern SDL_Surface *sprite_image_Fusee[2];
+
+
+extern int ** inputsJoueurs;
+
+extern niveau NiveauActuelle;
+
+extern SDL_Event event;
+
 
 long int getTime(){
   struct timespec tms;
@@ -113,7 +122,101 @@ void DrawMenu(){
   }
 
   
+  //TODO
+  
+}
 
+
+
+
+void ClickOnMenu(){
+  int posMX;
+  int posMY;
+while (SDL_PollEvent(&event))
+    {
+      switch (event.type)
+      {
+      case SDL_KEYUP:
+	switch(event.key.keysym.sym){
+	case SDLK_ESCAPE:EtapeActuelleDuJeu = 0;break;
+	default:break;
+	}
+	break;
+      case SDL_MOUSEWHEEL:
+        // if (event.wheel.y > 0) {
+	// } else if (event.wheel.y < 0) {
+	// }
+        break;
+      case SDL_MOUSEBUTTONDOWN:
+         if (event.button.button == SDL_BUTTON_LEFT) {
+	   SDL_GetMouseState(&posMX, &posMY);
+	   if((posMX > TailleEcranLong/8 && posMX < TailleEcranLong/8 + TailleEcranLong/6 && posMY > TailleEcranHaut/6 && posMY < TailleEcranHaut/6 + TailleEcranHaut/2)){
+	       NiveauActuelle = AleaCreaTion(42, 2);
+	       initGestion();
+	       EtapeActuelleDuJeu = 42;
+	   }
+        // } else if (event.button.button == SDL_BUTTON_RIGHT) {
+	 }
+        break;
+      case SDL_QUIT:
+        EtapeActuelleDuJeu = 0;
+        break;
+      case SDL_WINDOWEVENT:
+	if(event.window.event == SDL_WINDOWEVENT_SIZE_CHANGED){
+	  TailleEcranHaut = event.window.data2;
+	  TailleEcranLong = event.window.data1;
+	}
+	break;
+      default:
+        break;
+      }
+    }  
+}
+
+
+void ClickOnParam(){
+  while (SDL_PollEvent(&event))
+    {
+      switch (event.type)
+      {
+	case SDL_KEYUP:
+	switch(event.key.keysym.sym){
+	case SDLK_ESCAPE:EtapeActuelleDuJeu = 0;break;
+	default:break;
+	}
+	break;
+      case SDL_MOUSEWHEEL:
+        // if (event.wheel.y > 0) {
+	// } else if (event.wheel.y < 0) {
+	// }
+        break;
+      case SDL_MOUSEBUTTONDOWN:
+        // if (event.button.button == SDL_BUTTON_LEFT) {
+        // } else if (event.button.button == SDL_BUTTON_RIGHT) {
+	// }
+        break;
+      case SDL_QUIT:
+        EtapeActuelleDuJeu = 0;
+        break;
+      case SDL_WINDOWEVENT:
+	if(event.window.event == SDL_WINDOWEVENT_SIZE_CHANGED){
+	  TailleEcranHaut = event.window.data2;
+	  TailleEcranLong = event.window.data1;
+	}
+	break;
+      default:
+        break;
+      }
+    }
+}
+
+
+void GetManetteInput(){
+  
+}
+
+
+void ManetteInit(){
   
 }
 
