@@ -106,7 +106,7 @@ int BouclePrincipaleDuJeu(){
   NowTime = getTime();
 
 
-  void ManetteInit();
+  ManetteInit();
 
   /************Début de la boucle des ticks***********************/
     pthread_t threadBoucleDesTicks;
@@ -207,7 +207,7 @@ void create_Win() {
   SDL_DisplayMode screen_dimension;
 
   /* Initialisation de la SDL  + gestion de l'échec possible */
-  if (SDL_Init(SDL_INIT_VIDEO) != 0)
+  if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_JOYSTICK | SDL_INIT_AUDIO) != 0)
     end_sdl(0, "ERROR SDL INIT");
 
   //récupère la taille de l'écran
@@ -236,6 +236,7 @@ void create_Win() {
     printf("TTF_Init: %s\n", TTF_GetError());
     exit(2);
   }
+
 
   /* Taille de écran fournit par SDL */
   SDL_GetWindowSize(window, &TailleEcranLong, &TailleEcranHaut);
