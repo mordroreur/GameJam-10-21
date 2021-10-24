@@ -141,12 +141,18 @@ void gestionPhysiquesJoueur(int idJoueur) {
 
 
     if(inputsJoueurs[idJoueur][INPUT_RIGHT] && grounded) {
-      //joueur->xSpeed = ((joueur->xSpeed + X_ACCEL < X_TERM_VELOCITY) ? joueur->xSpeed + X_ACCEL : X_TERM_VELOCITY);
       joueur->xSpeed = MIN(joueur->xSpeed + X_ACCEL, X_TERM_VELOCITY);
     } else if(inputsJoueurs[idJoueur][INPUT_LEFT] && grounded) {
-      // joueur->xSpeed = ((joueur->xSpeed - X_ACCEL > -X_TERM_VELOCITY) ? joueur->xSpeed - X_ACCEL : -X_TERM_VELOCITY);
       joueur->xSpeed = MAX(joueur->xSpeed - X_ACCEL, -X_TERM_VELOCITY);
     } else if (grounded){
+      joueur->xSpeed = 0;
+    }
+
+    if(inputsJoueurs[idJoueur][INPUT_RIGHT] && !grounded) {
+      joueur->xSpeed = MIN(joueur->xSpeed + X_ACCEL_AERIAL, X_TERM_VELOCITY);
+    } else if(inputsJoueurs[idJoueur][INPUT_LEFT] && !grounded) {
+      joueur->xSpeed = MAX(joueur->xSpeed - X_ACCEL_AERIAL, -X_TERM_VELOCITY);
+    } else if (!grounded){
       joueur->xSpeed = 0;
     }
 
