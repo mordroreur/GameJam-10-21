@@ -132,9 +132,6 @@ int moveEntityX(entite* e, float x)
 
 void gestionPhysiquesJoueur(int idJoueur) {
     entite * joueur = &NiveauActuelle.player[idJoueur];
-    float x = joueur->x, y = joueur->y;
-    int salleJoueur = getSalleEntite(*joueur);
-    int isJumping = 0;
     int grounded = 0;
 
 
@@ -150,7 +147,7 @@ void gestionPhysiquesJoueur(int idJoueur) {
     }
     */
     
-    joueur->ySpeed = MIN(16.0/64, joueur->ySpeed+1/128.0);
+    joueur->ySpeed = MIN(16.0/64, joueur->ySpeed+GRAVITY);
 
     
     if(moveEntityY(joueur, joueur->ySpeed) == 0)
@@ -199,11 +196,17 @@ void gestionPhysiquesJoueur(int idJoueur) {
     //   joueur->ySpeed -= 0.05;
     // }
 
-    if(inputsJoueurs[idJoueur][INPUT_JUMP] && grounded) {
-      joueur->ySpeed = -20/64.0;
-      isJumping = 1;
-      inputsJoueurs[idJoueur][INPUT_JUMP] = 0;
+    if(inputsJoueurs[idJoueur][INPUT_JUMP] == 1 && grounded) {
+      joueur->ySpeed = JUMP_HEIGHT;
+      inputsJoueurs[idJoueur][INPUT_JUMP] = 2;
     }
+
+    if(inputsJoueurs[idJoueur][INPUT_JUMP] == 2 && !grounded) {
+      joueur->ySpeed -= HELD_JUMP_BOOST;
+      inputsJoueurs[idJoueur][INPUT_JUMP] = 2;
+    }
+
+    // printf("J%d : %d\n", idJoueur, inputsJoueurs[idJoueur][INPUT_JUMP]);
 
 /*
     if(NiveauActuelle.salle[salleJoueur].terrain[(int)x][(int)(y+joueur->sizeY+joueur->ySpeed)] != 1) {

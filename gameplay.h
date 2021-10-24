@@ -5,7 +5,10 @@
 #include "Entite.h"
 #include "Terrain.h"
 
-#define GRAVITY_MULTIPLIER 1.1
+#define GRAVITY 1/128.0
+#define JUMP_HEIGHT -15/64.0
+#define HELD_JUMP_BOOST 1/256.0
+
 #define AIR_FRICTION 0.0003
 #define GROUND_FRICTION 0.01
 
