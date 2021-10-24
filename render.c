@@ -282,7 +282,30 @@ void create_Win() {
 
 */
 
+//TailleEcranLong TailleEcranHaut 
+// cam: TAILLE_X TAILLE_Y
 
+float camX;
+float camY;
+int camWindowsPxOffsetX;
+int camWindowsPxOffsetY;
+
+void DrawOnScreen(float x, float y, float sizeX, float sizeY, float camX, float camY, int screenXoffset, int screenYoffset, 
+SDL_Surface *sprite, SDL_RendererFlip *flip) 
+{
+
+    SDL_Rect r;
+    r.x = 
+    r.y = - (int)(TailleEcranHaut/TAILLE_Y + ((float)NiveauActuelle.player[0].y - (int)NiveauActuelle.player[0].y - 1)*TailleEcranHaut/(TAILLE_Y));
+    r.w = TailleEcranLong/(2*TAILLE_X);
+    r.h = TailleEcranHaut/TAILLE_Y;
+
+    avatar = SDL_CreateTextureFromSurface(renderer, image);
+    SDL_RenderCopy(renderer, avatar, NULL, rect);
+    SDL_DestroyTexture(avatar);
+
+
+}
 
 
 
