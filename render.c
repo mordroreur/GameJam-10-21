@@ -37,7 +37,7 @@ SDL_Surface *sprite_image_Player[2][9];
 
 
 SDL_Surface *sprite_image_Star[3];
-SDL_Surface *sprite_image_Fusee[2];
+SDL_Surface *sprite_image_Fusee[3];
 SDL_Surface *sprite_image_PowerUp[5];
 
 SDL_Surface *sprite_image_Starshit;
@@ -136,6 +136,7 @@ int BouclePrincipaleDuJeu(){
 
   sprite_image_Fusee[0] = IMG_Load("Res/background/rocket/open.png");
   sprite_image_Fusee[1] = IMG_Load("Res/background/rocket/close.png");
+  sprite_image_Fusee[2] = IMG_Load("Res/background/rocket/rocket_sus.png");
   
   /************Initialisation des variables de temps**************/
   LastFrame = getTime();
@@ -187,6 +188,8 @@ int BouclePrincipaleDuJeu(){
       switch(EtapeActuelleDuJeu){
       case 2:DrawMenu();break;
       case 42:DessinPrincipale();break;
+      case 420:WinOrange();break;
+      case 421:WinVert();break;
       default:return 0;break;
       }
       
@@ -369,6 +372,81 @@ SDL_Surface *sprite, SDL_RendererFlip *flip)
 }
 
 
+void WinOrange(){
+  SDL_Texture *Text;
+  int posMX;
+  int posMY;
+  SDL_GetMouseState(&posMX, &posMY);
+
+  SDL_Rect Rect;
+  Rect.x = 0;
+  Rect.y = 0;
+  Rect.h = TailleEcranHaut;
+  Rect.w = TailleEcranLong;
+  
+  Text = SDL_CreateTextureFromSurface(renderer, background_image);
+  SDL_RenderCopy(renderer, Text, NULL, &Rect);
+  SDL_DestroyTexture(Text);
+
+
+  Rect.x = TailleEcranHaut/6;
+  Rect.y = TailleEcranLong/8;
+  Rect.h = TailleEcranHaut/2;
+  Rect.w = TailleEcranLong/4;
+
+
+  
+  Text = SDL_CreateTextureFromSurface(renderer, sprite_image_Fusee[1]);
+  SDL_RenderCopy(renderer, Text, NULL, &Rect);
+  SDL_DestroyTexture(Text);
+
+  DrawString("Orange A gagné", 50, 68, 8, 'c', 255, 127, 0);
+
+  SDL_RenderPresent(renderer);
+      SDL_RenderClear(renderer);
+  
+    SDL_Delay(10000);
+      EtapeActuelleDuJeu = 2;
+
+}
+
+
+void WinVert(){
+    SDL_Texture *Text;
+  int posMX;
+  int posMY;
+  SDL_GetMouseState(&posMX, &posMY);
+
+  SDL_Rect Rect;
+  Rect.x = 0;
+  Rect.y = 0;
+  Rect.h = TailleEcranHaut;
+  Rect.w = TailleEcranLong;
+  
+  Text = SDL_CreateTextureFromSurface(renderer, background_image);
+  SDL_RenderCopy(renderer, Text, NULL, &Rect);
+  SDL_DestroyTexture(Text);
+
+
+  Rect.x = TailleEcranHaut/6;
+  Rect.y = TailleEcranLong/8;
+  Rect.h = TailleEcranHaut/2;
+  Rect.w = TailleEcranLong/4;
+
+
+  
+  Text = SDL_CreateTextureFromSurface(renderer, sprite_image_Fusee[1]);
+  SDL_RenderCopy(renderer, Text, NULL, &Rect);
+  SDL_DestroyTexture(Text);
+
+  DrawString("Vert A gagné", 50, 68, 8, 'c', 50, 205, 50);
+  SDL_RenderPresent(renderer);
+      SDL_RenderClear(renderer);
+  SDL_Delay(10000);
+  
+  EtapeActuelleDuJeu = 2;
+  
+}
 
 void *BouclePrincipaleDesTicks(void *CeciEstUneVaribleNull){
   
@@ -390,6 +468,8 @@ void *BouclePrincipaleDesTicks(void *CeciEstUneVaribleNull){
       case 42 : gestionInputs();break;
       case 2 : ClickOnMenu();break;
       case 4 : ClickOnParam();break;
+      case 420:break;
+      case 421:break;
       default:printf("Cette etape du jeu n'existe pas...\n");break;
       }
 

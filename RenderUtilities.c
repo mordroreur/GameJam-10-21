@@ -112,16 +112,17 @@ void DrawMenu(){
     LastOpen = isSouris;
     nombreOpen++;
   }
-  
+  if(nombreOpen < 200){
   Text = SDL_CreateTextureFromSurface(renderer, sprite_image_Fusee[isSouris]);
+  }else {
+  Text = SDL_CreateTextureFromSurface(renderer, sprite_image_Fusee[2]);  
+  }
   SDL_RenderCopy(renderer, Text, NULL, &Rect);
   SDL_DestroyTexture(Text);
 
   DrawString("Play", 22, 68, 8, 'c', 255*isSouris, 255*isSouris, 255*isSouris);
 
-  if(nombreOpen > 100){
-    DrawString("EASTER EGG", 22, 50, 8, 'c', 255, 0, 255);
-  }
+  
 
   
   //TODO
@@ -153,7 +154,7 @@ while (SDL_PollEvent(&event))
          if (event.button.button == SDL_BUTTON_LEFT) {
 	   SDL_GetMouseState(&posMX, &posMY);
 	   if((posMX > TailleEcranLong/8 && posMX < TailleEcranLong/8 + TailleEcranLong/6 && posMY > TailleEcranHaut/6 && posMY < TailleEcranHaut/6 + TailleEcranHaut/2)){
-	       NiveauActuelle = AleaCreaTion(420, 2);
+	       NiveauActuelle = AleaCreaTion(time(NULL), 2);
 	       initGestion();
 	       EtapeActuelleDuJeu = 42;
 	       }
@@ -173,9 +174,7 @@ while (SDL_PollEvent(&event))
         break;
       }
     }
- NiveauActuelle = AleaCreaTion(420, 2);
- initGestion();
- EtapeActuelleDuJeu = 42;
+
 }
 
 
