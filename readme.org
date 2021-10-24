@@ -11,8 +11,7 @@ sudo apt install libsdl2-ttf-2.0-0
 
 
 * TODO:
-** Physique : perte de vitesse progressivement au sol
 ** Physique : hitbox plus petite que le sprite
-** Physique : perte de vitesse en saut
+** Physique : Gestion des salles
 ** affichage : Saut regarde du mauvais coté
 ** affichage : gestion 2 eme personnage.

@@ -6,6 +6,8 @@ extern niveau NiveauActuelle;
 extern int ** inputsJoueurs;
 #define MIN(a,b) ((a) < (b) ? (a) : (b))
 #define MAX(a,b) ((a) > (b) ? (a) : (b))
+#define Block_Solid 1
+#define Block_Air 0
 
 int blockIsSolid(int id)
 {
@@ -13,10 +15,23 @@ int blockIsSolid(int id)
 }
 
 
-int getBlockId(salle* s, int x, int y)
+int getBlockId(int x, int y)
 {
+  int salleNb = x/TAILLE_X_SALLE;
+
+  if(salleNb<0 || salleNb >= NiveauActuelle.nbSalle)
+  {
+    return Block_Air;
+  }
+  return getBlockIdRelative(&(NiveauActuelle.salle[salleNb]), x, y);
+}
+
+
+int getBlockIdRelative(salle* s, int x, int y)
+{
+  x %= TAILLE_X_SALLE;
   return x >= 0 && x <TAILLE_X_SALLE && y >= 0 && y <TAILLE_Y_SALLE ?
-    s->terrain[x][y] : 0;
+    s->terrain[x][y] : Block_Air;
 }
 
 int getSalleEntite(entite ent) {
@@ -27,9 +42,8 @@ int moveEntityY(entite* e, float y)
 {
   if(y == 0){return 1;}
 
-  int xMinTile = MAX(0,floorf(e->x+0.2));
-  int xMaxTile = MIN(TAILLE_X_SALLE-1, ceilf(e->x+e->sizeX - 0.2));
-  salle* s = &(NiveauActuelle.salle[getSalleEntite(*e)]);
+  int xMinTile = floorf(e->x+0.2);
+  int xMaxTile = ceilf(e->x+e->sizeX - 0.2);
 
   int yNewTile;
   e->y += y;
@@ -40,7 +54,7 @@ int moveEntityY(entite* e, float y)
     
     for(int i = xMinTile; i < xMaxTile;i++)
     {
-      if(blockIsSolid(getBlockId(s, i, yNewTile)))
+      if(blockIsSolid(getBlockId(i, yNewTile)))
       {
         e->y = (yNewTile-e->sizeY);
         // printf("SNAP %f\n", e->y);
@@ -53,7 +67,7 @@ int moveEntityY(entite* e, float y)
   yNewTile = floorf(e->y);
   for(int i = xMinTile; i < xMaxTile;i++)
   {
-    if(blockIsSolid(getBlockId(s, i, yNewTile)))
+    if(blockIsSolid(getBlockId(i, yNewTile)))
     {
       e->y = (yNewTile+1);
       return 0;
@@ -66,8 +80,8 @@ int moveEntityX(entite* e, float x)
 {
   if(x == 0){return 1;}
 
-  int yMinTile = MAX(0,floorf(e->y)+1);
-  int yMaxTile = MIN(TAILLE_Y_SALLE-1, floorf(e->y+e->sizeY));
+  int yMinTile = floorf(e->y)+1;
+  int yMaxTile = floorf(e->y+e->sizeY);
   salle* s = &(NiveauActuelle.salle[getSalleEntite(*e)]);
 
   int xNewTile;
@@ -79,7 +93,7 @@ int moveEntityX(entite* e, float x)
     
     for(int i = yMinTile; i < yMaxTile;i++)
     {
-      if(blockIsSolid(getBlockId(s, xNewTile, i)))
+      if(blockIsSolid(getBlockId(xNewTile, i)))
       {
         e->x = (xNewTile-e->sizeX);
         return 0;
@@ -91,7 +105,7 @@ int moveEntityX(entite* e, float x)
   xNewTile = floorf(e->x);
   for(int i = yMinTile; i < yMaxTile;i++)
   {
-    if(blockIsSolid(getBlockId(s, xNewTile, i)))
+    if(blockIsSolid(getBlockId(xNewTile, i)))
     {
       e->x = (xNewTile+1);
       return 0;
@@ -108,6 +122,7 @@ void gestionPhysiquesJoueur(int idJoueur) {
     int salleJoueur = getSalleEntite(*joueur);
     int isJumping = 0;
     int grounded = 0;
+
 
 /*
     if(NiveauActuelle.salle[salleJoueur].terrain[(int)x][(int)(y+joueur->sizeY)] != 1) {
@@ -138,6 +153,7 @@ void gestionPhysiquesJoueur(int idJoueur) {
       //joueur->ySpeed = 0;
 
       //grounded=1;
+    //printf("x:%f, y:%f\n", joueur->x, joueur->y);
 
 
     if(inputsJoueurs[idJoueur][INPUT_RIGHT] && grounded) {
