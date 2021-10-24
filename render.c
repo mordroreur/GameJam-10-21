@@ -19,8 +19,8 @@ TTF_Font *RobotoFont;
 SDL_Surface *image = NULL;
 SDL_Texture  *avatar;
 
-//SDL_Surface *separation_image = NULL;
-//SDL_Texture *separation_avatar;
+SDL_Surface *separation_image = NULL;
+SDL_Texture *separation_avatar;
 
 SDL_Surface *background_image = NULL;
 SDL_Texture *background_avatar;
@@ -28,6 +28,8 @@ SDL_Texture *background_avatar;
 SDL_Surface *sprite_image = NULL;
 
 SDL_Surface *sprite_image_orange[9];
+
+SDL_Surface *sprite_image_vert[9];
 
 SDL_Surface *sprite_image_Star[3];
 SDL_Surface *sprite_image_Fusee[2];
@@ -76,7 +78,7 @@ int BouclePrincipaleDuJeu(){
   }
   background_image = IMG_Load("Res/background/sky.png");
 
-  //separation_image = IMG_Load("Res/background/sky.png");
+  separation_image = IMG_Load("Res/split.png");
   
   sprite_image_orange[0] = IMG_Load("Res/player/orange/player_walk0.png");
   sprite_image_orange[1] = IMG_Load("Res/player/orange/player_walk1.png");
@@ -385,11 +387,11 @@ void DessinPrincipale(){
 
         SDL_DestroyTexture(background_avatar);
 
-        //SDL_Rect separation;
-        //separation.h= TailleEcranHaut;
-        //separation.w= TailleEcranLong/(2*TAILLE_X);
-        //separation.x= TailleEcranLong/2;
-        //separation.y = 0;
+        SDL_Rect separation;
+        separation.h= TailleEcranHaut;
+        separation.w= TailleEcranLong /7;
+        separation.x= TailleEcranLong/2 - separation.w/2;
+        separation.y = 0;
         
         SDL_Rect case_screen;
         case_screen.x = - (int)((TailleEcranLong/(2*TAILLE_X)+((float)NiveauActuelle.player[0].x - (int)NiveauActuelle.player[0].x )*TailleEcranLong/(2*TAILLE_X)));
@@ -487,10 +489,15 @@ void DessinPrincipale(){
           }
         }
 
+      separation_avatar = SDL_CreateTextureFromSurface(renderer, separation_image);
+
       sprite_avatar = SDL_CreateTextureFromSurface(renderer, sprite_image);
       //SDL_RenderCopy(renderer, sprite_avatar, NULL, &Joueur);
       SDL_RenderCopyEx(renderer, sprite_avatar, NULL, &Joueur, angle, NULL, flip);
       SDL_DestroyTexture(sprite_avatar);
+
+      SDL_RenderCopy(renderer, separation_avatar, NULL, &separation);
+      SDL_DestroyTexture(separation_avatar);
       }
       //end split screen
     }
