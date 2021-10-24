@@ -2,6 +2,7 @@
 #include "RenderUtilities.h"
 #include "Terrain.h"
 #include <SDL2/SDL_render.h>
+#include <SDL2/SDL_surface.h>
 #include <SDL2/SDL_timer.h>
 #define TAILLE_X 22
 #define TAILLE_Y 18
@@ -30,9 +31,9 @@ SDL_Surface *sprite_image = NULL;
 
 SDL_Surface *semisolid_image = NULL;
 
-SDL_Surface *sprite_image_orange[9];
+SDL_Surface *sprite_image_Player[2][9];
 
-SDL_Surface *sprite_image_vert[9];
+
 
 SDL_Surface *sprite_image_Star[3];
 SDL_Surface *sprite_image_Fusee[2];
@@ -89,31 +90,31 @@ int BouclePrincipaleDuJeu(){
 
   separation_image = IMG_Load("Res/split.png");
   
-  sprite_image_orange[0] = IMG_Load("Res/player/orange/player_walk0.png");
-  sprite_image_orange[1] = IMG_Load("Res/player/orange/player_walk1.png");
-  sprite_image_orange[2] = IMG_Load("Res/player/orange/player_walk2.png");
-  sprite_image_orange[3] = IMG_Load("Res/player/orange/player_walk3.png");
+  sprite_image_Player[0][0] = IMG_Load("Res/player/orange/player_walk0.png");
+  sprite_image_Player[0][1] = IMG_Load("Res/player/orange/player_walk1.png");
+  sprite_image_Player[0][2] = IMG_Load("Res/player/orange/player_walk2.png");
+  sprite_image_Player[0][3] = IMG_Load("Res/player/orange/player_walk3.png");
 
-  sprite_image_orange[4] = IMG_Load("Res/player/orange/player_base0.png");
-  sprite_image_orange[5] = IMG_Load("Res/player/orange/player_base1.png");
+  sprite_image_Player[0][4] = IMG_Load("Res/player/orange/player_base0.png");
+  sprite_image_Player[0][5] = IMG_Load("Res/player/orange/player_base1.png");
 
-  sprite_image_orange[6] = IMG_Load("Res/player/orange/player_face.png");
+  sprite_image_Player[0][6] = IMG_Load("Res/player/orange/player_face.png");
 
-  sprite_image_orange[7] = IMG_Load("Res/player/orange/player_fall.png");
-  sprite_image_orange[8] = IMG_Load("Res/player/orange/player_jump.png");
+  sprite_image_Player[0][7] = IMG_Load("Res/player/orange/player_fall.png");
+  sprite_image_Player[0][8] = IMG_Load("Res/player/orange/player_jump.png");
 
-  sprite_image_vert[0] = IMG_Load("Res/player/vert/player_walk0.png");
-  sprite_image_vert[1] = IMG_Load("Res/player/vert/player_walk1.png");
-  sprite_image_vert[2] = IMG_Load("Res/player/vert/player_walk2.png");
-  sprite_image_vert[3] = IMG_Load("Res/player/vert/player_walk3.png");
+  sprite_image_Player[1][0] = IMG_Load("Res/player/vert/player_walk0.png");
+  sprite_image_Player[1][1] = IMG_Load("Res/player/vert/player_walk1.png");
+  sprite_image_Player[1][2] = IMG_Load("Res/player/vert/player_walk2.png");
+  sprite_image_Player[1][3] = IMG_Load("Res/player/vert/player_walk3.png");
 
-  sprite_image_vert[4] = IMG_Load("Res/player/vert/player_base0.png");
-  sprite_image_vert[5] = IMG_Load("Res/player/vert/player_base1.png");
+  sprite_image_Player[1][4] = IMG_Load("Res/player/vert/player_base0.png");
+  sprite_image_Player[1][5] = IMG_Load("Res/player/vert/player_base1.png");
 
-  sprite_image_vert[6] = IMG_Load("Res/player/vert/player_face.png");
+  sprite_image_Player[1][6] = IMG_Load("Res/player/vert/player_face.png");
 
-  sprite_image_vert[7] = IMG_Load("Res/player/vert/player_fall.png");
-  sprite_image_vert[8] = IMG_Load("Res/player/vert/player_jump.png");
+  sprite_image_Player[1][7] = IMG_Load("Res/player/vert/player_fall.png");
+  sprite_image_Player[1][8] = IMG_Load("Res/player/vert/player_jump.png");
 
 
 
@@ -402,15 +403,22 @@ void DessinPrincipale(){
   if (fabs(NiveauActuelle.player[1].x - NiveauActuelle.player[0].x) > TAILLE_X/1.2 || fabs(NiveauActuelle.player[1].y - NiveauActuelle.player[0].y) > TAILLE_Y/3){
 
    
-    DrawCamera(NiveauActuelle.player[0].x, NiveauActuelle.player[0].y, 16, TailleEcranLong/2, TailleEcranHaut, 0, 0);
-    DrawCamera(NiveauActuelle.player[1].x, NiveauActuelle.player[1].y, 16,TailleEcranLong/2, TailleEcranHaut, TailleEcranLong/2, 0);
+    DrawCamera(NiveauActuelle.player[0].x, NiveauActuelle.player[0].y, 16, TailleEcranLong/2*0.96, TailleEcranHaut, 0, 0);
+    DrawCamera(NiveauActuelle.player[1].x, NiveauActuelle.player[1].y, 16,TailleEcranLong/2, TailleEcranHaut, TailleEcranLong/2*1.04, 0);
+    
     SDL_Rect separation;
+    separation.h= TailleEcranHaut;
+    separation.w= TailleEcranLong /29;
+    separation.x= TailleEcranLong/2 - separation.w/2;
+    separation.y = 0;
+    
+    separation_avatar = SDL_CreateTextureFromSurface(renderer, separation_image);
+    SDL_SetRenderDrawColor(renderer, 22, 38, 114, 255);
+    SDL_RenderFillRect(renderer, &separation);
     separation.h= TailleEcranHaut;
     separation.w= TailleEcranLong /7;
     separation.x= TailleEcranLong/2 - separation.w/2;
     separation.y = 0;
-    separation_avatar = SDL_CreateTextureFromSurface(renderer, separation_image);
-    
     SDL_RenderCopy(renderer, separation_avatar, NULL, &separation);
     SDL_DestroyTexture(separation_avatar);
   }else{
@@ -470,19 +478,19 @@ void DrawCamera(
   for(int i = 0;i < NiveauActuelle.nbPlayer; i++)
   {
     entite* p = &(NiveauActuelle.player[i]);
-    if(i == 0){
-      if(p->ySpeed == 0){
-	if (p->xSpeed == 0){
-	  sprite_image = sprite_image_orange[4 + (SDL_GetTicks()/500)%2];
-	}else{
-	  sprite_image = sprite_image_orange[(SDL_GetTicks()/110)%4];
-	}
-      } else if(p->ySpeed < 0){
-	sprite_image = sprite_image_orange[8];
-      } else if(p->ySpeed > 0){
-	sprite_image = sprite_image_orange[7];
+
+    if(p->ySpeed == 0){
+      if (p->xSpeed == 0){
+	sprite_image = sprite_image_Player[i][4 + (SDL_GetTicks()/500)%2];
+      }else{
+	sprite_image = sprite_image_Player[i][(SDL_GetTicks()/110)%4];
       }
+    } else if(p->ySpeed < 0){
+      sprite_image = sprite_image_Player[i][8];
+    } else if(p->ySpeed > 0){
+      sprite_image = sprite_image_Player[i][7];
     }
+
     DrawSprite(p->x, p->y, p->sizeX, p->sizeY, sprite_image, (p->direction)?SDL_FLIP_NONE:SDL_FLIP_HORIZONTAL, NULL);
   }
 
@@ -498,7 +506,9 @@ void DrawBlockAt(int x, int y)
   switch(id)
   {
     case 1:
-      DrawBlock(x,y, image, NULL);
+      DrawBlock(x,y, image, NULL);break;
+  case 2:
+    DrawBlock(x,y, semisolid_image, NULL);
     break;
     case 0:
     default: break;
