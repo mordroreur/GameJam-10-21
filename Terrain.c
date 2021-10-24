@@ -41,13 +41,25 @@ void fill(salle* s, int xBegin, int xLength, int yBegin, int yLength, int id)
   } 
 }
 
+void addRandomPowerUp(salle* s, int x, int y)
+{
+  entite* jetpack = entityNew(rand()%3+1);
+  entityInit(jetpack, x, y, 1, 1, 1, 1, 0.5, 0.5);
+  ajouteDebut(&(s->lE), *jetpack);
+}
+
+
 void placePlatform(salle* s, int x, int y, int size, int nbTime)
 {
   if(nbTime < 0)
   {return;}
 
   fill(s, x, size, y, 0, 2);
-  placePlatform(s, x+rand()%10, y+rand()%11-7, 2+rand()%7, nbTime-1);
+  placePlatform(s, x+rand()%10, y+rand()%9-7, 2+rand()%7, nbTime-1);
+
+  if(nbTime == 0){
+    addRandomPowerUp(s, x+rand()%5,y-1);
+  }
 }
 
 
@@ -66,6 +78,16 @@ salle GetRandomRoom(int i, int* y)
         set(&s, x, y, rand()%(17+9)==1 ? 3 : 0);
     } 
   } 
+
+  if(i==0)
+  {
+    fill(&s, 0, 0, 0, TAILLE_Y_SALLE, 1);
+  }
+
+/*
+  entite* jetpack = entityNew(ENTITY_POWERUP_JETPACK);
+  entityInit(jetpack, 1, *y-2, 1, 1, 1, 1, 0.5, 0.5);
+  ajouteDebut(&(s.lE), *jetpack);*/
 
   int yEnter = *y;
   int x  = 0;
