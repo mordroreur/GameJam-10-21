@@ -435,20 +435,27 @@ void DessinPrincipale(){
   }else{
     DrawCamera((NiveauActuelle.player[0].x + NiveauActuelle.player[1].x)/2, (NiveauActuelle.player[0].y + NiveauActuelle.player[1].y)/2, 16, TailleEcranLong, TailleEcranHaut, 0, 0);
   }
+  
   SDL_Rect PowerUp;
-  PowerUp.y= TailleEcranHaut/30;
-  PowerUp.x= TailleEcranLong /30;
-  PowerUp.h= TailleEcranLong/20 ;
-  PowerUp.w = TailleEcranLong/20;
-  SDL_SetRenderDrawColor(renderer, 22, 255, 0, 255);
-  SDL_RenderFillRect(renderer, &PowerUp);
+  if(NiveauActuelle.player[0].heldPowerup != -1){
+    PowerUp.y= 0;
+    PowerUp.x= 0;
+    PowerUp.h= TailleEcranLong/10 ;
+    PowerUp.w = TailleEcranLong/10;
+    SDL_Texture *avatarTmp = SDL_CreateTextureFromSurface(renderer, sprite_image_PowerUp[NiveauActuelle.player[0].heldPowerup]);
+    SDL_RenderCopy(renderer, avatarTmp, NULL, &PowerUp);
+    SDL_DestroyTexture(avatarTmp);
+  }
 
-  PowerUp.y= TailleEcranHaut/30;
-  PowerUp.x= TailleEcranLong - (TailleEcranLong /30) - (TailleEcranLong /20);
-  PowerUp.h= TailleEcranLong/20 ;
-  PowerUp.w = TailleEcranLong/20;
-  SDL_SetRenderDrawColor(renderer, 22, 255, 0, 255);
-  SDL_RenderFillRect(renderer, &PowerUp);
+  if(NiveauActuelle.player[1].heldPowerup != -1){
+    PowerUp.y= 0;
+    PowerUp.x=  TailleEcranLong- (TailleEcranLong /10);
+    PowerUp.h= TailleEcranLong/10 ;
+    PowerUp.w = TailleEcranLong/10;
+    SDL_Texture *avatarTmp = SDL_CreateTextureFromSurface(renderer, sprite_image_PowerUp[NiveauActuelle.player[1].heldPowerup]);
+    SDL_RenderCopy(renderer, avatarTmp, NULL, &PowerUp);
+    SDL_DestroyTexture(avatarTmp);
+  }
 }
           
 
