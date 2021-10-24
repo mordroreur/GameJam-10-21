@@ -1,6 +1,5 @@
 #include "gest_event.h"
 #include "gameplay.h"
-#include <SDL2/SDL_events.h>
 #include <SDL2/SDL_keycode.h>
 
 extern int EtapeActuelleDuJeu; /* 0 = fin; 1 = Loading Screen... */
@@ -14,9 +13,6 @@ int **inputsJoueurs;
 extern int ToucheAppuiPlayer[2][4];
 
 extern niveau NiveauActuelle;
-
-extern SDL_Joystick **joystick;
-
 
 void keyUp(SDL_KeyboardEvent *key){
   // printf("%d\n", key->keysym.sym);
@@ -114,24 +110,20 @@ void gestionInputs() {
 	  TailleEcranLong = event.window.data1;
 	}
 	break;
-      case SDL_JOYAXISMOTION:
-	if(event.jaxis.axis == 0){
-	  if(SDL_JoystickGetAxis(joystick[event.jaxis.which],0) < -25000){
-	    inputsJoueurs[event.jaxis.which][INPUT_LEFT] = 1;NiveauActuelle.player[event.jaxis.which].direction = 0;
-	  }else if(SDL_JoystickGetAxis(joystick[event.jaxis.which],0) > 25000){
-	    inputsJoueurs[event.jaxis.which][INPUT_RIGHT] = 1;NiveauActuelle.player[event.jaxis.which].direction = 1;
-	  }else{
-	    inputsJoueurs[event.jaxis.which][INPUT_LEFT] = 0;
-	    inputsJoueurs[event.jaxis.which][INPUT_RIGHT] = 0;
-	  }
-	}
-	
+      case SDL_JOYBUTTONDOWN:
+	if(event.jbutton.button == 0){
+	  inputsJoueurs[event.jbutton.which][INPUT_JUMP] = 1;
+	}break;
+      case SDL_JOYBUTTONUP:
+	if(event.jbutton.button == 0){
+	  inputsJoueurs[event.jbutton.which][INPUT_JUMP] = 0;
+	}break;
       default:
         break;
       }
     }
 
-    //GetManetteInput();
+    GetManetteInput();
 
      for(int i = 0; i < NiveauActuelle.nbPlayer; i++) {
        gestionPhysiquesJoueur(i);
