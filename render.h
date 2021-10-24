@@ -30,6 +30,9 @@ void end_sdl(char ok, char const *msg);
 
 void *BouclePrincipaleDesTicks(void *CeciEstUneVaribleNull);
 
+//Dessine un sprite dans le render 
+void DrawOnScreen(float x, float y, float sizeX, float sizeY, float camX, float camY, int screenXoffset, int screenYoffset, 
+SDL_Surface *sprite, SDL_RendererFlip *flip) ;
 
 void DessinPrincipale();
 

@@ -302,7 +302,7 @@ SDL_Surface *sprite, SDL_RendererFlip *flip)
     r.h = TailleEcranHaut/TAILLE_Y;
 
     avatar = SDL_CreateTextureFromSurface(renderer, image);
-    SDL_RenderCopy(renderer, avatar, NULL, rect);
+    SDL_RenderCopy(renderer, avatar, NULL, &r);
     SDL_DestroyTexture(avatar);
 
 
@@ -367,7 +367,7 @@ void DessinPrincipale(){
   SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
   SDL_RenderFillRect(renderer, &Fond);
 
-      if (fabs(NiveauActuelle.player[1].x - NiveauActuelle.player[0].x) > TAILLE_X/2){
+      if (fabs(NiveauActuelle.player[1].x - NiveauActuelle.player[0].x) > TAILLE_X/1.2 || fabs(NiveauActuelle.player[1].y - NiveauActuelle.player[0].y) > TAILLE_Y/3){
         SDL_Rect Player1_Screen;
         Player1_Screen.x = 0;
         Player1_Screen.y = 0;
@@ -505,9 +505,10 @@ void DessinPrincipale(){
       float moy_x = fabs(NiveauActuelle.player[1].x + NiveauActuelle.player[0].x)/2;
       float moy_y = fabs(NiveauActuelle.player[1].y + NiveauActuelle.player[0].y)/2;
 
+      
       SDL_Rect case_screen;
-      case_screen.x = 0;
-      case_screen.y = 0;
+      case_screen.x = -((float)moy_x - (int)moy_x)*TailleEcranHaut/(TAILLE_X*2);
+      case_screen.y = - (int)(TailleEcranHaut/TAILLE_Y + ((float)moy_y - (int)moy_y - 1)*TailleEcranHaut/(TAILLE_Y));
       case_screen.w = TailleEcranLong/(2*TAILLE_X);
       case_screen.h = TailleEcranHaut/TAILLE_Y;
 
@@ -516,26 +517,26 @@ void DessinPrincipale(){
 
         
       for(i= moy_x -21; i< moy_x + TAILLE_X +3; i++){
-        printf("%d %f\n", i, NiveauActuelle.player[0].x);
+        //printf("%d %f\n", i, NiveauActuelle.player[0].x);
 
         //printf("%d %d %d %d\n", case_screen.x, case_screen.y, case_screen.w, case_screen.h);
         case_screen.x = case_screen.x + case_screen.w;
-        case_screen.y = - (int)(TailleEcranHaut/TAILLE_Y + ((float)NiveauActuelle.player[0].y - (int)NiveauActuelle.player[0].y - 1)*TailleEcranHaut/(TAILLE_Y));
+        case_screen.y = - (int)(TailleEcranHaut/TAILLE_Y + ((float)moy_y - (int)moy_y - 1)*TailleEcranHaut/(TAILLE_Y));
         for(j= moy_y - 8  ; j<TAILLE_Y +1 + moy_y - 8 ; j++){
 
           case_screen.y = case_screen.y + case_screen.h ;
           /*
-          if (1 || (NiveauActuelle.player[0].x/TAILLE_X >= i && NiveauActuelle.player[0].x/TAILLE_X <= i+1)){
-            Joueur.x = case_screen.x;
+          if ((NiveauActuelle.player[0].x >= moy_x - TAILLE_X/2 + i*case_screen.w && NiveauActuelle.player[0].x <= moy_x - TAILLE_X/2 + (i+1)*case_screen.w)){
+            Joueur.x = case_screen.x + fabs(NiveauActuelle.player[0].x - NiveauActuelle.player[1].x);
             Joueur.y = NiveauActuelle.player[0].y;
-            Joueur.h = NiveauActuelle.player[joueur_id].sizeY *  TailleEcranHaut/TAILLE_Y;
-            Joueur.w = NiveauActuelle.player[joueur_id].sizeX * TailleEcranLong/(2*TAILLE_X);
+            Joueur.h = NiveauActuelle.player[0].sizeY *  TailleEcranHaut/TAILLE_Y;
+            Joueur.w = NiveauActuelle.player[0].sizeX * TailleEcranLong/(2*TAILLE_X);
             sprite_image = sprite_image_orange[4 + (SDL_GetTicks()/500)%2];
             
 
             sprite_avatar = SDL_CreateTextureFromSurface(renderer, sprite_image);
             SDL_RenderCopy(renderer, sprite_avatar, NULL, &Joueur);
-            SDL_RenderCopyEx(renderer, sprite_avatar, NULL, &Joueur, angle, NULL, flip);
+            SDL_RenderCopyEx(renderer, sprite_avatar, NULL, &Joueur, angle, NULL, SDL_FLIP_NONE);
             SDL_DestroyTexture(sprite_avatar);
           }*/
           
@@ -552,7 +553,60 @@ void DessinPrincipale(){
 
       //affichage joueurs
         
+      for (joueur_id = 0; joueur_id <2; joueur_id++){
+          flip = SDL_FLIP_NONE;
 
+          // if(joueur_id == 0){
+            Joueur.h = NiveauActuelle.player[joueur_id].sizeY *  TailleEcranHaut/TAILLE_Y;
+            Joueur.w = NiveauActuelle.player[joueur_id].sizeX * TailleEcranLong/(2*TAILLE_X);
+            Joueur.x = (NiveauActuelle.player[joueur_id].x - (moy_x-21))*TailleEcranLong/(2*TAILLE_X);
+            Joueur.y =  (NiveauActuelle.player[joueur_id].y - (moy_y-9))*TailleEcranHaut/(TAILLE_Y);
+          // }
+          // else {
+          //   Joueur.h = NiveauActuelle.player[joueur_id].sizeY *  TailleEcranHaut/TAILLE_Y;
+          //   Joueur.w = NiveauActuelle.player[joueur_id].sizeX * TailleEcranLong/(2*TAILLE_X);
+          //   Joueur.x = (float)TailleEcranLong*3/4 - moy_x;
+          //   Joueur.y = (float)TailleEcranHaut/2;
+          // }
+
+          if (NiveauActuelle.player[joueur_id].ySpeed == 0){
+
+            if (NiveauActuelle.player[joueur_id].xSpeed == 0){
+              sprite_image = sprite_image_orange[4 + (SDL_GetTicks()/500)%2];
+              if (NiveauActuelle.player[joueur_id].direction == 0){
+                flip = SDL_FLIP_HORIZONTAL;
+              }
+            }
+            
+            if (NiveauActuelle.player[joueur_id].xSpeed > 0){
+            sprite_image = sprite_image_orange[(SDL_GetTicks()/110)%4];
+            }
+            
+            if (NiveauActuelle.player[joueur_id].xSpeed < 0){
+            sprite_image = sprite_image_orange[(SDL_GetTicks()/110)%4];
+            flip = SDL_FLIP_HORIZONTAL;
+            }
+        }
+
+        else if(NiveauActuelle.player[joueur_id].ySpeed > 0){
+          sprite_image = sprite_image_orange[7];
+          if (NiveauActuelle.player[joueur_id].direction == 0){
+            flip = SDL_FLIP_HORIZONTAL;
+          }
+        }
+        
+        else if (NiveauActuelle.player[joueur_id].ySpeed < 0) {
+          sprite_image = sprite_image_orange[8];
+          if (NiveauActuelle.player[joueur_id].direction == 0){
+            flip = SDL_FLIP_HORIZONTAL;
+          }
+        }
+
+      sprite_avatar = SDL_CreateTextureFromSurface(renderer, sprite_image);
+      //SDL_RenderCopy(renderer, sprite_avatar, NULL, &Joueur);
+      SDL_RenderCopyEx(renderer, sprite_avatar, NULL, &Joueur, angle, NULL, flip);
+      SDL_DestroyTexture(sprite_avatar);
+      }
 
       //sprite_avatar = SDL_CreateTextureFromSurface(renderer, sprite_image);
       //SDL_RenderCopy(renderer, sprite_avatar, NULL, &Joueur);
