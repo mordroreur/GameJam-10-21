@@ -22,9 +22,9 @@ niveau AleaCreaTion(int seed, int playerNb){
     10, 10,
     2,2,
     14/16.0, 22/16.0,
-    0.65, 1
+    0.7, 1
     );
-    
+
   }
 
   int begin = 17;
