@@ -15,7 +15,7 @@ niveau AleaCreaTion(int seed, int playerNb){
 
     entite* p = &(res.player[i]);
     p->direction = 1;
-    p->type = 0;
+    p->type = ENTITY_PLAYER;
     p->equipe = i;
 
     entityInit(p, 
@@ -161,28 +161,3 @@ salle getKnownSalle(int n, int *Begin){
 
   return s;
 }
-
-
-
-
-entite* entityNew(int type)
-{
-  entite * e = malloc(sizeof(entite));
-  e->type = 0;
-  return e;
-}
-
-void entityInit(entite* e, float x, float y, float sizeX, float sizeY, float xHitbox, float yHitbox, float xHitboxOffsetPourcentage, float yHitboxOffsetPourcentage) 
-{
-  e->x=x;
-  e->y=y;
-  e->xSpeed=0;
-  e->ySpeed=0;
-  e->sizeX=sizeX;
-  e->sizeY=sizeY;
-  e->xHitbox=xHitbox;
-  e->yHitbox=yHitbox;
-  e->xHitboxOffset= (sizeX-xHitbox)*xHitboxOffsetPourcentage;
-  e->yHitboxOffset= (sizeY-yHitbox)*yHitboxOffsetPourcentage;
-}
-

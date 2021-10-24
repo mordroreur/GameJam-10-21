@@ -22,7 +22,7 @@
 #define MIN(a,b) ((a) < (b) ? (a) : (b))
 #define MAX(a,b) ((a) > (b) ? (a) : (b))
 
-#define Hitbox_Precision (1/64.0)
+#define Hitbox_Precision (2/16.0)
 
 #define Block_Solid 1
 #define Block_Air 0

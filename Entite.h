@@ -1,6 +1,9 @@
 #ifndef ENTITE_HEADER_
 #define ENTITE_HEADER_
 
+#include <stdlib.h>
+#include <stdio.h>
+
 typedef struct Entite{
 
   float x;
@@ -23,6 +26,8 @@ typedef struct Entite{
   int direction;
 }entite;
 
+entite* entityNew();
+void entityInit(entite* e, float x, float y, float sizeX, float sizeY, float xHitbox, float yHitbox, float xHitboxOffsetPourcentage, float yHitboxOffsetPourcentage);
 
 
 

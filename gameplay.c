@@ -51,7 +51,7 @@ int moveEntityY(entite* e, float y)
 {
   if(y == 0){return 1;}
 
-  int xMinTile = floorf(xHitboxPos(e)+Hitbox_Precision);
+  int xMinTile = floorf(xHitboxPos(e) + Hitbox_Precision);
   int xMaxTile = ceilf(xHitboxPos(e)+e->xHitbox - Hitbox_Precision);
 
   int yNewTile;
@@ -89,8 +89,8 @@ int moveEntityX(entite* e, float x)
 {
   if(x == 0){return 1;}
 
-  int yMinTile = floorf(yHitboxPos(e))+1;
-  int yMaxTile = floorf(yHitboxPos(e)+e->yHitbox);
+  int yMinTile = floorf(yHitboxPos(e)-Hitbox_Precision)+1;
+  int yMaxTile = floorf(yHitboxPos(e)+e->yHitbox+Hitbox_Precision);
 
   int xNewTile;
   e->x += x;
