@@ -340,6 +340,8 @@ void DessinPrincipale(){
       Fond.w = TailleEcranLong;
       SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
       SDL_RenderFillRect(renderer, &Fond);
+
+      //if (fabs(NiveauActuelle.player[1].x - NiveauActuelle.player[0].x)
       
       SDL_Rect Player1_Screen;
       Player1_Screen.x = 0;
@@ -378,7 +380,7 @@ void DessinPrincipale(){
 
           case_screen.y = case_screen.y + case_screen.h;
 
-          if (j >= 0 && i >= 0 && NiveauActuelle.salle[0].terrain[i][j]){
+          if (j >= 0 && i >= 0 && NiveauActuelle.salle[(int)NiveauActuelle.player[0].x/100].terrain[i][j]){
             avatar = SDL_CreateTextureFromSurface(renderer, image);
             SDL_RenderCopy(renderer, avatar, NULL, &case_screen);
 	          SDL_DestroyTexture(avatar);
