@@ -293,6 +293,7 @@ void processCollision(int idJoueur, entite * entity) {
 
 void usePowerup(int idJoueur) {
   entite * joueur = &NiveauActuelle.player[idJoueur];
+  int idPowerup;
   switch(joueur->heldPowerup) {
     case ENTITY_POWERUP_CRISTAL_RESET:
       for (int i = 0; i < NiveauActuelle.nbPlayer; i++) {
@@ -306,6 +307,11 @@ void usePowerup(int idJoueur) {
     case ENTITY_POWERUP_JETPACK:
       joueur->durabiliteJetpack = 500;
       joueur->heldPowerup = -1;
+      break;
+    case ENTITY_POWERUP_COINY:
+      idPowerup = rand()%2;
+      if(idPowerup == 0)  joueur->heldPowerup = ENTITY_POWERUP_JETPACK;
+      else            joueur->heldPowerup = ENTITY_POWERUP_CRISTAL_RESET;
       break;
   }
 }
