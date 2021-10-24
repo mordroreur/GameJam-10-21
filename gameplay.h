@@ -19,12 +19,23 @@
 #define INPUT_RIGHT 2
 #define INPUT_ITEM 3
 
+#define MIN(a,b) ((a) < (b) ? (a) : (b))
+#define MAX(a,b) ((a) > (b) ? (a) : (b))
+
+#define Hitbox_Precision 0.2
+
+#define Block_Solid 1
+#define Block_Air 0
+
 int getBlockIdRelative(salle* s, int x, int y);
 int getBlockId(int x, int y);
 int getSalleEntite(entite ent);
 void gestionPhysiquesJoueur(int idJoueur);
 
 int blockIsSolid(int id); 
+
+float xHitboxPos(entite* e);
+float yHitboxPos(entite* e);
 
 // 0 = pas reussi
 // 1 = reuss à te déplacer
