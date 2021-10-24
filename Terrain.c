@@ -3,11 +3,126 @@
 #define NombreDeSalleConnu 2
 
 
+
+int indexValid(int x, int y)
+{
+  return x >= 0 && x < TAILLE_X_SALLE && y >= 0 && y<TAILLE_Y_SALLE; 
+}
+
+
+void set(salle* s, int x, int y, int id)
+{
+  if(indexValid(x,y))
+  {
+    s->terrain[x][y] = id;
+  } 
+}
+
+
+void fill(salle* s, int xBegin, int xLength, int yBegin, int yLength, int id)
+{
+  if(xLength < 0)
+  {
+    fill(s, xBegin+xLength, -xLength, yBegin, yLength, id);
+    return;
+  } 
+  if(yLength < 0)
+  {
+    fill(s, xBegin, xLength, yBegin+yLength, -yLength, id);
+    return;
+  } 
+
+  for(int x = xBegin; x<=xBegin+xLength; x++)
+  {
+    for(int y = yBegin; y <= yBegin+yLength;y++)
+    {
+      set(s, x, y, id);
+    } 
+  } 
+}
+
+void placePlatform(salle* s, int x, int y, int size, int nbTime)
+{
+  if(nbTime < 0)
+  {return;}
+
+  fill(s, x, size, y, 0, 2);
+  placePlatform(s, x+rand()%10, y+rand()%11-7, 2+rand()%7, nbTime-1);
+}
+
+
+//y : y enter & y leave
+salle GetRandomRoom(int i, int* y)
+{
+  salle s;
+  s.lE = creerListe();
+
+  fill(&s, 0, TAILLE_X_SALLE, 0, TAILLE_Y_SALLE, 0);
+
+  for(int x = 0; x < TAILLE_X_SALLE;x++)
+  {
+    for(int y = 0; y < TAILLE_X_SALLE;y++)
+    {
+        set(&s, x, y, rand()%(17+9)==1 ? 3 : 0);
+    } 
+  } 
+
+  int yEnter = *y;
+  int x  = 0;
+  while(x<TAILLE_X_SALLE)
+  {
+    int length = rand()%20+1;
+    int height = rand()%11-5;
+
+    if((*y > TAILLE_Y_SALLE-10 && height > 0)|| (*y < 10 && height < 0))
+    {
+        height = -height;
+    }
+
+    fill(&s, x, length, *y, TAILLE_Y_SALLE-*y, 1);
+
+    if(rand()%3==0)
+    {
+      int z = *y;
+      placePlatform(&s, x, z-3-rand()%6, 3+rand()%10, rand()%3);
+    } 
+
+
+    x+=length;//+(rand()*rand()%7);
+    *y+=height;
+    //printf("x = %i, y = %i\n", x, )
+  }
+
+  int yEnd = *y;
+  /*
+  x = 0;
+  int z = yEnter;
+  while(x<TAILLE_X_SALLE)
+  {
+    if(rand()%3==0)
+    {
+      int l = 2+rand()%13;
+      fill(&s, x, l, z, 1, 2);
+      x+=l;
+    } 
+    else
+    {
+      x += 10+rand()%10*3;
+    } 
+  }*/
+
+
+  *y = yEnd;
+
+  return s;
+}
+
+
 niveau AleaCreaTion(int seed, int playerNb){
   srand(seed);
   niveau res;
   
-  res.nbSalle = 1; //rand()%10 + 30;
+  res.nbSalle = rand()%10 + 30;
   res.nbPlayer = playerNb;
   res.player = (entite *)malloc(sizeof(entite)*playerNb);
   
@@ -19,27 +134,32 @@ niveau AleaCreaTion(int seed, int playerNb){
     p->equipe = i;
 
     entityInit(p, 
-    10, 10,
+    1, 10,
     2,2,
     14/16.0, 22/16.0,
-    0.5, 1
+    0.7, 1
     );
 
   }
 
-  int begin = 17;
   
   res.salle = (salle *)malloc(sizeof(salle)*res.nbSalle);
 
   //res.salle[0] = getKnownSalle(0, &begin);
-  res.salle[0] = getFirstSalle(rand(), &begin);
+  //res.salle[0] = getFirstSalle(rand(), &begin);
 
   //printf("%d\n", begin);
   
-  for(int i = 1; i < res.nbSalle; i++){
+  int yEnter = TAILLE_Y_SALLE-8;
+  for(int i = 0; i < res.nbSalle; i++)
+  {
+    salle s =GetRandomRoom(i, &yEnter);
+    res.salle[i] = s;
+    
+    /*
     res.salle[i].lE = creerListe();
 
-    if(rand()%3 < 3){
+    if(rand()%3 <= 1){
       res.salle[i] = getKnownSalle(rand(), &begin);
     }else {
       for(int j = 0; j < TAILLE_X_SALLE; j++){
@@ -47,7 +167,8 @@ niveau AleaCreaTion(int seed, int playerNb){
           res.salle[i].terrain[j][k] = (rand()%2 == 1)?0:1;
         }
       }
-    }
+    }*/
+    
     
     
     
@@ -57,6 +178,9 @@ niveau AleaCreaTion(int seed, int playerNb){
   
   return res;
 }
+
+
+
 
 salle getFirstSalle(int n, int *Begin){
   salle s;
@@ -116,51 +240,6 @@ salle getFirstSalle(int n, int *Begin){
 
   s.terrain[2][10] = 1;
   s.terrain[3][10] = 1;
-
-  // s.terrain[12][12] = 2;
-
-  ListeEntite * l = malloc(sizeof(ListeEntite));
-  l->first = NULL;
-
-  entite * powerup = entityNew(ENTITY_POWERUP_CRISTAL_RESET);
-  entityInit(powerup, 
-    12, 12,
-    1, 1,
-    16/16.0, 16/16.0,
-    0.5, 0.5
-    );
-  // printf("%f %f\n", powerup->x, powerup->y);
-  powerup->equipe = -1;
-  powerup->direction = -1;
-  ajouteDebut(l, *powerup);
-
-  entite * coiny = entityNew(ENTITY_POWERUP_COINY);
-  entityInit(coiny, 
-    15, 12,
-    1, 1,
-    16/16.0, 16/16.0,
-    0.5, 0.5
-    );
-  // printf("%f %f\n", powerup->x, powerup->y);
-  coiny->equipe = -1;
-  coiny->direction = -1;
-  ajouteDebut(l, *coiny);
-
-  entite * jetpack = entityNew(ENTITY_POWERUP_JETPACK);
-  entityInit(jetpack, 
-    18, 10,
-    1, 1,
-    16/16.0, 16/16.0,
-    0.5, 0.5
-    );
-  // printf("%f %f\n", powerup->x, powerup->y);
-  coiny->equipe = -1;
-  coiny->direction = -1;
-  ajouteDebut(l, *jetpack);
-
-  s.lE = *l;
-
-  // printf("%f %f\n", l->first->val.x, l->first->val.y);
   return s;
 }
 
