@@ -19,7 +19,8 @@
 #define INPUT_RIGHT 2
 #define INPUT_ITEM 3
 
-int getBlockId(salle* s, int x, int y);
+int getBlockIdRelative(salle* s, int x, int y);
+int getBlockId(int x, int y);
 int getSalleEntite(entite ent);
 void gestionPhysiquesJoueur(int idJoueur);
 
