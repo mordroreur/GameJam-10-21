@@ -232,6 +232,7 @@ void gestionPhysiquesJoueur(int idJoueur) {
     }
 
     checkEntityCollisions(idJoueur);
+    joueur->durabiliteJetpack--;
     // entite ent = (NiveauActuelle.salle[0].lE.first)->val;
     // printf("%f %f\n", ent.x, ent.y);
 }
@@ -281,6 +282,12 @@ void processCollision(int idJoueur, entite * entity) {
       supprValeur(&(NiveauActuelle.salle[getSalleEntite(*joueur)].lE), *entity);
       // printf("POWERUP ACTIVE\n");
       break;
+
+    case ENTITY_POWERUP_JETPACK:
+      joueur->heldPowerup = ENTITY_POWERUP_JETPACK;
+      supprValeur(&(NiveauActuelle.salle[getSalleEntite(*joueur)].lE), *entity);
+      // printf("POWERUP ACTIVE\n");
+      break;
   }
 }
 
@@ -294,6 +301,10 @@ void usePowerup(int idJoueur) {
                 NiveauActuelle.player[i].ySpeed = 0;
               }
             }
+      joueur->heldPowerup = -1;
+      break;
+    case ENTITY_POWERUP_JETPACK:
+      joueur->durabiliteJetpack = 500;
       joueur->heldPowerup = -1;
       break;
   }

@@ -146,6 +146,18 @@ salle getFirstSalle(int n, int *Begin){
   coiny->direction = -1;
   ajouteDebut(l, *coiny);
 
+  entite * jetpack = entityNew(ENTITY_POWERUP_JETPACK);
+  entityInit(jetpack, 
+    18, 10,
+    1, 1,
+    16/16.0, 16/16.0,
+    0.5, 0.5
+    );
+  // printf("%f %f\n", powerup->x, powerup->y);
+  coiny->equipe = -1;
+  coiny->direction = -1;
+  ajouteDebut(l, *jetpack);
+
   s.lE = *l;
 
   // printf("%f %f\n", l->first->val.x, l->first->val.y);
