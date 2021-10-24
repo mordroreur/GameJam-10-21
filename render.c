@@ -2,7 +2,7 @@
 #include "RenderUtilities.h"
 #include "Terrain.h"
 #include <SDL2/SDL_render.h>
-#define TAILLE_X 21
+#define TAILLE_X 22
 #define TAILLE_Y 18
 
 extern int EtapeActuelleDuJeu; /* 0 = fin; 1 = Loading Screen... */
@@ -18,6 +18,9 @@ TTF_Font *RobotoFont;
 
 SDL_Surface *image = NULL;
 SDL_Texture  *avatar;
+
+//SDL_Surface *separation_image = NULL;
+//SDL_Texture *separation_avatar;
 
 SDL_Surface *background_image = NULL;
 SDL_Texture *background_avatar;
@@ -72,6 +75,8 @@ int BouclePrincipaleDuJeu(){
     printf("IMG_Load: %s\n", IMG_GetError());
   }
   background_image = IMG_Load("Res/background/sky.png");
+
+  //separation_image = IMG_Load("Res/background/sky.png");
   
   sprite_image_orange[0] = IMG_Load("Res/player/orange/player_walk0.png");
   sprite_image_orange[1] = IMG_Load("Res/player/orange/player_walk1.png");
@@ -335,6 +340,8 @@ void DessinPrincipale(){
       Fond.w = TailleEcranLong;
       SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
       SDL_RenderFillRect(renderer, &Fond);
+
+      //if (fabs(NiveauActuelle.player[1].x - NiveauActuelle.player[0].x)
       
       SDL_Rect Player1_Screen;
       Player1_Screen.x = 0;
@@ -351,6 +358,12 @@ void DessinPrincipale(){
       SDL_RenderCopy(renderer, background_avatar, NULL, &Player2_Screen);
 
       SDL_DestroyTexture(background_avatar);
+
+      //SDL_Rect separation;
+      //separation.h= TailleEcranHaut;
+      //separation.w= TailleEcranLong/(2*TAILLE_X);
+      //separation.x= TailleEcranLong/2;
+      //separation.y = 0;
       
       SDL_Rect case_screen;
       case_screen.x = - (int)((TailleEcranLong/(2*TAILLE_X)+((float)NiveauActuelle.player[0].x - (int)NiveauActuelle.player[0].x )*TailleEcranLong/(2*TAILLE_X)));
@@ -360,14 +373,13 @@ void DessinPrincipale(){
 
       
       for(i=(int)(NiveauActuelle.player[0].x) -11; i< (int)NiveauActuelle.player[0].x + TAILLE_X - 10; i++){
-
         case_screen.x = case_screen.x + case_screen.w;
         case_screen.y = - (int)(TailleEcranHaut/TAILLE_Y + ((float)NiveauActuelle.player[0].y - (int)NiveauActuelle.player[0].y - 1)*TailleEcranHaut/(TAILLE_Y));
-        for(j=(int)NiveauActuelle.player[0].y - 8; j<TAILLE_Y +1 + (int)NiveauActuelle.player[0].y - 8; j++){
+        for(j=(int)NiveauActuelle.player[0].y - 8  ; j<TAILLE_Y +1 + (int)NiveauActuelle.player[0].y - 8 ; j++){
 
-          case_screen.y = case_screen.y + case_screen.h;
+          case_screen.y = case_screen.y + case_screen.h ;
 
-          if (j >= 0 && i >= 0 && NiveauActuelle.salle[0].terrain[i][j]){
+          if (j >= 0 && i >= 0 && NiveauActuelle.salle[i/100].terrain[i%100][j]){
             avatar = SDL_CreateTextureFromSurface(renderer, image);
             SDL_RenderCopy(renderer, avatar, NULL, &case_screen);
 	          SDL_DestroyTexture(avatar);
@@ -389,7 +401,7 @@ void DessinPrincipale(){
 
           case_screen_2.y = case_screen_2.y + case_screen_2.h;
 
-          if (j >= 0 && i >= 0 && NiveauActuelle.salle[0].terrain[i][j]){
+          if (j >= 0 && i >= 0 && NiveauActuelle.salle[i/100].terrain[i%100][j]){
             avatar = SDL_CreateTextureFromSurface(renderer, image);
             SDL_RenderCopy(renderer, avatar, NULL, &case_screen_2);
 	          SDL_DestroyTexture(avatar);
