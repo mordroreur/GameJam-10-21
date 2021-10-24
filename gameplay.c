@@ -5,6 +5,7 @@ extern niveau NiveauActuelle;
 
 extern int ** inputsJoueurs;
 
+extern int EtapeActuelleDuJeu; /* 0 = fin; 1 = Loading Screen; 420 = Vict J0; 421 = Vict J1 */
 
 float xHitboxPos(entite* e)
 {
@@ -134,6 +135,9 @@ void gestionPhysiquesJoueur(int idJoueur) {
     entite * joueur = &NiveauActuelle.player[idJoueur];
     int grounded = 0;
 
+    if(getSalleEntite(*joueur)+1 > NiveauActuelle.nbSalle) {
+      EtapeActuelleDuJeu = 420 + idJoueur;
+    }
 
 /*
     if(NiveauActuelle.salle[salleJoueur].terrain[(int)x][(int)(y+joueur->sizeY)] != 1) {
@@ -264,6 +268,12 @@ void processCollision(int idJoueur, entite * entity) {
   switch(entity->type) {
     case ENTITY_POWERUP_CRISTAL_RESET:
       joueur->heldPowerup = ENTITY_POWERUP_CRISTAL_RESET;
+      supprValeur(&(NiveauActuelle.salle[getSalleEntite(*joueur)].lE), *entity);
+      // printf("POWERUP ACTIVE\n");
+      break;
+
+    case ENTITY_POWERUP_COINY:
+      joueur->heldPowerup = ENTITY_POWERUP_COINY;
       supprValeur(&(NiveauActuelle.salle[getSalleEntite(*joueur)].lE), *entity);
       // printf("POWERUP ACTIVE\n");
       break;

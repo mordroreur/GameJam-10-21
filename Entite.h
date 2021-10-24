@@ -6,6 +6,7 @@
 
 #define ENTITY_PLAYER 0
 #define ENTITY_POWERUP_CRISTAL_RESET 1
+#define ENTITY_POWERUP_COINY 2
 
 typedef struct Entite{
 
