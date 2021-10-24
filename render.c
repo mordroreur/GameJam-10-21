@@ -93,6 +93,19 @@ int BouclePrincipaleDuJeu(){
   sprite_image_orange[7] = IMG_Load("Res/player/orange/player_fall.png");
   sprite_image_orange[8] = IMG_Load("Res/player/orange/player_jump.png");
 
+  sprite_image_vert[0] = IMG_Load("Res/player/vert/player_walk0.png");
+  sprite_image_vert[1] = IMG_Load("Res/player/vert/player_walk1.png");
+  sprite_image_vert[2] = IMG_Load("Res/player/vert/player_walk2.png");
+  sprite_image_vert[3] = IMG_Load("Res/player/vert/player_walk3.png");
+
+  sprite_image_vert[4] = IMG_Load("Res/player/vert/player_base0.png");
+  sprite_image_vert[5] = IMG_Load("Res/player/vert/player_base1.png");
+
+  sprite_image_vert[6] = IMG_Load("Res/player/vert/player_face.png");
+
+  sprite_image_vert[7] = IMG_Load("Res/player/vert/player_fall.png");
+  sprite_image_vert[8] = IMG_Load("Res/player/vert/player_jump.png");
+
 
 
   sprite_image_Star[0] = IMG_Load("Res/background/star/star0.png");
@@ -456,10 +469,13 @@ void DessinPrincipale(){
             Joueur.y = (float)TailleEcranHaut/2;
           }
 
-          if (NiveauActuelle.player[joueur_id].ySpeed == 0){
+         if (NiveauActuelle.player[joueur_id].ySpeed == 0){
 
             if (NiveauActuelle.player[joueur_id].xSpeed == 0){
               sprite_image = sprite_image_orange[4 + (SDL_GetTicks()/500)%2];
+              if(joueur_id){
+                sprite_image = sprite_image_vert[4 + (SDL_GetTicks()/500)%2];
+              }
               if (NiveauActuelle.player[joueur_id].direction == 0){
                 flip = SDL_FLIP_HORIZONTAL;
               }
@@ -467,16 +483,19 @@ void DessinPrincipale(){
             
             if (NiveauActuelle.player[joueur_id].xSpeed > 0){
             sprite_image = sprite_image_orange[(SDL_GetTicks()/110)%4];
+            if (joueur_id) sprite_image = sprite_image_vert[(SDL_GetTicks()/110)%4];
             }
             
             if (NiveauActuelle.player[joueur_id].xSpeed < 0){
             sprite_image = sprite_image_orange[(SDL_GetTicks()/110)%4];
+            if (joueur_id) sprite_image = sprite_image_vert[(SDL_GetTicks()/110)%4];
             flip = SDL_FLIP_HORIZONTAL;
             }
         }
 
         else if(NiveauActuelle.player[joueur_id].ySpeed > 0){
           sprite_image = sprite_image_orange[7];
+          if (joueur_id) sprite_image = sprite_image_vert[7];
           if (NiveauActuelle.player[joueur_id].direction == 0){
             flip = SDL_FLIP_HORIZONTAL;
           }
@@ -484,6 +503,7 @@ void DessinPrincipale(){
         
         else if (NiveauActuelle.player[joueur_id].ySpeed < 0) {
           sprite_image = sprite_image_orange[8];
+          if (joueur_id) sprite_image = sprite_image_vert[8];
           if (NiveauActuelle.player[joueur_id].direction == 0){
             flip = SDL_FLIP_HORIZONTAL;
           }
@@ -580,6 +600,9 @@ void DessinPrincipale(){
 
             if (NiveauActuelle.player[joueur_id].xSpeed == 0){
               sprite_image = sprite_image_orange[4 + (SDL_GetTicks()/500)%2];
+              if(joueur_id){
+                sprite_image = sprite_image_vert[4 + (SDL_GetTicks()/500)%2];
+              }
               if (NiveauActuelle.player[joueur_id].direction == 0){
                 flip = SDL_FLIP_HORIZONTAL;
               }
@@ -587,16 +610,19 @@ void DessinPrincipale(){
             
             if (NiveauActuelle.player[joueur_id].xSpeed > 0){
             sprite_image = sprite_image_orange[(SDL_GetTicks()/110)%4];
+            if (joueur_id) sprite_image = sprite_image_vert[(SDL_GetTicks()/110)%4];
             }
             
             if (NiveauActuelle.player[joueur_id].xSpeed < 0){
             sprite_image = sprite_image_orange[(SDL_GetTicks()/110)%4];
+            if (joueur_id) sprite_image = sprite_image_vert[(SDL_GetTicks()/110)%4];
             flip = SDL_FLIP_HORIZONTAL;
             }
         }
 
         else if(NiveauActuelle.player[joueur_id].ySpeed > 0){
           sprite_image = sprite_image_orange[7];
+          if (joueur_id) sprite_image = sprite_image_vert[7];
           if (NiveauActuelle.player[joueur_id].direction == 0){
             flip = SDL_FLIP_HORIZONTAL;
           }
@@ -604,6 +630,7 @@ void DessinPrincipale(){
         
         else if (NiveauActuelle.player[joueur_id].ySpeed < 0) {
           sprite_image = sprite_image_orange[8];
+          if (joueur_id) sprite_image = sprite_image_vert[8];
           if (NiveauActuelle.player[joueur_id].direction == 0){
             flip = SDL_FLIP_HORIZONTAL;
           }
