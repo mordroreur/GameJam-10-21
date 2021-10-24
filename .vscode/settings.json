@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "terrain.h": "c",
+        "listeentite.h": "c",
+        "stdio.h": "c",
+        "stdlib.h": "c"
+    }
+}

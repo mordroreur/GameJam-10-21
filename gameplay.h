@@ -5,7 +5,10 @@
 #include "Entite.h"
 #include "Terrain.h"
 
-#define GRAVITY_MULTIPLIER 1.1
+#define GRAVITY 1/128.0
+#define JUMP_HEIGHT -15/64.0
+#define HELD_JUMP_BOOST 1/256.0
+
 #define AIR_FRICTION 0.0003
 #define GROUND_FRICTION 0.01
 
@@ -19,12 +22,25 @@
 #define INPUT_RIGHT 2
 #define INPUT_ITEM 3
 
+#define MIN(a,b) ((a) < (b) ? (a) : (b))
+#define MAX(a,b) ((a) > (b) ? (a) : (b))
+
+#define Hitbox_Precision (2/16.0)
+
+#define Block_Semisolid 2
+#define Block_Solid 1
+#define Block_Air 0
+
 int getBlockIdRelative(salle* s, int x, int y);
 int getBlockId(int x, int y);
 int getSalleEntite(entite ent);
 void gestionPhysiquesJoueur(int idJoueur);
 
 int blockIsSolid(int id); 
+int blockIsSemiSolid(int id); 
+
+float xHitboxPos(entite* e);
+float yHitboxPos(entite* e);
 
 // 0 = pas reussi
 // 1 = reuss à te déplacer

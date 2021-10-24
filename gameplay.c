@@ -4,14 +4,28 @@
 extern niveau NiveauActuelle;
 
 extern int ** inputsJoueurs;
-#define MIN(a,b) ((a) < (b) ? (a) : (b))
-#define MAX(a,b) ((a) > (b) ? (a) : (b))
-#define Block_Solid 1
-#define Block_Air 0
+
+
+float xHitboxPos(entite* e)
+{
+  return e->x+e->xHitboxOffset;
+}
+
+float yHitboxPos(entite* e)
+{
+  return e->y+e->yHitboxOffset;
+}
+
+float yHitboxPos(entite* e);
 
 int blockIsSolid(int id)
 {
-  return id == 1;
+  return id == Block_Solid;
+}
+
+int blockIsSemiSolid(int id)
+{
+  return id == Block_Semisolid;
 }
 
 
@@ -42,21 +56,22 @@ int moveEntityY(entite* e, float y)
 {
   if(y == 0){return 1;}
 
-  int xMinTile = floorf(e->x+0.2);
-  int xMaxTile = ceilf(e->x+e->sizeX - 0.2);
+  int xMinTile = floorf(xHitboxPos(e) + Hitbox_Precision);
+  int xMaxTile = ceilf(xHitboxPos(e)+e->xHitbox - Hitbox_Precision);
 
   int yNewTile;
   e->y += y;
 
   if(y > 0)
   {
-    yNewTile = floorf(e->y+e->sizeY);
+    yNewTile = floorf(yHitboxPos(e)+e->yHitbox);
     
     for(int i = xMinTile; i < xMaxTile;i++)
     {
-      if(blockIsSolid(getBlockId(i, yNewTile)))
+      int id = getBlockId(i, yNewTile);
+      if(blockIsSolid(id) || blockIsSemiSolid(id))
       {
-        e->y = (yNewTile-e->sizeY);
+        e->y = (yNewTile-e->yHitbox-e->yHitboxOffset);
         // printf("SNAP %f\n", e->y);
         return 0;
       }
@@ -64,12 +79,12 @@ int moveEntityY(entite* e, float y)
     return 1;
   }
   
-  yNewTile = floorf(e->y);
+  yNewTile = floorf(yHitboxPos(e));
   for(int i = xMinTile; i < xMaxTile;i++)
   {
     if(blockIsSolid(getBlockId(i, yNewTile)))
     {
-      e->y = (yNewTile+1);
+      e->y = (yNewTile+1-e->yHitboxOffset);
       return 0;
     }
   }
@@ -80,34 +95,33 @@ int moveEntityX(entite* e, float x)
 {
   if(x == 0){return 1;}
 
-  int yMinTile = floorf(e->y)+1;
-  int yMaxTile = floorf(e->y+e->sizeY);
-  salle* s = &(NiveauActuelle.salle[getSalleEntite(*e)]);
+  int yMinTile = floorf(yHitboxPos(e)-Hitbox_Precision)+1;
+  int yMaxTile = floorf(yHitboxPos(e)+e->yHitbox+Hitbox_Precision);
 
   int xNewTile;
   e->x += x;
 
   if(x > 0)
   {
-    xNewTile = floorf(e->x+e->sizeX);
+    xNewTile = floorf(xHitboxPos(e)+e->xHitbox);
     
     for(int i = yMinTile; i < yMaxTile;i++)
     {
       if(blockIsSolid(getBlockId(xNewTile, i)))
       {
-        e->x = (xNewTile-e->sizeX);
+        e->x = (xNewTile-e->xHitbox-e->xHitboxOffset);
         return 0;
       }
     }
     return 1;
   }
   
-  xNewTile = floorf(e->x);
+  xNewTile = floorf(xHitboxPos(e));
   for(int i = yMinTile; i < yMaxTile;i++)
   {
     if(blockIsSolid(getBlockId(xNewTile, i)))
     {
-      e->x = (xNewTile+1);
+      e->x = (xNewTile+1-e->xHitboxOffset);
       return 0;
     }
   }
@@ -118,9 +132,6 @@ int moveEntityX(entite* e, float x)
 
 void gestionPhysiquesJoueur(int idJoueur) {
     entite * joueur = &NiveauActuelle.player[idJoueur];
-    float x = joueur->x, y = joueur->y;
-    int salleJoueur = getSalleEntite(*joueur);
-    int isJumping = 0;
     int grounded = 0;
 
 
@@ -136,7 +147,7 @@ void gestionPhysiquesJoueur(int idJoueur) {
     }
     */
     
-    joueur->ySpeed = MIN(16.0/64, joueur->ySpeed+1/128.0);
+    joueur->ySpeed = MIN(16.0/64, joueur->ySpeed+GRAVITY);
 
     
     if(moveEntityY(joueur, joueur->ySpeed) == 0)
@@ -154,6 +165,9 @@ void gestionPhysiquesJoueur(int idJoueur) {
 
       //grounded=1;
     //printf("x:%f, y:%f\n", joueur->x, joueur->y);
+    // printf("size x%f\n", joueur->sizeX);
+    //printf("size x%f, size y%f\n", joueur->sizeX, joueur->sizeY);
+    //printf("x%f, y%f\n", joueur->x, joueur->y);
 
 
     if(inputsJoueurs[idJoueur][INPUT_RIGHT] && grounded) {
@@ -182,11 +196,17 @@ void gestionPhysiquesJoueur(int idJoueur) {
     //   joueur->ySpeed -= 0.05;
     // }
 
-    if(inputsJoueurs[idJoueur][INPUT_JUMP] && grounded) {
-      joueur->ySpeed = -20/64.0;
-      isJumping = 1;
-      inputsJoueurs[idJoueur][INPUT_JUMP] = 0;
+    if(inputsJoueurs[idJoueur][INPUT_JUMP] == 1 && grounded) {
+      joueur->ySpeed = JUMP_HEIGHT;
+      inputsJoueurs[idJoueur][INPUT_JUMP] = 2;
     }
+
+    if(inputsJoueurs[idJoueur][INPUT_JUMP] == 2 && !grounded) {
+      joueur->ySpeed -= HELD_JUMP_BOOST;
+      inputsJoueurs[idJoueur][INPUT_JUMP] = 2;
+    }
+
+    // printf("J%d : %d\n", idJoueur, inputsJoueurs[idJoueur][INPUT_JUMP]);
 
 /*
     if(NiveauActuelle.salle[salleJoueur].terrain[(int)x][(int)(y+joueur->sizeY+joueur->ySpeed)] != 1) {

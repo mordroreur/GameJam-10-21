@@ -3,10 +3,14 @@
 
 #include "listeEntite.h"
 
+
 #include <stdlib.h>
 
 #define TAILLE_X_SALLE 100
 #define TAILLE_Y_SALLE 50
+
+#define ENTITY_PLAYER 0
+#define ENTITY_POWERUP_CRISTAL_RESET 1
 
 typedef struct Salle{
 
@@ -26,7 +30,7 @@ typedef struct Niveau{
 }niveau;
 
 niveau AleaCreaTion(int seed, int playerNb);
-salle getKnownSalle(int n);
-salle getFirstSalle(int n);
+salle getKnownSalle(int n, int *Begin);
+salle getFirstSalle(int n, int *Begin);
 
 #endif /* TERRAIN_HEADER_ */

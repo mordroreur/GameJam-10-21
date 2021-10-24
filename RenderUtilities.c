@@ -1,5 +1,7 @@
 #include "RenderUtilities.h"
+#include "gameplay.h"
 #include "gest_event.h"
+#include <SDL2/SDL_joystick.h>
 
 extern int EtapeActuelleDuJeu; /* 0 = fin; 1 = Loading Screen... */
 
@@ -151,10 +153,10 @@ while (SDL_PollEvent(&event))
          if (event.button.button == SDL_BUTTON_LEFT) {
 	   SDL_GetMouseState(&posMX, &posMY);
 	   if((posMX > TailleEcranLong/8 && posMX < TailleEcranLong/8 + TailleEcranLong/6 && posMY > TailleEcranHaut/6 && posMY < TailleEcranHaut/6 + TailleEcranHaut/2)){
-	       NiveauActuelle = AleaCreaTion(42, 2);
+	       NiveauActuelle = AleaCreaTion(420, 2);
 	       initGestion();
 	       EtapeActuelleDuJeu = 42;
-	   }
+	       }
         // } else if (event.button.button == SDL_BUTTON_RIGHT) {
 	 }
         break;
@@ -170,7 +172,10 @@ while (SDL_PollEvent(&event))
       default:
         break;
       }
-    }  
+    }
+ NiveauActuelle = AleaCreaTion(420, 2);
+ initGestion();
+ EtapeActuelleDuJeu = 42;
 }
 
 
@@ -210,13 +215,69 @@ void ClickOnParam(){
     }
 }
 
+SDL_Joystick **joystick;
+int tempo = 0;
+
+
 
 void GetManetteInput(){
-  
+
+  tempo++;
+  SDL_JoystickUpdate();
+
+if ( event.type == SDL_JOYAXISMOTION )
+{
+
+  //  for (int i = 0 ; i < SDL_JoystickNumAxes(joystick[0]) ; i++ )
+  //    {
+      //printf("Axe %d à la valeur %d\n",i,SDL_JoystickGetAxis(joystick[0],i));
+  //    }
+  for(int i = 0; i < SDL_NumJoysticks(); i++){
+    if(SDL_JoystickGetAxis(joystick[i],0) < -25000){
+      inputsJoueurs[i][INPUT_LEFT] = 1;NiveauActuelle.player[i].direction = 0;
+      inputsJoueurs[i][INPUT_RIGHT] = 0;
+    }else if(SDL_JoystickGetAxis(joystick[i],0) > 25000){
+      inputsJoueurs[i][INPUT_RIGHT] = 1;NiveauActuelle.player[i].direction = 1;
+      inputsJoueurs[i][INPUT_LEFT] = 0;
+    }else{
+      inputsJoueurs[i][INPUT_LEFT] = 0;
+      inputsJoueurs[i][INPUT_RIGHT] = 0;
+    }
+    
+  }
+ }
+
+ 
 }
 
 
+
 void ManetteInit(){
+
+  
+
+  int numJoystick = SDL_NumJoysticks();
+  //printf("nb de manette :%d\n", numJoystick);
+
+  joystick = (SDL_Joystick **)malloc(numJoystick*sizeof(SDL_Joystick*));
+
+  
+  for(int i = 0; i < numJoystick; i++){
+      joystick[i] = SDL_JoystickOpen(i);
+      if ( joystick[i] == NULL ){
+        printf("Erreur pour ouvrir le joystick\n");
+    }
+    /*
+    printf("Informations du joystick\n");
+    printf("Nom : %s\n",SDL_JoystickName(0));
+    printf("Nombre d'axes : %d\n",SDL_JoystickNumAxes(joystick[i]));
+    printf("Nombre de chapeaux : %d\n",SDL_JoystickNumHats(joystick[i]));
+    printf("Nombre de trackballs : %d\n",SDL_JoystickNumBalls(joystick[i]));
+    printf("Nombre de boutons : %d\n",SDL_JoystickNumButtons(joystick[i]));
+    */
+  }
+
+    SDL_JoystickEventState(SDL_ENABLE);
   
 }
 

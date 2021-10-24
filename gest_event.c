@@ -59,12 +59,14 @@ void keyDown(SDL_KeyboardEvent *key){
   for(int i = 0; i < NiveauActuelle.nbPlayer; i++){
     for(int j = 0; j < NB_INPUTS; j++){
       if(key->keysym.sym == ToucheAppuiPlayer[i][j]){
-	inputsJoueurs[i][j] = 1;
-	if(j == INPUT_RIGHT){
-	  NiveauActuelle.player[i].direction = 1;
-	}else if(j == INPUT_LEFT){
-	  NiveauActuelle.player[i].direction = 0;
-	}
+        if(!key->repeat) {
+	        inputsJoueurs[i][j] = 1;
+        }
+	      if(j == INPUT_RIGHT){
+	        NiveauActuelle.player[i].direction = 1;
+	      }else if(j == INPUT_LEFT){
+	        NiveauActuelle.player[i].direction = 0;
+	      }
       }
     }
   }
@@ -108,6 +110,14 @@ void gestionInputs() {
 	  TailleEcranLong = event.window.data1;
 	}
 	break;
+      case SDL_JOYBUTTONDOWN:
+	if(event.jbutton.button == 0){
+	  inputsJoueurs[event.jbutton.which][INPUT_JUMP] = 1;
+	}break;
+      case SDL_JOYBUTTONUP:
+	if(event.jbutton.button == 0){
+	  inputsJoueurs[event.jbutton.which][INPUT_JUMP] = 0;
+	}break;
       default:
         break;
       }
