@@ -30,7 +30,7 @@ void keyUp(SDL_KeyboardEvent *key){
   default:break;
   }*/
   if(key->keysym.sym == SDLK_ESCAPE){
-    EtapeActuelleDuJeu = 0;
+    // EtapeActuelleDuJeu = 0;
   }else{
     for(int i = 0; i < NiveauActuelle.nbPlayer; i++){
       for(int j = 0; j < NB_INPUTS; j++){

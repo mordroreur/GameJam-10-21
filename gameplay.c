@@ -210,6 +210,10 @@ void gestionPhysiquesJoueur(int idJoueur) {
       inputsJoueurs[idJoueur][INPUT_JUMP] = 2;
     }
 
+    if (inputsJoueurs[idJoueur][INPUT_JUMP] && !grounded && joueur->durabiliteJetpack > 0) {
+      joueur->ySpeed -= 4/256.0;
+    }
+
     if(inputsJoueurs[idJoueur][INPUT_ITEM] == 1) {
       usePowerup(idJoueur);
     }
