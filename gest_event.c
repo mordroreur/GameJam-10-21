@@ -1,4 +1,6 @@
 #include "gest_event.h"
+#include "gameplay.h"
+#include <SDL2/SDL_keycode.h>
 
 extern int EtapeActuelleDuJeu; /* 0 = fin; 1 = Loading Screen... */
 extern int TailleEcranLong; /* Taille de l'ecran en nombre de pixel de gauche a droite */
@@ -6,13 +8,15 @@ extern int TailleEcranHaut; /* Taille de l'ecran en nombre de pixel de haut en b
 
 extern SDL_Event event;
 
-int ** inputsJoueurs;
+int **inputsJoueurs;
+
+extern int ToucheAppuiPlayer[2][4];
 
 extern niveau NiveauActuelle;
 
 void keyUp(SDL_KeyboardEvent *key){
   // printf("%d\n", key->keysym.sym);
-  switch(key->keysym.sym){
+  /*switch(key->keysym.sym){
   case SDLK_ESCAPE:EtapeActuelleDuJeu = 0;break;
   case SDLK_UP:inputsJoueurs[0][INPUT_JUMP] = 0;break;
   case SDLK_RIGHT:inputsJoueurs[0][INPUT_RIGHT] = 0; break;
@@ -24,12 +28,23 @@ void keyUp(SDL_KeyboardEvent *key){
   case SDLK_q:inputsJoueurs[1][INPUT_LEFT] = 0; break;
   case SDLK_s:inputsJoueurs[1][INPUT_ITEM] = 0;break;
   default:break;
+  }*/
+  if(key->keysym.sym == SDLK_ESCAPE){
+    EtapeActuelleDuJeu = 0;
+  }else{
+    for(int i = 0; i < NiveauActuelle.nbPlayer; i++){
+      for(int j = 0; j < NB_INPUTS; j++){
+	if(key->keysym.sym == ToucheAppuiPlayer[i][j]){
+	  inputsJoueurs[i][j] = 0;
+	}
+      }
+    }
   }
 }
 
 void keyDown(SDL_KeyboardEvent *key){
   // printf("%d\n", key->keysym.sym);
-  switch(key->keysym.sym){
+  /*switch(key->keysym.sym){
   case SDLK_UP:inputsJoueurs[0][INPUT_JUMP] = 1;break;
   case SDLK_RIGHT:inputsJoueurs[0][INPUT_RIGHT] = 1; NiveauActuelle.player[0].direction = 1; break;
   case SDLK_LEFT:inputsJoueurs[0][INPUT_LEFT] = 1; NiveauActuelle.player[0].direction = 0; break;
@@ -40,6 +55,18 @@ void keyDown(SDL_KeyboardEvent *key){
   case SDLK_q:inputsJoueurs[1][INPUT_LEFT] = 1;  NiveauActuelle.player[1].direction = 0; break;
   case SDLK_s:inputsJoueurs[1][INPUT_ITEM] = 1;break;
   default:break;
+  }*/
+  for(int i = 0; i < NiveauActuelle.nbPlayer; i++){
+    for(int j = 0; j < NB_INPUTS; j++){
+      if(key->keysym.sym == ToucheAppuiPlayer[i][j]){
+	inputsJoueurs[i][j] = 1;
+	if(j == INPUT_RIGHT){
+	  NiveauActuelle.player[i].direction = 1;
+	}else if(j == INPUT_LEFT){
+	  NiveauActuelle.player[i].direction = 0;
+	}
+      }
+    }
   }
 }
 
