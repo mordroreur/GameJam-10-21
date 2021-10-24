@@ -38,6 +38,7 @@ SDL_Surface *sprite_image_Player[2][9];
 SDL_Surface *sprite_image_Star[3];
 SDL_Surface *sprite_image_Fusee[2];
 
+SDL_Surface *sprite_image_Starshit;
 
 SDL_Texture *sprite_avatar;
 
@@ -89,6 +90,8 @@ int BouclePrincipaleDuJeu(){
   semisolid_image = IMG_Load("Res/semisolid.png");
 
   separation_image = IMG_Load("Res/split.png");
+
+  sprite_image_Starshit = IMG_Load("Res/background/star/starsheet.png");
   
   sprite_image_Player[0][0] = IMG_Load("Res/player/orange/player_walk0.png");
   sprite_image_Player[0][1] = IMG_Load("Res/player/orange/player_walk1.png");
@@ -503,12 +506,20 @@ void DrawCamera(
 void DrawBlockAt(int x, int y)
 {
   int id = getBlockId(x,y);
+  SDL_Rect r;
   switch(id)
   {
     case 1:
       DrawBlock(x,y, image, NULL);break;
   case 2:
     DrawBlock(x,y, semisolid_image, NULL);
+    break;
+  case 3:
+    r.x = 16*((SDL_GetTicks()/(120 + (x*3+y*7)%40) + x*3+y*7)%4);
+    r.y = 0;
+    r.w = 16;
+    r.h = 16;
+    DrawBlock(x, y, sprite_image_Starshit, &r);
     break;
     case 0:
     default: break;
