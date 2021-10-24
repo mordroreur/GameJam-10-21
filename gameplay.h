@@ -6,7 +6,8 @@
 #include "Terrain.h"
 
 #define GRAVITY_MULTIPLIER 1.1
-#define AIR_FRICTION 0.8
+#define AIR_FRICTION 0.0003
+#define GROUND_FRICTION 0.01
 
 #define X_ACCEL 0.01
 #define X_ACCEL_AERIAL 0.0025
