@@ -17,6 +17,7 @@ void entityInit(entite* e, float x, float y, float sizeX, float sizeY, float xHi
   e->sizeY=sizeY;
   e->xHitbox=xHitbox;
   e->yHitbox=yHitbox;
+  e->heldPowerup=0;
   e->xHitboxOffset= (sizeX-xHitbox)*xHitboxOffsetPourcentage;
   e->yHitboxOffset= (sizeY-yHitbox)*yHitboxOffsetPourcentage;
 }

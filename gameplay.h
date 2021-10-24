@@ -43,6 +43,7 @@ void gestionPhysiquesJoueur(int idJoueur);
 void checkEntityCollisions(int idJoueur);
 int checkCollision(entite * joueur, entite * entity);
 void processCollision(int idJoueur, entite * entity);
+void usePowerup(int idJoueur);
 
 int blockIsSolid(int id); 
 int blockIsSemiSolid(int id); 

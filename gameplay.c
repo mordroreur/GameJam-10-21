@@ -206,6 +206,10 @@ void gestionPhysiquesJoueur(int idJoueur) {
       inputsJoueurs[idJoueur][INPUT_JUMP] = 2;
     }
 
+    if(inputsJoueurs[idJoueur][INPUT_ITEM] == 1) {
+      usePowerup(idJoueur);
+    }
+
     // printf("J%d : %d\n", idJoueur, inputsJoueurs[idJoueur][INPUT_JUMP]);
 
 /*
@@ -259,14 +263,24 @@ void processCollision(int idJoueur, entite * entity) {
   entite * joueur = &NiveauActuelle.player[idJoueur];
   switch(entity->type) {
     case ENTITY_POWERUP_CRISTAL_RESET:
-      for (int i = 0; i < NiveauActuelle.nbPlayer; i++) {
-        if (i != idJoueur) {
-          NiveauActuelle.player[i].xSpeed = 0;
-          NiveauActuelle.player[i].ySpeed = 0;
-        }
-      }
+      joueur->heldPowerup = ENTITY_POWERUP_CRISTAL_RESET;
       supprValeur(&(NiveauActuelle.salle[getSalleEntite(*joueur)].lE), *entity);
-      printf("POWERUP ACTIVE\n");
+      // printf("POWERUP ACTIVE\n");
+      break;
+  }
+}
+
+void usePowerup(int idJoueur) {
+  entite * joueur = &NiveauActuelle.player[idJoueur];
+  switch(joueur->heldPowerup) {
+    case ENTITY_POWERUP_CRISTAL_RESET:
+      for (int i = 0; i < NiveauActuelle.nbPlayer; i++) {
+              if (i != idJoueur) {
+                NiveauActuelle.player[i].xSpeed = 0;
+                NiveauActuelle.player[i].ySpeed = 0;
+              }
+            }
+      joueur->heldPowerup = 0;
       break;
   }
 }

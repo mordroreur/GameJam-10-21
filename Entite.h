@@ -4,6 +4,9 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+#define ENTITY_PLAYER 0
+#define ENTITY_POWERUP_CRISTAL_RESET 1
+
 typedef struct Entite{
 
   float x;

@@ -9,9 +9,6 @@
 #define TAILLE_X_SALLE 100
 #define TAILLE_Y_SALLE 50
 
-#define ENTITY_PLAYER 0
-#define ENTITY_POWERUP_CRISTAL_RESET 1
-
 typedef struct Salle{
 
   int terrain[TAILLE_X_SALLE][TAILLE_Y_SALLE];
