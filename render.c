@@ -37,6 +37,7 @@ SDL_Surface *sprite_image_Player[2][9];
 
 SDL_Surface *sprite_image_Star[3];
 SDL_Surface *sprite_image_Fusee[2];
+SDL_Surface *sprite_image_PowerUp[4];
 
 SDL_Surface *sprite_image_Starshit;
 
@@ -49,6 +50,8 @@ int ToucheAppuiPlayer[2][4];
 int tickCount = 0;
 
 niveau NiveauActuelle;
+
+
 
 int cycle_animation = 0;
 
@@ -92,6 +95,11 @@ int BouclePrincipaleDuJeu(){
   separation_image = IMG_Load("Res/split.png");
 
   sprite_image_Starshit = IMG_Load("Res/background/star/starsheet.png");
+
+  sprite_image_PowerUp[0] = IMG_Load("Res/powerup/jetpack.png");
+  sprite_image_PowerUp[1] = IMG_Load("Res/powerup/cristal_anti_gravite.png");
+  sprite_image_PowerUp[2] = IMG_Load("Res/powerup/richesse.png");
+  sprite_image_PowerUp[3] = IMG_Load("Res/powerup/rock.png");
   
   sprite_image_Player[0][0] = IMG_Load("Res/player/orange/player_walk0.png");
   sprite_image_Player[0][1] = IMG_Load("Res/player/orange/player_walk1.png");
@@ -403,7 +411,7 @@ void DessinPrincipale(){
 
   
 
-  if (fabs(NiveauActuelle.player[1].x - NiveauActuelle.player[0].x) > TAILLE_X/1.2 || fabs(NiveauActuelle.player[1].y - NiveauActuelle.player[0].y) > TAILLE_Y/3){
+  if (fabs(NiveauActuelle.player[1].x - NiveauActuelle.player[0].x) > TAILLE_X || fabs(NiveauActuelle.player[1].y - NiveauActuelle.player[0].y) > TAILLE_Y/1.3){
 
    
     DrawCamera(NiveauActuelle.player[0].x, NiveauActuelle.player[0].y, 16, TailleEcranLong/2*0.96, TailleEcranHaut, 0, 0);
@@ -425,9 +433,29 @@ void DessinPrincipale(){
     SDL_RenderCopy(renderer, separation_avatar, NULL, &separation);
     SDL_DestroyTexture(separation_avatar);
   }else{
-    DrawCamera(NiveauActuelle.player[0].x, NiveauActuelle.player[0].y, 16, TailleEcranLong, TailleEcranHaut, 0, 0);
+    DrawCamera((NiveauActuelle.player[0].x + NiveauActuelle.player[1].x)/2, (NiveauActuelle.player[0].y + NiveauActuelle.player[1].y)/2, 16, TailleEcranLong, TailleEcranHaut, 0, 0);
+  }
+  
+  SDL_Rect PowerUp;
+  if(NiveauActuelle.player[0].heldPowerup != -1){
+    PowerUp.y= 0;
+    PowerUp.x= 0;
+    PowerUp.h= TailleEcranLong/10 ;
+    PowerUp.w = TailleEcranLong/10;
+    SDL_Texture *avatarTmp = SDL_CreateTextureFromSurface(renderer, sprite_image_PowerUp[NiveauActuelle.player[0].heldPowerup]);
+    SDL_RenderCopy(renderer, avatarTmp, NULL, &PowerUp);
+    SDL_DestroyTexture(avatarTmp);
   }
 
+  if(NiveauActuelle.player[1].heldPowerup != -1){
+    PowerUp.y= 0;
+    PowerUp.x=  TailleEcranLong- (TailleEcranLong /10);
+    PowerUp.h= TailleEcranLong/10 ;
+    PowerUp.w = TailleEcranLong/10;
+    SDL_Texture *avatarTmp = SDL_CreateTextureFromSurface(renderer, sprite_image_PowerUp[NiveauActuelle.player[1].heldPowerup]);
+    SDL_RenderCopy(renderer, avatarTmp, NULL, &PowerUp);
+    SDL_DestroyTexture(avatarTmp);
+  }
 }
           
 
