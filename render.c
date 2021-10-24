@@ -373,16 +373,13 @@ void DessinPrincipale(){
 
       
       for(i=(int)(NiveauActuelle.player[0].x) -11; i< (int)NiveauActuelle.player[0].x + TAILLE_X - 10; i++){
-
         case_screen.x = case_screen.x + case_screen.w;
         case_screen.y = - (int)(TailleEcranHaut/TAILLE_Y + ((float)NiveauActuelle.player[0].y - (int)NiveauActuelle.player[0].y - 1)*TailleEcranHaut/(TAILLE_Y));
-        for(j=(int)NiveauActuelle.player[0].y - 8; j<TAILLE_Y +1 + (int)NiveauActuelle.player[0].y - 8; j++){
+        for(j=(int)NiveauActuelle.player[0].y - 8  ; j<TAILLE_Y +1 + (int)NiveauActuelle.player[0].y - 8 ; j++){
 
-          case_screen.y = case_screen.y + case_screen.h;
+          case_screen.y = case_screen.y + case_screen.h ;
 
-          int salle_a_afficher = (int)((NiveauActuelle.player[0].x + TAILLE_X/2)/100);
-          
-          if (j >= 0 && i >= 0 && NiveauActuelle.salle[salle_a_afficher].terrain[i][j]){
+          if (j >= 0 && i >= 0 && NiveauActuelle.salle[i/100].terrain[i%100][j]){
             avatar = SDL_CreateTextureFromSurface(renderer, image);
             SDL_RenderCopy(renderer, avatar, NULL, &case_screen);
 	          SDL_DestroyTexture(avatar);
@@ -404,7 +401,7 @@ void DessinPrincipale(){
 
           case_screen_2.y = case_screen_2.y + case_screen_2.h;
 
-          if (j >= 0 && i >= 0 && NiveauActuelle.salle[0].terrain[i][j]){
+          if (j >= 0 && i >= 0 && NiveauActuelle.salle[i/100].terrain[i%100][j]){
             avatar = SDL_CreateTextureFromSurface(renderer, image);
             SDL_RenderCopy(renderer, avatar, NULL, &case_screen_2);
 	          SDL_DestroyTexture(avatar);
