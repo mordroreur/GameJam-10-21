@@ -1,6 +1,7 @@
 #include "render.h"
 #include "RenderUtilities.h"
 #include "Terrain.h"
+#include "listeEntite.h"
 #include <SDL2/SDL_render.h>
 #include <SDL2/SDL_surface.h>
 #include <SDL2/SDL_timer.h>
@@ -498,14 +499,22 @@ void DrawCamera(
   int blockMore = 1;
 
 
-  for(int x = -blockMore+1; x < (int)(CamX+CamNbBlockX) + blockMore; x++)
+  for(int x = -blockMore+1+CamX; x < (int)(CamX+CamNbBlockX) + blockMore; x++)
   {
-    for(int y = -blockMore+1; y < (int)(CamY+CamNbBlockY) + blockMore; y++)
+    for(int y = -blockMore+1+CamY; y < (int)(CamY+CamNbBlockY) + blockMore; y++)
     {
       DrawBlockAt(x,y);
     } 
   }
 
+  int salle = (-blockMore+1+CamX)/100;
+  int nbEntite = ListLenght(NiveauActuelle.salle[salle].lE);
+  Maillon *m =NiveauActuelle.salle[salle].lE.first;
+  for(int i = 0; i < nbEntite; i++){
+    DrawSprite(m->val.x, m->val.y, m->val.sizeX, m->val.sizeX, sprite_image_PowerUp[m->val.type], SDL_FLIP_NONE, NULL);
+    m = m->suiv;
+  }
+  
   for(int i = 0;i < NiveauActuelle.nbPlayer; i++)
   {
     entite* p = &(NiveauActuelle.player[i]);
