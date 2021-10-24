@@ -21,10 +21,10 @@ niveau AleaCreaTion(int seed, int playerNb){
     entityInit(p, 
     10, 10,
     2,2,
-    16/16.0, 22/16.0,
-    0.5, 1
+    14/16.0, 22/16.0,
+    0.65, 1
     );
-
+    
   }
 
   int begin = 17;
