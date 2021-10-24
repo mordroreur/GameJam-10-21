@@ -407,8 +407,8 @@ void DessinPrincipale(){
         else {
           Joueur.h = NiveauActuelle.player[joueur_id].sizeY *  TailleEcranHaut/TAILLE_Y;
           Joueur.w = NiveauActuelle.player[joueur_id].sizeX * TailleEcranLong/(2*TAILLE_X);
-          Joueur.x = TailleEcranLong/(2) +NiveauActuelle.player[joueur_id].x * TailleEcranLong/(2*TAILLE_X);
-          Joueur.y = NiveauActuelle.player[joueur_id].y *  TailleEcranHaut/TAILLE_Y;
+          Joueur.x = (float)TailleEcranLong*3/4;
+          Joueur.y = (float)TailleEcranHaut/4;
         }
 
         if (NiveauActuelle.player[joueur_id].ySpeed == 0){
