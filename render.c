@@ -2,7 +2,7 @@
 #include "RenderUtilities.h"
 #include "Terrain.h"
 #include <SDL2/SDL_render.h>
-#define TAILLE_X 21
+#define TAILLE_X 22
 #define TAILLE_Y 18
 
 extern int EtapeActuelleDuJeu; /* 0 = fin; 1 = Loading Screen... */
@@ -380,7 +380,9 @@ void DessinPrincipale(){
 
           case_screen.y = case_screen.y + case_screen.h;
 
-          if (j >= 0 && i >= 0 && NiveauActuelle.salle[(int)NiveauActuelle.player[0].x/100].terrain[i][j]){
+          int salle_a_afficher = (int)((NiveauActuelle.player[0].x + TAILLE_X/2)/100);
+          
+          if (j >= 0 && i >= 0 && NiveauActuelle.salle[salle_a_afficher].terrain[i][j]){
             avatar = SDL_CreateTextureFromSurface(renderer, image);
             SDL_RenderCopy(renderer, avatar, NULL, &case_screen);
 	          SDL_DestroyTexture(avatar);
