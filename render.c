@@ -1,4 +1,5 @@
 #include "render.h"
+#include "RenderUtilities.h"
 #include "Terrain.h"
 #include <SDL2/SDL_render.h>
 #define TAILLE_X 21
@@ -90,7 +91,8 @@ int BouclePrincipaleDuJeu(){
   TimeCount = getTime();
   NowTime = getTime();
 
-  NiveauActuelle = AleaCreaTion(42, 2);
+
+  void ManetteInit();
 
   /************Début de la boucle des ticks***********************/
     pthread_t threadBoucleDesTicks;
@@ -277,8 +279,7 @@ void *BouclePrincipaleDesTicks(void *CeciEstUneVaribleNull){
   long int NowTime;
   NowTime = getTime();
   LastTick = getTime();
-  initGestion();
-
+  
   
   while(EtapeActuelleDuJeu){
 
@@ -287,8 +288,13 @@ void *BouclePrincipaleDesTicks(void *CeciEstUneVaribleNull){
     /* Gestion des verif gameplay */
     if (NowTime - LastTick > timeForNewTick) {
       
+      switch(EtapeActuelleDuJeu){
+      case 42 : gestionInputs();break;
+      case 2 : ClickOnMenu();break;
+      case 4 : ClickOnParam();break;
+      default:printf("Cette etape du jeu n'existe pas...\n");break;
+      }
 
-      gestionInputs();
       
       LastTick += timeForNewTick;
       tickCount++;

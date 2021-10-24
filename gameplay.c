@@ -120,8 +120,10 @@ void gestionPhysiquesJoueur(int idJoueur) {
         joueur->ySpeed = 0;
     }
     */
+    
     joueur->ySpeed = MIN(16.0/64, joueur->ySpeed+1/128.0);
 
+    
     if(moveEntityY(joueur, joueur->ySpeed) == 0)
     {
       joueur->ySpeed = 0;
@@ -146,7 +148,6 @@ void gestionPhysiquesJoueur(int idJoueur) {
       joueur->xSpeed = 0;
     }
 
-    
 
     // Jetpack
     // if(inputsJoueurs[idJoueur][INPUT_JUMP] && joueur->ySpeed < 2) {
