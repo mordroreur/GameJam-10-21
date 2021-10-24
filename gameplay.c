@@ -175,22 +175,22 @@ void gestionPhysiquesJoueur(int idJoueur) {
     } else if(inputsJoueurs[idJoueur][INPUT_LEFT] && grounded) {
       joueur->xSpeed = MAX(joueur->xSpeed - X_ACCEL, -X_TERM_VELOCITY);
     } else if (grounded && joueur->xSpeed > 0){
-      joueur->xSpeed = MAX(0, joueur->xSpeed-GROUND_FRICTION);
+      joueur->xSpeed = MAX(0, joueur->xSpeed - GROUND_FRICTION);
     } else if (grounded && joueur->xSpeed < 0){
-      joueur->xSpeed = MIN(0, joueur->xSpeed+GROUND_FRICTION);
+      joueur->xSpeed = MIN(0, joueur->xSpeed + GROUND_FRICTION);
     }
 
     if(inputsJoueurs[idJoueur][INPUT_RIGHT] && !grounded) {
-      joueur->xSpeed = MIN(joueur->xSpeed + X_ACCEL_AERIAL, X_TERM_VELOCITY);
+      joueur->xSpeed = MIN(joueur->xSpeed - AIR_FRICTION + X_ACCEL_AERIAL, X_TERM_VELOCITY_AERIAL);
     } else if(inputsJoueurs[idJoueur][INPUT_LEFT] && !grounded) {
-      joueur->xSpeed = MAX(joueur->xSpeed - X_ACCEL_AERIAL, -X_TERM_VELOCITY);
+      joueur->xSpeed = MAX(joueur->xSpeed - X_ACCEL_AERIAL + AIR_FRICTION, -X_TERM_VELOCITY_AERIAL);
     } else if (!grounded && joueur->xSpeed > 0){
-      joueur->xSpeed = MAX(0, joueur->xSpeed-AIR_FRICTION);
+      joueur->xSpeed = MAX(0, joueur->xSpeed - AIR_FRICTION);
     } else if (!grounded && joueur->xSpeed < 0){
-      joueur->xSpeed = MIN(0, joueur->xSpeed+AIR_FRICTION);
+      joueur->xSpeed = MIN(0, joueur->xSpeed + AIR_FRICTION);
     }
 
-
+    // if(idJoueur == 1) printf("Speed : %f\n", joueur->xSpeed);
     // Jetpack
     // if(inputsJoueurs[idJoueur][INPUT_JUMP] && joueur->ySpeed < 2) {
     //   joueur->ySpeed -= 0.05;
