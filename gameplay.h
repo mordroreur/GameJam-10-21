@@ -9,6 +9,7 @@
 #define AIR_FRICTION 0.8
 
 #define X_ACCEL 0.01
+#define X_ACCEL_AERIAL 0.0025
 #define X_TERM_VELOCITY 0.2
 
 #define NB_INPUTS 4
