@@ -65,10 +65,10 @@ salle getFirstSalle(int n){
     for(int j = 0; j < TAILLE_Y_SALLE; j++){
       int x = s.terrain[i-1][j];
       if(j < TAILLE_Y_SALLE-1){
-	x = s.terrain[i-1][j+1];
+	x += s.terrain[i-1][j+1];
       }
       if(j > 0){
-	x = s.terrain[i-1][j-1];
+	x += s.terrain[i-1][j-1];
       }
       
       if(x == 3){
@@ -105,7 +105,7 @@ salle getKnownSalle(int n){
   case 0 :
     for(int i = 0; i < TAILLE_X_SALLE; i++){
       for(int j = 0; j < TAILLE_Y_SALLE; j++){
-	if(j != 15){
+	if(j != 40){
 	  s.terrain[i][j] = 0;
 	}else {
 	  s.terrain[i][j] = 1;
