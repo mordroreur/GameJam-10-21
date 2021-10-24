@@ -235,35 +235,19 @@ if ( event.type == SDL_JOYAXISMOTION )
   for(int i = 0; i < SDL_NumJoysticks(); i++){
     if(SDL_JoystickGetAxis(joystick[i],0) < -25000){
       inputsJoueurs[i][INPUT_LEFT] = 1;NiveauActuelle.player[i].direction = 0;
+      inputsJoueurs[i][INPUT_RIGHT] = 0;
     }else if(SDL_JoystickGetAxis(joystick[i],0) > 25000){
       inputsJoueurs[i][INPUT_RIGHT] = 1;NiveauActuelle.player[i].direction = 1;
+      inputsJoueurs[i][INPUT_LEFT] = 0;
     }else{
       inputsJoueurs[i][INPUT_LEFT] = 0;
       inputsJoueurs[i][INPUT_RIGHT] = 0;
     }
-    if(SDL_JoystickGetAxis(joystick[i],1) < -25000){
-      inputsJoueurs[i][INPUT_JUMP] = 1;
-    }else if(SDL_JoystickGetAxis(joystick[i],1) > 25000){
-      inputsJoueurs[i][INPUT_ITEM] = 1;
-    }else{
-      inputsJoueurs[i][INPUT_JUMP] = 0;
-      inputsJoueurs[i][INPUT_ITEM] = 0;
-    }
+    
   }
+ }
 
-  
- }
- for(int i = 0; i < SDL_NumJoysticks(); i++){
-       if ( SDL_JoystickGetButton(joystick[i],0) )
-	 {
-	    inputsJoueurs[i][INPUT_JUMP] = 1;
-	 }
-       else
-	 {
-	   inputsJoueurs[i][INPUT_JUMP] = 0;
-	 }
-     
- }
+ 
 }
 
 
