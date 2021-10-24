@@ -144,7 +144,7 @@ niveau AleaCreaTion(int seed, int playerNb){
   srand(seed);
   niveau res;
   
-  res.nbSalle = rand()%10 + 30;
+  res.nbSalle = rand()%3 + 3;
   res.nbPlayer = playerNb;
   res.player = (entite *)malloc(sizeof(entite)*playerNb);
   

@@ -187,6 +187,8 @@ int BouclePrincipaleDuJeu(){
       switch(EtapeActuelleDuJeu){
       case 2:DrawMenu();break;
       case 42:DessinPrincipale();break;
+      case 420:printf("Victoire de Orange !\n"); EtapeActuelleDuJeu = 0; break;
+      case 421:printf("Victoire de Vert !\n"); EtapeActuelleDuJeu = 0; break;
       default:return 0;break;
       }
       
@@ -390,6 +392,8 @@ void *BouclePrincipaleDesTicks(void *CeciEstUneVaribleNull){
       case 42 : gestionInputs();break;
       case 2 : ClickOnMenu();break;
       case 4 : ClickOnParam();break;
+      case 420 : break;
+      case 421 : break;
       default:printf("Cette etape du jeu n'existe pas...\n");break;
       }
 
