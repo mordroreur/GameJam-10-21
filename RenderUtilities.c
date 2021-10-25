@@ -153,7 +153,7 @@ while (SDL_PollEvent(&event))
          if (event.button.button == SDL_BUTTON_LEFT) {
 	   SDL_GetMouseState(&posMX, &posMY);
 	   if((posMX > TailleEcranLong/8 && posMX < TailleEcranLong/8 + TailleEcranLong/6 && posMY > TailleEcranHaut/6 && posMY < TailleEcranHaut/6 + TailleEcranHaut/2)){
-	       NiveauActuelle = AleaCreaTion(420, 2);
+	       NiveauActuelle = AleaCreaTion(42069, 2);
 	       initGestion();
 	       EtapeActuelleDuJeu = 42;
 	       }
@@ -173,7 +173,7 @@ while (SDL_PollEvent(&event))
         break;
       }
     }
- NiveauActuelle = AleaCreaTion(420, 2);
+ NiveauActuelle = AleaCreaTion(42069, 2);
  initGestion();
  EtapeActuelleDuJeu = 42;
 }
