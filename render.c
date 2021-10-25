@@ -280,9 +280,12 @@ void create_Win() {
 
 
   /* Création de la fenêtre, cas avec erreur */
-  window = SDL_CreateWindow("THIS IS A F****** WINDOW!!!", SDL_WINDOWPOS_CENTERED,
+  window = SDL_CreateWindow("MoonRun", SDL_WINDOWPOS_CENTERED,
                             SDL_WINDOWPOS_CENTERED, screen_dimension.w/2,
                             screen_dimension.h/2, SDL_WINDOW_RESIZABLE);
+  SDL_Surface *thumbnail;
+  thumbnail = IMG_Load("Res/thumbnail.png");
+  SDL_SetWindowIcon(window, thumbnail);
   if (window == NULL)
     end_sdl(0, "ERROR WINDOW CREATION");
 
