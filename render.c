@@ -412,7 +412,7 @@ void WinOrange(){
 
 
 void WinVert(){
-    SDL_Texture *Text;
+  SDL_Texture *Text;
   int posMX;
   int posMY;
   SDL_GetMouseState(&posMX, &posMY);

@@ -16,7 +16,7 @@ SDL_Window *window = NULL; /* Adresse de la fenêtre que l'on va créer. */
 SDL_Renderer *renderer = NULL; /* Adresse de l'endroit du dessin de la fenetre. */
 
 
-int DEBUG = 1; /* 1 : affiche le debug*/
+int DEBUG = 0; /* 1 : affiche le debug*/
 
 
 /////////////////////////////////////////////////////////////
