@@ -218,6 +218,7 @@ void gestionPhysiquesJoueur(int idJoueur) {
 
     if(inputsJoueurs[idJoueur][INPUT_ITEM] == 1) {
       usePowerup(idJoueur);
+      inputsJoueurs[idJoueur][INPUT_ITEM] = 0;
     }
 
     // printf("J%d : %d\n", idJoueur, inputsJoueurs[idJoueur][INPUT_JUMP]);

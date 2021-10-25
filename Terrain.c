@@ -49,16 +49,16 @@ void addRandomPowerUp(salle* s, int x, int y)
 }
 
 
-void placePlatform(salle* s, int x, int y, int size, int nbTime)
+void placePlatform(salle* s, int x, int y, int size, int nbTime, int numSalle)
 {
   if(nbTime < 0)
   {return;}
 
   fill(s, x, size, y, 0, 2);
-  placePlatform(s, x+rand()%10, y+rand()%9-7, 2+rand()%7, nbTime-1);
+  placePlatform(s, x+rand()%10, y+rand()%9-7, 2+rand()%7, nbTime-1, numSalle);
 
   if(nbTime == 0){
-    addRandomPowerUp(s, x+rand()%5,y-1);
+    addRandomPowerUp(s, x+(rand()%5)+(TAILLE_X_SALLE*numSalle),y-1);
   }
 }
 
@@ -106,7 +106,7 @@ salle GetRandomRoom(int i, int* y)
     if(rand()%3==0)
     {
       int z = *y;
-      placePlatform(&s, x, z-3-rand()%6, 3+rand()%10, rand()%3);
+      placePlatform(&s, x, z-3-rand()%6, 3+rand()%10, rand()%3, i);
     } 
 
 
