@@ -89,7 +89,7 @@ salle GetRandomRoom(int i, int* y)
   entityInit(jetpack, 1, *y-2, 1, 1, 1, 1, 0.5, 0.5);
   ajouteDebut(&(s.lE), *jetpack);*/
 
-  int yEnter = *y;
+  // int yEnter = *y;
   int x  = 0;
   while(x<TAILLE_X_SALLE)
   {
@@ -144,7 +144,7 @@ niveau AleaCreaTion(int seed, int playerNb){
   srand(seed);
   niveau res;
   
-  res.nbSalle = rand()%3 + 3;
+  res.nbSalle = rand()%5 + 5 + 1;
   res.nbPlayer = playerNb;
   res.player = (entite *)malloc(sizeof(entite)*playerNb);
   
@@ -173,7 +173,7 @@ niveau AleaCreaTion(int seed, int playerNb){
   //printf("%d\n", begin);
   
   int yEnter = TAILLE_Y_SALLE-8;
-  for(int i = 0; i < res.nbSalle; i++)
+  for(int i = 0; i < res.nbSalle-1; i++)
   {
     salle s =GetRandomRoom(i, &yEnter);
     res.salle[i] = s;
@@ -194,6 +194,11 @@ niveau AleaCreaTion(int seed, int playerNb){
     
     
     
+  }
+  for(int i = 0; i < TAILLE_X_SALLE; i++){
+    for(int j = 0; j < TAILLE_Y_SALLE; j++){
+      res.salle[res.nbSalle-1].terrain[i][j] = 3;
+    }  
   }
 
  

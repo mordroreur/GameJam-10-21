@@ -400,7 +400,7 @@ void WinOrange(){
   SDL_RenderCopy(renderer, Text, NULL, &Rect);
   SDL_DestroyTexture(Text);
 
-  DrawString("Orange A gagné", 50, 68, 8, 'c', 255, 127, 0);
+  DrawString("Orange Won", 50, 68, 8, 'c', 255, 127, 0);
 
   SDL_RenderPresent(renderer);
       SDL_RenderClear(renderer);
@@ -439,7 +439,7 @@ void WinVert(){
   SDL_RenderCopy(renderer, Text, NULL, &Rect);
   SDL_DestroyTexture(Text);
 
-  DrawString("Vert A gagné", 50, 68, 8, 'c', 50, 205, 50);
+  DrawString("Green Won", 50, 68, 8, 'c', 50, 205, 50);
   SDL_RenderPresent(renderer);
       SDL_RenderClear(renderer);
   SDL_Delay(10000);

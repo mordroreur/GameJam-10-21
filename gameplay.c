@@ -135,7 +135,9 @@ void gestionPhysiquesJoueur(int idJoueur) {
     entite * joueur = &NiveauActuelle.player[idJoueur];
     int grounded = 0;
 
-    if(getSalleEntite(*joueur)+1 > NiveauActuelle.nbSalle) {
+
+    if(getSalleEntite(*joueur)+1 >= NiveauActuelle.nbSalle) {
+
       EtapeActuelleDuJeu = 420 + idJoueur;
     }
 
