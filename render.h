@@ -47,6 +47,10 @@ void DrawBlock(int x, int y, SDL_Surface* sprite, SDL_Rect* source);
 
 void DessinPrincipale();
 
+void WinOrange();
+
+void WinVert();
+
 
 
 #endif /* RENDER_HEADER_ */
