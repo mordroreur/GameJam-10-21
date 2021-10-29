@@ -502,9 +502,13 @@ void DessinPrincipale(){
 
   if (fabs(NiveauActuelle.player[1].x - NiveauActuelle.player[0].x) > TAILLE_X || fabs(NiveauActuelle.player[1].y - NiveauActuelle.player[0].y) > TAILLE_Y/1.3){
 
-   
-    DrawCamera(NiveauActuelle.player[0].x, NiveauActuelle.player[0].y, 16, TailleEcranLong/2*0.96, TailleEcranHaut, 0, 0);
-    DrawCamera(NiveauActuelle.player[1].x, NiveauActuelle.player[1].y, 16,TailleEcranLong/2, TailleEcranHaut, TailleEcranLong/2*1.04, 0);
+    if (NiveauActuelle.player[1].x > NiveauActuelle.player[0].x) {
+        DrawCamera(NiveauActuelle.player[0].x, NiveauActuelle.player[0].y, 16, TailleEcranLong/2*0.96, TailleEcranHaut, 0, 0);
+        DrawCamera(NiveauActuelle.player[1].x, NiveauActuelle.player[1].y, 16,TailleEcranLong/2, TailleEcranHaut, TailleEcranLong/2*1.04, 0);
+    } else {
+        DrawCamera(NiveauActuelle.player[1].x, NiveauActuelle.player[1].y, 16, TailleEcranLong/2*0.96, TailleEcranHaut, 0, 0);
+        DrawCamera(NiveauActuelle.player[0].x, NiveauActuelle.player[0].y, 16,TailleEcranLong/2, TailleEcranHaut, TailleEcranLong/2*1.04, 0);
+    }
     
     SDL_Rect separation;
     separation.h= TailleEcranHaut;
